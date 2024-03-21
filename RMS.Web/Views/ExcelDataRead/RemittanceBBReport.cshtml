@@ -1,0 +1,93 @@
+﻿@using System.Globalization
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    ViewBag.Title = "Send To BFTN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+
+    
+@using (Html.BeginForm("RemittanceBBReport", "ExcelDataRead",FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="container">
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">
+                <h4>Generate Bangladesh Bank Report</h4>
+            </legend>
+            <fieldset class="scheduler-border">               
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="RoleId" class="col-md-2 control-label" tabindex="1">Payment Date :</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.DateofPayment, "{0: dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker ", tabindex = 2, placeholder = "dd MMM yyyy" })
+                            </div>
+
+                            @*<label for="RoleId" class="col-md-4 control-label">Payin Date Local</label>*@
+                            <div class="col-md-6">
+                                <input type="submit" value="Search" class="btn btn-primary" tabindex="2" />
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </fieldset>
+            <div class="row">
+                <div class="col-md-2 col-lg-2">@Html.Label("Total No of Record:")</div>
+                <div class="col-md-1 col-lg-1 text-left">@Html.Label(Model.RemittInfos.Count.ToString(CultureInfo.InvariantCulture))</div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" style="font-size:12px;">
+                    <thead style="background-color: mintcream">
+                        <tr>
+                            <td>@Html.Label("Issuing Branch")</td>
+                            <td>@Html.Label("Payment Date")</td>
+                            <td>@Html.Label("Exchange Refference")</td>
+                            <td>@Html.Label("Account No")</td>
+                            <td>@Html.Label("Account Name")</td>
+                            <td>@Html.Label("Responding Branch")</td>
+                            <td>@Html.Label("Currency")</td>
+                            <td>@Html.Label("Country")</td>
+                            <td>@Html.Label("USD Amount")</td>
+                            <td>@Html.Label("Exchange Rate")</td>
+                            <td>@Html.Label("BDT Amount")</td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RemittInfos)
+                        {
+                            <tr class="table-hover">
+                                <td>@Html.DisplayFor(modelItem => item.IssuingBranch)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DateofPayment, "{0:dd MMM yyyy}")</td>
+                                <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                                <td style="width:15%">@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.RespondingBranch)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CurrencyCode)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicantSendingCountry)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ExchangeRate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div style=" float:right">
+                @Html.HiddenFor(model => model.DateofPayment)
+                @Html.ActionLink("Generate Bangladesh Bank Report", "Export", "ExcelDataRead", new { DateofPayment = Model.DateofPayment }, new { @class = "btn btn-primary" })
+                @*@Html.ActionLink("Export BFTN File", "ExportEBFTN", "ExcelDataRead", new { @class = "btn btn-primary" })*@
+
+
+    @*<button id="verifyButton" style="height: 30PX;float:right" class="btn btn-primary">Export BFTN File</button>*@
+            </div>
+            <p style="color:red">@Model.Message</p>
+            </fieldset>
+</div>
+
+}
+

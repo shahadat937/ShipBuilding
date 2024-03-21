@@ -1,0 +1,96 @@
+﻿@model  RMS.Model.spProjectTaskStatus
+@{
+    Layout = null;
+}
+
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+</style>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">Basic Particular</div>
+        <div class="panel-body">
+            <div class="row">
+ 
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Total Contract Price:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.TotalContractPrice)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Foreign Principle:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.ForeignPrinciple)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Local Agent:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.LocalAgent)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Terms Of Payment:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.TermsOfPayment)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>*@
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Builder:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.Builder)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Delivery Date:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.DeliveryDate)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in Model.TenderSpecificationChilds)
+                {
+                         <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">@item.FieldName :</label>
+                        <div class="col-md-5">
+                          @item.FieldValue
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

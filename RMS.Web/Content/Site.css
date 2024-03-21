@@ -1,0 +1,331 @@
+﻿/*
+Theme Name: 
+*/
+
+
+body {
+    background: #f0f8ff;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    color: #000080;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    -ms-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
+}
+.panel-heading {
+    background:#000080 !important;
+    height:40px;
+    font-size: 18px;
+}
+h2 {
+    font-size: 32px;
+}
+p {
+    color: #666666;
+    letter-spacing: 1px;
+    line-height: 1.5em;
+}
+a {
+    text-decoration: none;
+    color: #444444;
+    -webkit-transition: all 02s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+a:hover {
+    text-decoration: none;
+}
+/*::-moz-selection {
+    background: #E0E0F5;
+    color: crimson;
+}
+::selection {
+    background: #E0E0F5;
+    color: #95957F;
+}*/
+
+
+/*
+ALL COMMON STYLE
+*/
+.header-section, .header-wrapper, .login-section, .user-wrapper, .sidenav-section  {
+    overflow: hidden;
+}
+.cus-mb-10 {
+    margin-bottom: 15px;
+}
+.custom-panel {
+    min-height: 525px;
+}
+.custom-panel-heading {
+    padding: 2px 15px;
+}
+.form-group {
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.custom-form-control {
+    width: 385px;
+}
+.custom-serach-btn {
+    background: #5bc0de;
+    color: #ffffff;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 4px;
+}
+
+.body-content {
+    background-color: #f0f8ff; 
+    max-height: 1000px; 
+    max-width: 1400px;
+}
+
+/*
+CUSTOM STYLE ***
+*/
+
+.main-body {
+    
+}
+.header-section {
+    border-bottom: 1px solid rgb(236, 235, 235);
+    background: #F5F5F5 url(images/bg2.jpg);
+}
+.fixed-header-section {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: #000080;
+    z-index: 999;
+}
+.header-wrapper {
+    overflow: hidden;
+}
+.header-wrapper .logo {
+    float: left;
+    margin-right: 5px;
+    height: auto;
+}
+.header-wrapper .logo-text {
+    margin: 0;
+    color: #ffffff;
+}
+.header-wrapper .logo-text a {
+    color: #f9f9f9;
+}
+.header-wrapper .user-wrapper {
+    overflow: hidden;
+}
+.header-wrapper .user-wrapper ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.header-wrapper .user-wrapper ul li {
+    float: left;
+}
+.header-wrapper .user-wrapper ul li a {
+    display: block;
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+.header-wrapper .user-wrapper ul li:last-child a {
+    padding-right: 0;
+}
+.header-wrapper .user-wrapper ul li a img {
+    height: auto;
+}
+.header-wrapper .user-wrapper ul li a:hover {
+    color: #800000;
+}
+/*
+NAVBAR
+*/
+.navbar {
+    min-height: 42px;
+    margin-bottom: 0;
+    background:  slateblue;
+    border-radius: 0;
+}
+.navbar-dashboard {
+    min-height: 42px;
+    margin-bottom: 0;
+    background:#32CD32;
+    border-radius: 0;
+}
+.navbar-inverse {
+    border-color: transparent;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, 
+.navbar-inverse .navbar-nav>.open>a:hover {
+    background-color: #9E5BBA ;
+}
+.custom-nav.navbar-nav > li > a {
+    color: #dfdfdf;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-right: 2px solid #fff ;
+}
+.custom-navbar-right.custom-nav.navbar-nav > li > a {
+    border-right: none;
+}
+.custom-nav ul {
+    background: white;
+}
+.custom-nav ul li a {
+    color: black;
+}
+.custom-nav ul li a:hover {
+    color: #f5f5f5;
+    background-color: #000080;
+}
+.custom-nav .custom-divider {
+    background-color: rgb(5, 68, 5) !important;
+}
+
+.progress{
+    height: auto;
+    margin-bottom: 0;
+    background-color: gainsboro;
+    -webkit-box-shadow: inset 0 0px 5px 0px rgba(0,0,0,.1);
+    box-shadow: inset 0 0px 5px 0px rgba(0,0,0,.1);
+}
+.progress-bar{
+    background:  orange;
+    -webkit-transition: width 1.5s ease-in-out;
+    transition: width 1.5s ease-in-out;
+}
+.custom-navbar-right.navbar-right {
+    margin-right: 3px;
+}
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #690505;
+}
+/*
+log in page style
+*/
+.login-wrapper {
+    height: 620px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: auto;
+}
+.login-inner-wrapper {
+    width: 400px;
+}
+.login-inner-wrapper, .registration-inner-wrapper {
+    background: #FFFFFF;
+    border: 1px solid #bce8f1;
+    border-radius: 2px;
+    box-shadow: 0 0 3px 0 #DDDDDD;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    padding: 20px;
+}
+.registration-inner-wrapper {
+    width: 100%;
+}
+.login-wrapper .remember-checkbox {
+    color: #282828;
+}
+.login-wrapper a.forgotpass {
+    text-decoration: none;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+.login-wrapper a.forgotpass:hover {
+    text-decoration: underline;
+}
+.login-wrapper .or-title {
+    overflow: hidden;
+    display: block;
+    padding: 5px 0;
+    color: #666;
+    font-weight: 600;
+    text-align: center;
+}
+.controls {
+    overflow: hidden;
+}
+.btn-login {
+    color: #FFFFFF;
+    font-weight: 600;
+    background: #009e4c;
+    border: 1px solid #82ba59;
+    text-transform: capitalize;
+}
+
+.btn-login-custom {
+    color: #FFFFFF;
+    font-weight: 600;
+    background: #8CC63E;
+    border: 1px solid #82ba59;
+    text-transform: capitalize;
+}
+
+.btn-registration {
+    color: #FFFFFF;
+    font-weight: 600;
+    background: #9E5BBA;
+    border: 1px solid #9E5BBA;
+    text-transform: capitalize;
+}
+.btn-login:hover {
+    color: #FFFFFF;
+    background: rgb(119, 181, 72);
+    border: 1px solid #79b64b;
+}
+
+/*
+footer section style
+*/
+.footer-section {
+    position: fixed;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    left: 0;
+    bottom: 0;
+    background: white;
+    color: black;
+    text-align: center;
+    border-top: 1px solid rgb(236, 235, 235);
+    z-index: 1000;
+    font-weight: bold;
+}
+.footer-section p {
+    margin: 0;
+    padding: 7px 0;
+    color: #003c20;
+    font-size: 0.9em;
+    text-align: center;
+}
+.footer-section a {
+    color: #015b31;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.footer-section a:hover {
+    color: #003A20;
+    text-decoration: underline;
+}
+
+.text-justify {
+    text-align: justify;
+}

@@ -1,0 +1,88 @@
+﻿@using RMS.Model
+
+@{
+    ViewBag.Title = "Chat";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<style type="text/css">
+    #Lobby {
+        height: 400px;
+        overflow: scroll;
+    }
+</style>
+<div class="col-lg-8">
+    <div class="panel panel-primary" style="margin-top: 50px;">
+        <div class=" panel-heading">
+            <h3 class="panel-title">Chat Dashboard </h3>
+        </div>
+        <div class="panel-body">
+            <div id="Lobby">
+                <br />
+                <div id="messeage">
+                    model.NumberOfRemittance
+                    ViewBag.count
+                </div>
+            </div>
+            <br />
+            <div style="float: left">
+                @using (Ajax.BeginForm("Chat", "ChatDashboard", new { msg = "" }, new AjaxOptions()
+                {
+                    HttpMethod = "Post",
+                    InsertionMode = InsertionMode.InsertAfter,
+                    UpdateTargetId = "messeage",
+                }))
+                {
+                    <div id="Speak" style="margin-top: 10%">
+                        <table border="0" width="40%">
+
+                            <tr>
+
+                                <td rowspan="2">
+                                    @Html.TextBox("msg")
+                                    @*<textarea id="txtSpeak" style="width: 100%" rows="3"></textarea>*@
+                                </td>
+                                <td style="left: 10px">
+                                    <button id="btnSpeak" class="btn btn-primary " value="Sent" style="font-weight: bold; width: 80px">
+                                        Sent
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <input type="button" id="btnClear" class="btn btn-primary" value="Clear Conversation" style="font-weight: bold; width: 180px">
+
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#btnClear').click(function () {
+
+        $.ajax({
+            url: "/ChatDashboard/ClearConversation/",
+            method: "POST",
+            dataType: "html",
+            success: function (data) {
+                $('#messeage').html("");
+            }
+        });
+    });
+</script>
+
+
+
+
+

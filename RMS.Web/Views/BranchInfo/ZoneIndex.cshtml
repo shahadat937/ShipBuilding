@@ -1,0 +1,111 @@
+﻿@model RMS.Web.Models.ViewModel.BranchInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="">
+    @using (Html.BeginForm("Index", "BranchInfo", FormMethod.Get))
+    {
+        <div class="col-sm-12 col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="text-align:center;">
+                    Zone Information
+                </div>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("SaveZoneInfo", "BranchInfo", FormMethod.Post))
+    {
+        <div class="col-md-4 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Zone List
+                </div>
+
+                <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:380px; width:auto;padding-top:0px">
+                    <br />
+                    <div class="tree">
+                        <ul>
+                            @foreach (var firstLevel in Model.ZoneInfos)
+                            {
+                                <li>
+                                    <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span style="font-size: 14px; color: #006400">
+                                        @Html.ActionLink(firstLevel.ZoneName + " [" + firstLevel.ZoneCode + "]", "ZoneIndex", "BranchInfo", new { ZoneInfoIdentity = firstLevel.ZoneInfoIdentity, ZoneCode = firstLevel.ZoneCode }, null)
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-8 col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Zone Information
+                </div>
+                <div class="panel-body" style="height:380px">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Code :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ZoneInfo.ZoneCode, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Zone Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="PhoneNumber" class="col-md-4 control-label">Type :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ZoneInfo.ZoneName, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = " Zone Name" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+                                    @if (Model.IsSucceed == 1)
+                                    {
+                                        <p style="color:green">@Model.Message</p>
+                                    }
+                                    else
+                                    {
+                                        <p style="color:red">@Model.Message</p>
+                                    }
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="submit" name="save" id="btnSave" value="Add New" class="btn btn-info" tabindex=7 />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" name="update" id="btnUpdate" value="Update" class="btn btn-info" tabindex=7 />
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.ActionLink("Delete", "DeleteZoneInfo", "BranchInfo", new { ZoneInfoIdentity = Model.ZoneInfo.ZoneInfoIdentity, ZoneCode = Model.ZoneInfo.ZoneCode }, new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-left" id="reportContainner">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

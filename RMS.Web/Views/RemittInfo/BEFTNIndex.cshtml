@@ -1,0 +1,223 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Send to BEFTN";
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("BEFTNIndex", "RemittInfo", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.IsSucceed)
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Upload Date:</label>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(x => x.RemittInfo.FileUploadDate, "{0: dd MMMM yyyy}", new { @class = "textBoxsize form-control datepicker", id = "uploadDate" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.FileUploadDate)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Batch No.:</label>
+                        <div class="col-md-3">
+                            @Html.TextBoxFor(x => x.RemittInfo.BatchNo, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Batch No.", id = "batchNo" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.BatchNo)
+                        </div>
+                        <div class="col-md-2" style="text-align:right">
+                            <input type="submit" id="btnSave" value="Find for Payment" class="btn btn-info" tabindex=13 />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*<h5>Export BEFTN File after Payment</h5>
+                 <div class="row">
+                     <div class="col-sm-6">
+                         <div class="form-group">
+                             <label class="col-md-4 control-label">Date of Payment:</label>
+                             <div class="col-md-6">
+                                 @Html.TextBoxFor(x => x.RemittInfo.DateofPayment, "{0: dd MMMM yyyy}", new { @class = "textBoxsize form-control datepicker", id = "dateOfPayment" })
+                                 @Html.ValidationMessageFor(x => x.RemittInfo.DateofPayment)
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-sm-6">
+                         <div class="col-md-12" style="text-align: left">
+                             @Html.ActionLink("Export BEFTN File", "ExportBEFTNFile", "RemittInfo", new { @class = "btn btn-info", id = "btnExportBEFTNFile" })
+                             <input type="submit" name="save" id="btnSave" value="Export BEFTN File" class="btn btn-info" tabindex=7 />
+
+                         </div>
+                     </div>
+                </div>*@
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-6 control-label">No. of Remittance:</label>
+                        <div class="col-md-6" style="color: blue; text-align: left">
+                            @Html.DisplayFor(x => x.NumberOfRemittance, new { @class = "form-control", tabindex = 5, @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-6">Due Amount(BDT):</label>
+                        <div class="col-md-6" style="color: blue; text-align: left">
+                            @Html.DisplayFor(x => x.TotalAmountInBDT, new { @class = "form-control", tabindex = 6, @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+        @using (Html.BeginForm("BEFTNVerify", "RemittInfo", FormMethod.Post, new { @class = "verifyTransaction" }))
+        {
+            @Html.HiddenFor(x => x.PaymentBy)
+            @Html.HiddenFor(x => x.RemittInfo.ExchangeHouse)
+            @Html.HiddenFor(x => x.RemittInfo.FileUploadDate)
+            @Html.HiddenFor(x => x.RemittInfo.BatchNo)
+            @Html.HiddenFor(x => x.TotalAmountInBDT)
+            @Html.HiddenFor(x => x.MinRestrictedBal)
+            @Html.HiddenFor(x => x.NRTKBalance)
+            <div class="">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="text-align:center"> Available for Make Payment</div>
+                    <div class="panel-body">
+                        <table class="table table-responsive table-bordered table-hover">
+                            <thead style="background-color: #32CD32;">
+                                <tr style="font-size:10px;">
+                                    <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                                    @*<th>Exchange Company</th>*@
+                                    <th>Originating Country</th>
+                                    <th>Currency</th>
+                                    <th>Reference Number</th>
+                                    <th>Remitter Name</th>
+                                    <th>Beneficiary Name</th>
+                                    <th>Transaction Date</th>
+                                    @*<th>Amount in FC</th>
+                            <th>Exchange Rate</th>*@
+                                    <th>Amount in BDT</th>
+                                    <th>Bank Name</th>
+                                    <th>District Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Routing No.</th>
+                                    <th>Payment Type</th>
+                                    <th>Account Number</th>
+                                    @*<th>Security Code</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RemittInfos)
+                                {
+                                    <tr style="font-size:10px;">
+                                        <td><input type="checkbox" value="@item.RemittInfoIdentity" name="NoOfTransaction" /></td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.BranchInfo2.BranchName)</td>*@
+                                        <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CommonCode.TypeValue)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ApplicantName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                                        <td style="text-align: center">@Html.DisplayFor(modelItem => item.TransDate)</td>
+                                        @*<td style="text-align: center">@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                <td style="text-align: center">@Html.DisplayFor(modelitem => item.ExchangeRate)</td>*@
+                                        <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                                        <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo.BranchName)</td>
+                                        <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo1.BranchName)</td>
+                                        <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                                        @if (item.BranchInfo3.OwnBranchCode.Trim() == "")
+                                        {
+                                            <td style="background-color:red">@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                                        }
+                                        @if (item.CommonCode2.CommonCodeID == 112395)
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color:white">@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                        }
+                                        <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.SecurityCode)</td>*@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div><button id="verifyButton" style="float:right" class="btn btn-info">Make Payment</button></div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+        $('#btnExportBEFTNFile').click(function () {
+            var dateOfPayment = $('#dateOfPayment').val();
+            //var batchNo = $('#batchNo').val(); // get the textbox value
+            if (dateOfPayment == '')
+                alert("Please select make payment date.");
+            var url = $(this).attr('href') + '&uploadDate=' + dateOfPayment + "&batchNo=" + batchNo; // build new url
+            location.href = url; // redirect
+            return false; // cancel default redirect
+        });
+    </script>
+}

@@ -1,0 +1,228 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoTempViewModel
+@*@model System.Data.DataTable*@
+@using System.Data;
+@using RMS.Web.Extensions
+
+@{
+    ViewBag.Title = "Index";
+
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+<link href="~/Content/Popup/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Content/Popup/jquery-1.7.1.min.js"></script>
+<script src="~/Content/Popup/jquery-ui-1.8.20.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".editDialog").on("click", function (e) {
+            var url = $(this).attr('href');
+            $("#dialog-edit").dialog({
+                title: 'Update Remittance Information',
+                autoOpen: false,
+                resizable: false,
+                height: 520,
+                width: 900,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+                open: function (event, ui) {
+                    $(this).load(url);
+
+                },
+                close: function (event, ui) {
+                    $(this).dialog('close');
+                }
+            });
+
+            $("#dialog-edit").dialog('open');
+            return false;
+        });
+
+        $(".confirmDialog").on("click", function (e) {
+            var url = $(this).attr('href');
+
+            $("#dialog-confirm").dialog({
+                title: 'Remove Remittance Info',
+                autoOpen: false,
+                resizable: false,
+                height: 170,
+                width: 350,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+                buttons: {
+                    "OK": function () {
+                        $(this).dialog("close");
+                        window.location = url;
+
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close");
+
+                    }
+                }
+            });
+            $("#dialog-confirm").dialog('open');
+            return false;
+        });
+       
+    });
+</script>
+<div class="table-responsive">
+    <div class="container">
+
+        <fieldset class="scheduler-border">
+    <legend class="scheduler-border">
+        <h4>Remittance File Information</h4>
+    </legend>
+@using (Html.BeginForm("Index", "ExcelDataRead", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+            <fieldset class="scheduler-border">
+                <div class="row">
+                    <div class="col-sm-5 col-lg-5">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-5 control-label">Exchange Company</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.ExchangeCompany, Model.ExchangesSelectdItemList, "--Select Exchange Company--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-3">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(x => x.IssuePaymentCode, Model.PaymentSelectdItemList, "--Select Payment Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                                @*@Html.DropDownListFor(x => x.IssuePaymentCode, Model.PaymentSelectdItemList, "--Select Payment Type--", new { @class = "Type dropdownsize form-control", tabindex = 3 })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="RoleId" class="col-md-6 control-label">Exchange Rate</label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.ExchangeRate, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Exchange Rate" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5 col-lg-5">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-4 control-label">Select Your File</label>
+                            <div class="col-md-8">
+                                <input type="file" id="dataFile" name="upload" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-lg-5">
+                        <div class="form-group">
+                            <label for="RoleId" class="col-md-4 control-label">Import Date</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.PayinDateLocal, "{0: dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker", tabindex = 1, autofocus = "autofocus", @Value = @DateTime.Now.ToShortDateString(),placeholder = "dd MMM yyyy" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-lg-2">
+                        <div class="form-group">
+                            @*<label for="RoleId" class="col-md-4 control-label">Payin Date Local</label>*@
+                            <div class="col-md-12">
+                                <input type="submit" value="Import File" class="btn btn-primary" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="UserName" style="color:red" class="col-md-12 control-label">@TempData["Message"]</label>
+
+                    </div>
+                </div>
+                </fieldset>
+                <table class="table table-bordered table-condensed">
+                    <thead style="background-color: #98BF21; text-align:center">
+                        <tr>
+                            <td>@Html.Label("Rem. No")</td>
+                            <td>@Html.Label("Exchange Company")</td>
+                            <td>@Html.Label("Paying Date")</td>
+                            <td>@Html.Label("Beneficiary Name")</td>
+                            <td>@Html.Label("Branch Code")</td>
+                            <td>@Html.Label("Bank Branch")</td>
+                            <td>@Html.Label("Bank Name")</td>
+                            <td>@Html.Label("Reference No")</td>
+                            <td>@Html.Label("Sending Country")</td>
+                            <td>@Html.Label("BDT Amount")</td>
+                            <td>@Html.Label("ERate")</td>
+                            <td>@Html.Label("USD Amount")</td>
+                            @*<td>@Html.Label("BBReport")</td>*@
+                            <th>@Html.Label("Edit")</th>
+                            <th>@Html.Label("Remove")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RemittInfoTemps)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.RemittanceNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ExchangeCompany)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PayinDateLocal)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BranchCode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BankBranch)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BeneficiaryBankName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Xpin)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OriginatingCountry)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ExchangeRate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PayoutAmount)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.BBReport)</td>*@ 
+                                    <td>@Html.ActionLink("Edit", "Edit", new { RemittanceNo = item.RemittanceNo, ExchangeCompany = item.ExchangeCompany, IssuePaymentCode =item.IssuePaymentCode }, new { @class = "editDialog" })</td>
+                                    <td>@Html.ActionLink("Remove", "Delete", new { RemittanceNo = item.RemittanceNo, ExchangeCompany = item.ExchangeCompany, IssuePaymentCode=item.IssuePaymentCode }, new { @class = "confirmDialog" })</td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            
+}
+@using (Html.BeginForm("Save", "ExcelDataRead", FormMethod.Post, new { @class = "UserForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.ExchangeCompany);
+    @Html.HiddenFor(model=>model.PayinDateLocal);
+    @Html.HiddenFor(model=>model.IssuePaymentCode);
+    <div class="row">
+      
+           
+                <div style="float: right">
+                    <input type="submit" style="float:right" id="btnSave" value="Save" class="btn btn-primary" tabindex=16 />
+                </div>
+            
+        
+    </div>            
+}
+            </fieldset>
+       
+
+            @*@Html.HiddenFor(model => model.PayinDateLocal)
+            @Html.ActionLink("Generate BEFTN File", "ExportEBFTN", "ExcelDataRead", new { @class = "btn btn-primary" })*@
+            @*@Html.ActionLink("Generate CSV File For Bangladesh Bank Report", "Export", "ExcelDataRead", new { PayinDateLocal = Model.PayinDateLocal }, new { @class = "btn btn-primary" })*@
+       
+    </div>
+</div> 
+<div id="dialog-confirm" style="display: none">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+        Are you sure to Remove ?
+    </p>
+</div>
+<div id="dialog-edit" style="display: none">
+</div>
+<script type="text/javascript">
+    @*$(".export").click(function() {
+        $.get("@Url.Action("Export", "ExcelDataRead")");
+    });*@
+
+</script>

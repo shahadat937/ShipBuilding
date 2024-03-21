@@ -1,0 +1,80 @@
+﻿@model  RMS.Web.Models.ViewModel.ProjectViewModel
+@{
+    Layout = null;
+}
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+
+    .hed {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    th {
+        color: white;
+    }
+</style>
+
+<div class="col-md-10 col-sm-10 col-xs-10">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">Department Opinion</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12 column">                   
+                 
+                    <table class="table table-bordered table-hover" id="tab_logic">
+                        @foreach (var group in Model.AllOpinion)
+                        {
+   
+                            <thead >
+                                <tr style="background-color: #571845" ><th colspan="3" class="text-center">@group.Key Opinion</th></tr>
+                                @*<tr>
+                                    <th class="text-center">
+                                        Department Name
+                                    </th>
+                                    <th class="text-center">
+                                        Remarks
+                                    </th>
+                                    <th class="text-center">
+                                        Opinion Url
+                                    </th>
+                                </tr>*@
+                            </thead>
+                            <tbody>
+                                @foreach (var item in group.Values)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.DeptName
+                                        </td>
+                                        <td>
+                                            @item.Remarks
+                                        </td>
+                                        @if (item.OpinionUrl != null)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("Show", "Demand", new { url = item.OpinionUrl })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,72 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.ContractFileViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Contract File Information
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td>@Html.ActionLink("Add New", "Create", "Contract Files", new { @class = "btn btn-info" })</td>
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "ContractFiles", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearchKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <h4 class="h4 text-info">@Model.Message</h4>
+            </div>
+            <div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.ContractFiles, rowCount: Model.ContractFiles.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new { Id = "grid" },
+                        tableStyle: "webgrid-table webgrid",
+                        headerStyle: "webgrid-header",
+                        footerStyle: "webgrid-footer",
+                        alternatingRowStyle: "webgrid-alternating-row",
+                        selectedRowStyle: "webgrid-selected-row",
+                        rowStyle: "webgrid-row-style",
+                        firstText: "First",
+                        lastText: "Last",
+                        nextText: "Next",
+                        mode: WebGridPagerModes.All,
+                        previousText: "Previous",
+                        columns: grid.Columns(
+                            grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                grid.Column("DemandName", header: "File No"),
+                                grid.Column("FileName", header: "File Name"),
+                                grid.Column("FileUrl", header: "File Url"),
+                                grid.Column("IssueDate", header: "Issue Date"),
+                                grid.Column("Remarks", header: "Remarks"),
+                                grid.Column("Approved", header: "Approved"),
+                                grid.Column("Edit", canSort: false, format: @<text> @Html.ActionLink("Edit", "Edit", "ContractFiles", new { Id = item.ContractFileId }, new { @class = "btn btn-info" })</text>),
+                    grid.Column("Delete", canSort: false, format: @<text> @Html.ActionLink("Delete", "Delete", "ContractFiles", new { Id = item.ContractFileId }, new { @class = "btn btn-primary" })</text>)
+                    @*grid.Column("    ", canSort: false, format: @<text> @Html.ActionLink("Update Content", "Index", "ContractFields", new { Id = item.ContractFileId }, new { @class = "btn btn-primary" })</text>)*@
+))
+                    ;
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

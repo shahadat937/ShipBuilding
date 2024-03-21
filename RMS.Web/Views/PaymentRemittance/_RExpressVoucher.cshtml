@@ -1,0 +1,309 @@
+﻿@using iTextSharp.text.pdf.qrcode
+@model RMS.Model.RemittanceInfo
+@{
+    Layout = null;
+
+}
+<link href="~/Content/App/cssForExpressVoutherReport.css" rel="stylesheet" />
+<div><input id="Button1" onclick="return Button1_onclick(); " type="button" value="Print"></div>
+
+<div class="container">
+    <table class="table firstTable">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable" style="font-size: small">
+                        <tbody>
+                            <tr>
+                                <th colspan="2"><b><center><font size="2">@Model.PaymentBankName</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2"><b><center><font size="2">@Model.PaymentBranchName Branch,@Model.PaymentDistrictName</font></center></b></th>
+                            </tr>
+                            <tr style="text-align: right">
+                                <th colspan="2"><b style="text-align: right;font-weight: bold"><font size="2">DUPLICATE</font></b></th>
+                            </tr>
+                            <tr style="font-size: x-small">
+                                <td><b>From: </b>@Model.IssuingBranchName,@Model.IssuingSubBranchName [@Model.IssuingSubBranch]</td>
+                            </tr>
+                            <tr style="font-size: x-small">
+                                <td><b>To: </b>@Model.PaymentBranchName Branch [@Model.NativeBranchCode]</td>
+                                <td align="right">Office Copy</td>
+                            </tr>
+                            <tr style="font-size: x-small">
+                                <td></td>
+                                <td class="rowRight">Date:@Model.LastUpdate.ToString("dd MMM yyyy")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Remitter </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Remitt#</b></td>
+                                <td><b>@Model.RemittanceNo</b></td>
+                            </tr>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.ApplicantName</td>
+                            </tr>
+                            <tr>
+                                <td>Phone No:</td>
+                                <td class="rowleft">@Model.ApplicantCellphone</td>
+                            </tr>
+                            <tr>
+                                <td>Exchange:</td>
+                                <td class="rowleft">@Model.IssuingSubBranchName</td>
+                            </tr>
+                            <tr>
+                                <td>Country:</td>
+                                <td class="rowleft">@Model.IssuingCountryName</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td class="rowleft">@Model.ApplicantEmail</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Beneficiary </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.BeneficiaryName</td>
+                            </tr>
+                            <tr>
+                                <td>Branch:</td>
+                                <td class="rowleft">@Model.PaymentBranchName Branch [@Model.NativeBranchCode]</td>
+                            </tr>
+                            <tr>
+                                <td><b>Security Code:</b></td>
+                                <td class="rowleft" style="font-weight:bold">@Model.SecurityCode</td>
+                            </tr>
+                            <tr>
+                                <td>ID Type:</td>
+                                <td class="rowleft">@Model.PaymentPhotoIdType</td>
+                            </tr>
+                            <tr>
+                                <td>ID No:</td>
+                                <td class="rowleft">@Model.PaymentPhotoIdNumber</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile No.:</td>
+                                <td class="rowleft">@Model.BeneficiaryCellPhone</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                            <tr style="text-align: right">
+                                <th colspan="2"><b style="text-align: right"><font size="2">Cash Amount @Model.FAmount.00 BDT</font></></b> </th>
+
+                            </tr>
+                            <tr style="text-align:left"><th colspan="2"><b style="text-align: left"><font size="2">In words: @Model.InWorld only</font></></b> </th></tr>
+                            <tr>
+                                <td colspan="2">
+                                    Declaration: I,receiver confirm the accuracy of details & amount are correct. Source of Fund is legal & the remittance is not for any "Terrorist Financing or Money laundering".
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold">@Model.PaymentUserID</td>
+                                <td class="rowRight"></td>
+                            </tr>
+                            <tr>
+                                <td>__________________</td>
+                                <td>__________________</td>
+                                <td class="rowRight">___________________</td>
+                            </tr>
+                            <tr>
+                                <td>Beneficiary Signature</td>
+                                <td>Paid by Officer Signature</td>
+                                <td>Manager/Officer Signature</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:right;font-size:xx-small"><i>Powered by Infinity Technology International Limited</i></td>
+            </tr>
+            <tr>
+                <td class="SeperateCustomerCopy" colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                            <tr>
+                                <th colspan="2"><b><center><font size="2">@Model.PaymentBankName</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2"><b><center><font size="2">@Model.PaymentBranchName Branch,@Model.PaymentDistrictName</font></center></b></th>
+                            </tr>
+                            <tr style="text-align: right">
+                                <th colspan="2"><b style="text-align: right;font-weight: bold"><font size="2">DUPLICATE</font></b></th>
+                            </tr>
+                            <tr>
+                                <td><b>From: </b>@Model.IssuingBranchName,@Model.IssuingSubBranchName [@Model.IssuingSubBranch]</td>
+                            </tr>
+                            <tr>
+                                <td><b>To: </b>@Model.PaymentBranchName Branch [@Model.NativeBranchCode]</td>
+                                <td align="right">Customer Copy</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="rowRight">Date:@Model.LastUpdate.ToString("dd MMM yyyy")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Remitter </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Remitt#</b></td>
+                                <td><b>@Model.RemittanceNo</b></td>
+                            </tr>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.ApplicantName</td>
+                            </tr>
+                            <tr>
+                                <td>Phone No:</td>
+                                <td class="rowleft">@Model.ApplicantCellphone</td>
+                            </tr>
+                            <tr>
+                                <td>Exchange:</td>
+                                <td class="rowleft">@Model.IssuingSubBranchName</td>
+                            </tr>
+                            <tr>
+                                <td>Country:</td>
+                                <td class="rowleft">@Model.IssuingCountryName</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td class="rowleft">@Model.ApplicantEmail</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Beneficiary </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.BeneficiaryName</td>
+                            </tr>
+                            <tr>
+                                <td>Branch:</td>
+                                <td class="rowleft">@Model.PaymentBranchName Branch [@Model.NativeBranchCode]</td>
+                            </tr>
+                            <tr>
+                                <td><b>Security Code:</b></td>
+                                <td class="rowleft" style="font-weight:bold">@Model.SecurityCode</td>
+                            </tr>
+                            <tr>
+                                <td>ID Type:</td>
+                                <td class="rowleft">@Model.PaymentPhotoIdType</td>
+                            </tr>
+                            <tr>
+                                <td>ID No.:</td>
+                                <td class="rowleft">@Model.PaymentPhotoIdNumber</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile No.:</td>
+                                <td class="rowleft">@Model.BeneficiaryCellPhone</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                            <tr style="text-align: right">
+                                <th colspan="2"><b style="text-align: right"><font size="2">Cash Amount @Model.FAmount.00 BDT</font></></b> </th>
+                            <tr style="text-align:left"><th colspan="2"><b style="text-align: left"><font size="2">In words: @Model.InWorld only</font></></b> </th></tr>
+                            <tr>
+                                <td colspan="2">
+                                    Declaration: I,receiver confirm the accuracy of details & amount are correct. Source of Fund is legal & the remittance is not for any "Terrorist Financing or Money laundering".
+                                </td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold">@Model.PaymentUserID</td>
+                                <td class="rowRight"></td>
+                            </tr>
+                            <tr>
+                                <td>__________________</td>
+                                <td>__________________</td>
+                                <td class="rowRight">___________________</td>
+                            </tr>
+                            <tr>
+                                <td>Beneficiary Signature</td>
+                                <td>Paid by Officer Signature</td>
+                                <td>Manager/Officer Signature</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:right;font-size:xx-small"><i>Powered by Infinity Technology International Limited</i></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+
+    function Button1_onclick() {
+
+        document.getElementById('Button1').style.visibility = 'hidden';
+        window.print();
+
+    }
+</script>
+
+
+
+
+
+

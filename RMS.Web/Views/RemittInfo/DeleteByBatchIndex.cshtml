@@ -1,0 +1,210 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Delete Remittance Transaction";
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("DeleteByBatchIndex", "RemittInfo", FormMethod.Post))
+        {
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" style="margin-top:5px;">Exchange Company:</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfo.ExchangeHouse, Model.ExchangeHouseSelectListItems, "-Select Exchange Company", new { @class = "form-control", id = "exchangeHouse", tabindex = 1 })
+                            @Html.HiddenFor(x => x.RemittInfo.ExchangeHouse)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Upload Date:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.FileUploadDate, "{0:dd MMMM yyyy}", new { @class = "form-control datepicker", tabindex = 2, placeholder = "File Upload Date", id = "uploadDate" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Batch No.:</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.RemittInfo.BatchNo, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Batch No.", id = "batchNo" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.BatchNo)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group" style="text-align:right">
+                        <input type="submit" id="btnSave" value="Find" class="btn btn-info" tabindex=13 />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label("Number of Transaction:")
+                </div>
+                <div class="col-sm-2">
+                    @Model.RemittInfos.Count
+                </div>
+                <div class="col-sm-8">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+        @using (Html.BeginForm("DeleteByBatch", "RemittInfo", FormMethod.Post, new { @class = "verifyTransaction" }))
+        {
+            @Html.HiddenFor(x => x.PaymentBy)
+            @Html.HiddenFor(x => x.RemittInfo.ExchangeHouse)
+            @Html.HiddenFor(x => x.RemittInfo.FileUploadDate)
+            @Html.HiddenFor(x => x.RemittInfo.BatchNo)
+            @Html.HiddenFor(x => x.TotalAmountInBDT)
+            @Html.HiddenFor(x => x.MinRestrictedBal)
+            @Html.HiddenFor(x => x.NRTKBalance)
+            <div class="">
+                <table class="table table-responsive table-bordered table-hover">
+                    <thead style="background-color: #32CD32;">
+                        <tr style="font-size:10px;">
+                            <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                            @*<th>Exchange Company</th>*@
+                            <th>Originating Country</th>
+                            <th>Currency</th>
+                            <th>Reference Number</th>
+                            <th>Remitter Name</th>
+                            <th>Beneficiary Name</th>
+                            <th>Transaction Date</th>
+                            @*<th>Amount in FC</th>
+                                <th>Exchange Rate</th>*@
+                            <th>Amount in BDT</th>
+                            <th>Bank Name</th>
+                            <th>District Name</th>
+                            <th>Branch Name</th>
+                            <th>Accuracy Percentage</th>
+                            <th>Routing No.</th>
+                            <th>Sending Branch Info</th>
+                            <th>Payment Type</th>
+                            <th>Account Number</th>
+                            @*<th>Security Code</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.RemittInfos)
+                        {
+                            <tr style="font-size:10px;">
+                                <td><input type="checkbox" value="@item.RemittInfoIdentity" name="NoOfTransaction" id="idCheckBox" /></td>
+                                @*<td>@Html.DisplayFor(modelItem => item.BranchInfo2.BranchName)</td>*@
+                                <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CommonCode.TypeValue)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicantName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                                <td style="text-align: center">@Html.DisplayFor(modelItem => item.TransDate)</td>
+                                @*<td style="text-align: center">@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                    <td style="text-align: center">@Html.DisplayFor(modelitem => item.ExchangeRate)</td>*@
+                                <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo.BranchName)</td>
+                                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo1.BranchName)</td>
+                                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                                @if (item.BranchAccuracyPercentage >= 100)
+                                {
+                                    if (item.IsEdit == true)
+                                    {
+                                        <td style="text-align: center; background-color: blue;">@Html.DisplayFor(x => item.BranchAccuracyPercentage)</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: center; background-color: #32CD32;">@Html.DisplayFor(x => item.BranchAccuracyPercentage)</td>
+
+                                    }
+                                }
+                                else
+                                {
+                                    <td style="text-align: center;background-color:red">@Html.DisplayFor(x => item.BranchAccuracyPercentage)</td>
+
+                                }
+                                @if (item.BranchInfo3.OwnBranchCode.Trim() == "")
+                                {
+                                    <td style="background-color:red">@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                                }
+                                else
+                                {
+                                    <td>@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                                }
+                                <td style="text-align: left;background-color:burlywood">@Html.DisplayFor(modelItem => item.BankBrInfo)</td>
+                                @if (item.CommonCode2.CommonCodeID == 112395)
+                                {
+                                    <td>@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                }
+                                else
+                                {
+                                    <td style="background-color:white">@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                }
+                                <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                                @*<td>@Html.DisplayFor(modelItem => item.SecurityCode)</td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div><button id="verifyButton" style="float:right" class="btn btn-info">Delete Checked Remittance</button></div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+    </script>
+}

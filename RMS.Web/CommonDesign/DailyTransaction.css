@@ -1,0 +1,63 @@
+﻿fieldset.scheduler-border {
+    border: 2px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 1px;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width:auto;
+
+}
+.btn-primary {
+   
+     width: 85px;
+     height: 26px;
+    padding-top: 3px;
+    font-weight: bold;
+    margin-top: 3px;
+    vertical-align: middle;
+}
+.btn-success{
+    width: 93px;
+     height: 26px;
+    padding-top: 3px;
+    font-weight: bold;
+    vertical-align: middle;
+    background-color:wheat;
+}
+.btn-warning{
+   
+     width: 85px;
+     height: 26px;
+    padding-top: 3px;
+    font-weight: bold;
+    margin-top: 3px;
+    vertical-align: middle;  
+}
+.btn-info{
+     width: 125px;
+     height: 26px;
+    padding-top: 3px;
+    font-weight: bold;
+    vertical-align: middle;  
+}
+
+.row{
+  margin-top: 2px;
+  margin-bottom: 2px
+}
+/*.dropdownsize{
+    width: 160px;
+}
+.textBoxsize {
+    width: 160px;
+}*/
+
+.rowHeight{
+    height: 26px;
+}

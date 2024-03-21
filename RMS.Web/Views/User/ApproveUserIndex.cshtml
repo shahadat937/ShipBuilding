@@ -1,0 +1,91 @@
+﻿@using System.Activities.Statements
+@using RMS.Utility
+@model RMS.Web.Models.ViewModel.UserViewModel
+@{
+    ViewBag.Title = "User information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .webgrid-header th {
+        color: white;
+    }
+
+        .webgrid-header th a {
+            color: white;
+        }
+</style>
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center">
+            User Information
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td>
+                        @using (Html.BeginForm("SearchByKeyforStatus", "User", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearchKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "User ID No or Branch Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+            <div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.UserBankInfos, rowCount: Model.UserBankInfos.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new { UserId = "grid" },
+                tableStyle: "webgrid-table webgrid",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                alternatingRowStyle: "webgrid-alternating-row",
+                selectedRowStyle: "webgrid-selected-row",
+                rowStyle: "webgrid-row-style",
+                firstText: "First",
+                lastText: "Last",
+                nextText: "Next",
+                mode: WebGridPagerModes.All,
+                previousText: "Previous",
+                columns: grid.Columns(
+                                             grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                             grid.Column("BankName", header: "Organization"),
+                                                      grid.Column("DistrictName", header: "Department"),
+                                             //grid.Column("BranchName", header: "Branch Name"),
+                                    grid.Column("RoleName", header: "Role Name"),
+                                    grid.Column("UserName", header: "User ID"),
+                                    grid.Column("PhoneNumber", header: "Mobile Number", canSort: false),
+                                             grid.Column("UserEmail", header: "Email Address", canSort: false),
+                                             grid.Column("ApprovedUser", header: "Status"),
+
+                                    grid.Column("Active", canSort: false, format: @<text> @Html.ActionLink("Active", "ActiveUser", "User", new { UserId = item.UserId }, new { @class = "btn btn-info" })</text>),
+                                    grid.Column("Inactive", canSort: false, format: @<text> @Html.ActionLink("Inactive", "InactiveUser", "User", new { UserId = item.UserId }, new { @class = "btn btn-info" })</text>)));
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

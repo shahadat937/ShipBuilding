@@ -1,0 +1,35 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="font-family:arial">
+
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Payment Installment  Add For @*@Html.DisplayFor(x => x.ProjectInstallment.ProjectName)*@
+            </div>
+            <div class="col-sm-12 col-lg-12">
+                @if (@Model.Message != null)
+                {
+                    <div style="color:green">@Model.Message</div>
+                }
+                else
+                {
+                    <div style="color:red">@Model.Message</div>
+                }
+
+            </div>
+
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "ProjectInstallments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.FinancialInstallment.FinancialInstallmentId)
+                    @Html.HiddenFor(x => x.Demand.DemandId)
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,305 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.CommiteeViewModel
+@{
+    ViewBag.Title = "Commitee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    select[readonly] {
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Committe Information
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="col-md-5">
+                    <div class="panel-body">
+                        <div style="border: 1px solid #e6e6fa; margin-top: -10px">
+                            @using (Html.BeginForm("CommitteCreate", "Commitee", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(x => x.CommitteInfo.FileNo)
+                                @Html.HiddenFor(x =>x.FlowSerial)
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-md-4 col-lg-4">Add Committe Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(x => x.CommitteNameList.CommitteName, null, new { id = "txtPhoneNo", @class = "txtMember form-control", required = "required" })
+                                                @Html.ValidationMessageFor(x => x.CommitteNameList.CommitteName)
+                                            </div>
+                                            <div class="col-md-1">
+                                                @*@Html.ActionLink("Back To List", "Index", "Member", null, new { @class = "btn btn-info" })*@
+                                                <input style="margin-left: -17px" type="submit" id="btnFlowAdd" class="btn btn-info pull-right" value="Add" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                @if (@Model.SuccessMessage != null)
+                                {
+                                    <div style="color: green">@Model.SuccessMessage</div>
+                                }
+                                else
+                                {
+                                    <div style="color: red">@Model.FailedMessage</div>
+                                }
+
+                            </div>
+                        </div>
+
+                        <br />
+                        <div style="border: 1px solid #e6e6fa">
+                            <h5 style="text-align: center">Committe Setup</h5> 
+                            @using (Html.BeginForm("Create", "Commitee", FormMethod.Post, new { id = "formCreateCommitee", }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(x => x.CommitteInfo.CommiteeId)
+                                @Html.HiddenFor(x =>x.FlowSerial, new { id = "flowSerial", })
+                                     <div class="row" style="margin-top: 10px">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">File No &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.DropDownListFor(x => x.CommitteInfo.FileNo, Model.ProjectSelectListItems, "--Select--", new { @class = "form-control fileNo", required = "required",@readonly =true })
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.FileNo)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">Committe Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.DropDownListFor(x => x.CommitteInfo.CommitteName, Model.CommitteSelectListItems, "--Select--", new { id = "flowId", @class = "form-control committeName", required = "required"})
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.CommitteName)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">Department Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.DropDownListFor(x => x.CommitteInfo.DepartmentId, Model.DeptSelectListItems, "--Select--", new { id = "ddlProject", @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.DepartmentId)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">Member Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.HiddenFor(x => x.CommitteInfo.MemberId, new { id = "subHiddenId", @class = "subHiddenClass" })
+                                                @Html.TextBoxFor(x => x.MemberName, null, new { id = "txtmem", @class = "txtMember form-control", required = "required", @onkeyup = "fileAutocomplite(this)" })
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.MemberId)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">Work Place &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(x => x.CommitteInfo.WorkPlace, null, new { id = "txtPhoneNo", @class = "txtMember form-control", required = "required" })
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.WorkPlace)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">Phone No &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.TextBoxFor(x => x.CommitteInfo.PhoneNo, null, new { id = "txtPhoneNo", @class = "txtMember form-control", required = "required" })
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.PhoneNo)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>*@
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-md-5 col-lg-5">Committe Designation &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                            <div class="col-md-7">
+                                                @Html.DropDownListFor(x => x.CommitteInfo.CommitteDesignation, Model.CommitteDesignationListItems, "--Select--", new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(x => x.CommitteInfo.CommitteDesignation)
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input type="submit" id="memberCreatebtn" class="btn btn-primary pull-right" value="Setup Flow" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    @if (Model.AllCommitteListed.Count > 0)
+                    {
+                        @Html.Partial("~/Views/Commitee/_AllListedMembeInformation.cshtml",Model)
+                    }
+                    @Html.ActionLink("Back Flow Info", "TreeMenuIndex", "FlowSetup", null, new { @class = "btn btn-info pull-right" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="col-md-2">
+    <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="SuccessMessage" style="color:green">Commitee Created Successfully!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="FailedMessage" style="color:red">Commitee Creation Failed!</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myMemberModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="FailedMessage" style="color:red">Please Member Name Select Form List.</h4>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+    function fileAutocomplite(obj) {
+        var textBox = $(obj);
+        textBox.autocomplete({
+            source: function (request, response) {
+                var option = {
+                    url: '/Commitee/MemberNameGet/',
+                    type: "GET",
+                    datatype: "html",
+                    data: { membername: request.term },
+                };
+                $.ajax(option)
+                .done(function (data) {
+                    $('#subHiddenId').val('');
+                    response($.map(data, function (customer) {
+                        return {
+                            label: customer.MemberName,
+                                value: customer.MemberId
+                        };
+                        //return { label: customer.BookIdentity + "_" + customer.BookName, value: customer.BookName, CustomerId: customer.BookIdentity };
+                    }));
+                });
+            },
+            minLength: 0,
+            select: function (event, ui) {
+                $('#txtmem').val(ui.item.label);
+                $('#subHiddenId').val(ui.item.value);
+                return false;
+            }
+        });
+    }
+
+
+    $('#memberCreatebtn').unbind('click').bind('click', function () {
+        var form = $("#formCreateCommiteee");
+        if ($('#subHiddenId').val() < 1) {
+            $("#myMemberModel").modal('show');
+            return false;
+        } 
+        if (jQuery.validator && jQuery.validator.unobtrusive) {
+            form.validate();
+            if (!form.valid()) {
+                return false;
+            } else {
+                var data = form.serialize();
+                var button = $('#memberCreatebtn');
+                var target = $(button.attr('data-target'));
+                $.ajax(
+                    {
+                        url: "/Commitee/Create",
+                        method: "post",
+                        data: data,
+                        dataType: "html",
+                        success: function (data) {
+                            alert("Hi");
+                            $("#mySuccessModel").modal('show');
+                            //$(".txtMember").val('');
+                        },
+                        error: function (err) {
+                            $("#myFailedModel").modal('show');
+                        }
+                    });
+            }
+        }
+
+    });
+    $(".committeName").change(function () {
+        var committeId = $(".committeName").val(); 
+        var fileNo = $(".fileNo").val();
+        var flowSerial = $("#flowSerial").val();
+        
+        var url = '/Commitee/Index?committeId=' + committeId + "&fileId=" + fileNo + "&flowserial=" + flowSerial; // build new urls
+        location.href = url; // redirect
+
+        return false; // cancel default redirect
+
+    });
+
+    </script>
+}
+
+
+
+
+
+
+
+
+

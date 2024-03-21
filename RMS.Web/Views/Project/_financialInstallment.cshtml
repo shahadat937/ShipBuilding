@@ -1,0 +1,86 @@
+﻿@model  RMS.Web.Models.ViewModel.ProjectViewModel
+@{
+    Layout = null;
+}
+
+
+
+<br />
+
+
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+    <div class="panel panel-info">
+        <div class="panel-heading" style="background-color:#8CC63E;text-align:center;font-weight: bold;color:white">
+            Terms Of Payment
+        </div>
+        <div class="panel-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                        <table class="table table-bordered table-striped" style="width: 80%">
+                            @{ int parentNo = 0;
+                             int childNo = 0;}
+                            @foreach (var parent in Model.FinancialInstallments)
+                            {
+                                <thead style="text-align: center; font-weight: bold">
+                                    <tr>
+                                        <td colspan="10">@(parentNo += 1).  @parent.FinancialYear.Value</td>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="text-align: center">
+                                    <tr>
+                                        <td>Sl. No</td>
+                                        <td>Installment</td>
+                                        <td>%</td>
+                                        <td>Amount</td>
+                                        <td>Terms & Condition</td>
+                                        <td>Paid</td>
+                                        <td>Paid Date</td>
+                                    </tr>
+                                    @foreach (var child in parent.ProjectInstallments)
+                                    {
+                                        <tr>
+
+                                            <td>@(childNo += 1)</td>
+                                            <td>@parent.Demand.FileNo</td>
+                                            <td>@child.Percent</td>
+                                            <td>@child.Amount</td>
+                                            <td>@child.Term</td>
+                                            @if (child.Status == 10045)
+                                            {
+                                                <td>@Html.Label("paid")</td>
+                                            <td>@Convert.ToDateTime(child.CreatedDate).ToString("dd MMM yyyy")</td>
+                                                
+                                            }
+                                            else
+                                            {
+                                            <td>@Html.Label("Unpaid")</td>
+                                                
+                                            }
+
+                                        </tr>
+                                    }
+                                </tbody>
+
+
+                            }
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</div>
+
+
+
+
+
+     
+
+
+

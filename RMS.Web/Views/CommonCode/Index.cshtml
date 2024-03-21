@@ -1,0 +1,172 @@
+﻿@model RMS.Web.Models.ViewModel.CommonCodeViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/App/treeViewNode.css" rel="stylesheet" />
+<style type="text/css">
+    .control-label {
+        text-align:right;
+        margin-top:10px;
+    }
+</style>
+<br />
+
+<div class="container">
+@using (Html.BeginForm("Index", "CommonCode", FormMethod.Get))
+{
+    <div class="col-sm-12 col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="height:50px">
+
+                <div class="col-sm-2 col-lg-1"><p style="font-weight:bold;margin-top:5px;color: white">Type:</p></div>
+                <div class="col-sm-8 col-lg-3">
+                    @Html.DropDownListFor(x => x.Type, new SelectList(Model.CommonCode.GroupBy(x => x.Type).Select(group => group.First()), "Type", "Type"), "--Select Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                </div>
+                <div class="col-sm-2 col-lg-8">
+                    <button id="findButton" class="btn btn-success" style=" font-weight:bold">Go</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    
+@using (Html.BeginForm("Save", "CommonCode", FormMethod.Post, new { @class = "UserForm" }))
+        {
+    <div class="col-md-4 col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Common Code List</h3>
+            </div>
+           
+            <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:380px; width:337px">
+                <br />
+                <div class="tree">
+                    <ul>
+                        @foreach (var firstLevel in Model.CommonCodeTreeViews)
+                        {
+                            <li>
+                                <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span style="font-size: 14px; color: #006400">
+                                    @Html.ActionLink(firstLevel.TypeValue + "[" + firstLevel.Code + "]", "Index", "CommonCode", new { Code = firstLevel.CommonCodeID }, null)
+                                    @*<a>@firstLevel.Type</a>*@
+                                    @*@Html.ActionLink(firstLevel.TypeValue + "[" + firstLevel.Code + "]", "Index", "CommonCode", new { Code = firstLevel.Code }, null)*@
+                                </span>
+                                @*<ul>
+                                @foreach (var secondLevel in firstLevel.CommonCodeTrees)
+                                {
+                                    <li>
+                                        <a></a><span>&nbsp;&nbsp;</span>
+                                        <span style="font-size: 14px; color: #800000">
+                                            @Html.ActionLink(secondLevel.TypeValue + "[" + secondLevel.Code + "]", "Index", "CommonCode", new { Code = secondLevel.Code }, null)
+                                        </span>
+
+                                    </li>
+                                }
+                            </ul>*@
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-8 col-lg-8">
+        @*@using (Html.BeginForm("Save", "CommonCode", FormMethod.Post, new { @class = "UserForm" }))
+        {*@
+            @*@Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)*@
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Common Code Information </h3>
+                </div>
+                <div class="panel-body" style="height:380px">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Code :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.Code, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="PhoneNumber" class="col-md-4 control-label">Type :</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.Type, new SelectList(Model.CommonCode.GroupBy(x => x.Type).Select(group => group.First()), "Type", "Type"), "--Select--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Type Value :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.TypeValue, new { @class = "textBoxsize form-control", tabindex = 3, autofocus = "autofocus", placeholder = "Type Value" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="PhoneNumber" class="col-md-4 control-label">Display Code :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.DisplayCode, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Display Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="PhoneNumber" class="col-md-4 control-label">Status :</label>
+                                <div class="col-md-8">
+                                    @Html.CheckBox("Status", new { @class = "form-control", tabindex = 5 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <p style="color:green">@TempData["message"]</p>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="submit" id="btnSave" value="Save" class="btn btn-primary" tabindex=7 />
+                                </div>
+                                <div class="col-md-5">
+                                    @Html.ActionLink("Delete", "Delete", "CommonCode", new { Code = Model.Code, Type=Model.Type }, new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-left" id="reportContainner">
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+}
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/APP/treeView.js"></script>
+    <script type="text/javascript">
+        $('.showReportParameterFor').click(function () {
+            var url = $(this).attr('action');
+            $('#reportContainner').load(url);
+        });
+    </script>
+}

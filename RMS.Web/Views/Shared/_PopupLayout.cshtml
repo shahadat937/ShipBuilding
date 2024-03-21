@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<style type="text/css">
+    .commonbackground {
+        background: rgba(242,10000,1000,100);
+            }
+
+   
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Navy</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="commonbackground">
+    <div class="navbar navbar-inverse navbar-fixed-top success commonMarquee">
+        <div class="container">
+            <div class="success">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+
+                @{Html.RenderAction("Menu", "Home");}
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/AppScripts")
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @*<script src="~/Scripts/APP/datepicker.js"></script>*@
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+
+
+
+
+

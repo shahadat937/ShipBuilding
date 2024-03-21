@@ -1,0 +1,54 @@
+﻿
+@model  RMS.Model.spProjectTaskStatus
+@{
+    Layout = null;
+}
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+</style>
+<div class="col-md-11 col-sm-11 col-xs-11">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">AIP</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">AIP Status:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.AfdLettetStatus)
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">PDF :</label>
+                        @if (Model.AfdLettetStatus == "Yes")
+                        {
+                            <div class="col-md-5">
+                                <a href="@Url.Action("Show", "Demand", new { url = Model.AfdLetter })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-5">
+                            </div>
+                        }
+
+                        <div class="col-md-4">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

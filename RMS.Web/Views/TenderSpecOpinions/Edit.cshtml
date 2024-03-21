@@ -1,0 +1,169 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.TenderSpecOpinionViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Tender Specification Opinion Information
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Edit", "TenderSpecOpinions", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "formCreateTenderSpecOpinion" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TenderSpecOpinion.TenderSpecOpinionId);
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">FileNo &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.TenderSpecOpinion.FileNo, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecOpinion.FileNo)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Tender Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.TenderSpecOpinion.TenderName, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecOpinion.TenderName)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Tender Url &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    <input type="file" id="file" name="upload" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecOpinion.TenderUrl)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Issue Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.TenderSpecOpinion.IssueDate, "{0:dd MMMM yyyy}", new { id = "txtStartDate", @class = "datepicker form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.TenderSpecOpinion.IssueDate)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Departments &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-6">
+                                    @for (var i = 0; i < Model.DepartmentList.Count; i++)
+                                    {
+                                        <p style="display:inline">
+                                            <span style="margin-left:5px; float: left;"> 
+                                                @Html.HiddenFor(m => m.DepartmentList[i].Text)
+                                                @Html.CheckBoxFor(m => m.DepartmentList[i].Selected, new { @class = "txtMember form-control", @RepeatDirection = "Horizontal", @TextAlign = "Right" })
+                                                @Html.HiddenFor(m => m.DepartmentList[i].Value)
+                                                @Model.DepartmentList[i].Text
+                                            </span>
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "TenderSpecOpinions", null, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnCreateTenderSpecOpinion" class="btn btn-info pull-right" value="Edit" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Tender Specification Created Successfully!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="FailedMessage" style="color:red">Tender Specification Creation Failed!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#btnCreateTenderSpecOpinion').unbind('click').bind('click', function () {
+        var form = $('#formCreateTenderSpecOpinion');
+        if (jQuery.validator && jQuery.validator.unobtrusive) {
+            form.validate();
+            if (!form.valid()) {
+                return false;
+            }
+            else {
+                var data = form.serialize();
+                $.ajax({
+                    url: "/TenderSpecOpinions/Edit",
+                    type: 'POST',
+                    data: data,
+                    dataType: "html",
+                    success: successFunc,
+                    error: errorFunc
+                });
+                successFunc = function (response) {
+                    $('#mySuccessModel').modal('show');
+                }
+                errorFunc = function (response) {
+                    $('#myFailedModel').modal('show');
+                }
+            }
+        }
+    });
+</script>

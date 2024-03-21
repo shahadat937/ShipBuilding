@@ -1,0 +1,62 @@
+﻿@model  RMS.Model.spProjectTaskStatus
+@{
+    Layout = null;
+}
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+</style>
+<div class="col-md-2 col-sm-2 col-xs-2"></div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">Demanding Authority</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-4 col-md-4 col-lg-4">Organization Name :</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.Organization)
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-4 col-md-4 col-lg-4">Approval Authority :</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.ChildOrganization)
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-4 col-md-4 col-lg-4">Demanding PDF :</label>
+                        @if (Model.DemandingUrl != null)
+                        {
+                            <div class="col-md-5">
+                                <a href="@Url.Action("Show", "Demand", new { url = Model.DemandingUrl })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-5">
+                            </div>
+                        }
+
+                        <div class="col-md-3">
+
+                        </div>
+
+                    </div>
+                </div>
+</div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,310 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.DailyTransactionViewModel
+
+@{
+    var title = Model.DailyTransaction.DailyTransactionIdentity > 0 ? "Update Cover Fund Transaction" : "Add Cover Fund Transaction";
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Save", "DailyTransaction", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.DailyTransaction.DailyTransactionIdentity, new { @class = "textBoxsize form-control", id = "transactionIdentity", tabindex = 2, placeholder = "Voucher Number" })
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Voucher Type:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.VoucherType, Model.VoucherTypeSelectListItems, "-Select Transaction Nature", new { @class = "form-control", id = "voucherType", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Transaction Nature:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DailyTransaction.TransNature, Model.TransactionNatureSelectListItems, "-Select Transaction Nature", new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" id="transactionMode">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Transaction Mode:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DailyTransaction.ModeOfTrans, Model.TransactionModeSelectListItems, "-Select Transaction Model-", new { @class = "form-control", tabindex = 1 })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Voucher Number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DailyTransaction.VoucherNo, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Voucher Number" })
+                            @Html.ValidationMessageFor(x => x.DailyTransaction.VoucherNo)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Transaction Date:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DailyTransaction.TransDate, "{0: dd MMMM yyyy}", new { @class = "form-control datepicker" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Transaction Type:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DailyTransaction.TransType, Model.TransactionTypeSelectListItems, "-Select Transaction Type-", new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Rate:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DailyTransaction.ExchangeRate, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Exchange Rate" })
+                            @Html.ValidationMessageFor(x => x.DailyTransaction.ExchangeRate)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="cashAccount">
+                <div class=" col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Account Number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DailyTransaction.AccountInfoIdentity, Model.AccountInfosSelectListItems, "-Select Account No", new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Currency:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DailyTransaction.Currency, Model.CurrencySelectListItems, "-Select Currency-", new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="" id="transferAccounts" style="display: none; position: relative">
+                @if (Model.DailyTransaction.DailyTransactionIdentity == 0)
+                {
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">From Account Number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.FromAccount, Model.AccountInfosSelectListItems, new { @class = "form-control", tabindex = 1 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Currency:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.FromCurrency, Model.CurrencySelectListItems, new { @class = "form-control", tabindex = 1 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">To Account Number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.ToAccount, Model.AccountInfosSelectListItems, new { @class = "form-control", tabindex = 1 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Currency:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.ToCurrency, Model.CurrencySelectListItems, new { @class = "form-control", tabindex = 1 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class=" col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Account Number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DailyTransaction.AccountInfoIdentity, Model.AccountInfosSelectListItems, "-Select Account No", new { @class = "form-control", tabindex = 1 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Currency:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.DailyTransaction.Currency, Model.CurrencySelectListItems, "-Select Currency-", new { @class = "form-control", tabindex = 1 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" id="lblDebit">Debit Amount:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DailyTransaction.FDebit, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Voucher Number", id = "txtDebit" })
+                            @Html.ValidationMessageFor(x => x.DailyTransaction.FDebit)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" id="lblCredit">Credit Amount:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DailyTransaction.FCredit, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Voucher Number", id = "txtCredit" })
+                            @Html.ValidationMessageFor(x => x.DailyTransaction.FCredit)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Company:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DailyTransaction.ExchangeHouse, Model.ExchangeSelectListItems, "-Select Exchange Company-", new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Description:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DailyTransaction.Description, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Description" })
+                            @Html.ValidationMessageFor(x => x.DailyTransaction.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-sm-2" style="text-align:left">
+                            <input type="submit" id="btnSave" value="Save" class="btn btn-info" tabindex=13 />
+                        </div>
+                        <div class="col-sm-6" style="text-align:right">
+                            @Html.ActionLink("Add New Transaction", "Index", "DailyTransaction", new { @class = "btn btn-info", id = "new-board-btn" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        <div class="">
+            @{
+                var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                grid.Bind(Model.DailyTransactions, rowCount: Model.DailyTransactions.Count, autoSortAndPage: true);
+                grid.Pager(WebGridPagerModes.All);
+                @grid.GetHtml(htmlAttributes: new { DailyTransactionIdentity = "grid" },
+                tableStyle: "webgrid-table webgrid",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                alternatingRowStyle: "webgrid-alternating-row",
+                selectedRowStyle: "webgrid-selected-row",
+                rowStyle: "webgrid-row-style",
+                firstText: "First",
+                lastText: "Last",
+                nextText: "Next",
+                mode: WebGridPagerModes.All,
+                previousText: "Previous",
+                columns: grid.Columns(
+                                             grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                                               grid.Column("VoucherNo", header: "Voucher No"),
+                                                                                                     grid.Column("TransDate", header: "Transaction Date", format: item => (item.TransDate == null) ? "" : item.TransDate.ToString("dd MMMM yyyy")),
+
+                                                      grid.Column("AccountInformation.AccountHead", header: "Account Number"),
+                                             grid.Column("Description", header: "Description"),
+                                    grid.Column("Debit", header: "Debit Amount"),
+                                    grid.Column("Credit", header: "Credit Amount", canSort: false),
+                                    grid.Column("ExchangeRate", header: "Rate"),
+                                              grid.Column("FDebit", header: "F Debit Amount"),
+                                              grid.Column("FCredit", header: "F Credit Amount", canSort: false),
+                                                      grid.Column("BranchInfo.BranchName", header: "Exchange Company", canSort: false),
+                                                      grid.Column("Verified", header: "Status"),
+                                    grid.Column("Edit", canSort: false, format: @<text> @Html.ActionLink("Edit", "Edit", "DailyTransaction", new { DailyTransactionIdentity = item.DailyTransactionIdentity }, new { @class = "btn btn-info" })</text>)
+                @*grid.Column("Delete", canSort: false, format: @<text> @Html.ActionLink("Delete", "Delete", "User", new { UserId = item.UserId }, new { @class = "btn btn-primary" })</text>)*@
+))
+            }
+        </div>
+
+    </div>
+</div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+       
+        $(function () {
+
+            setInterval(function () { $('#contributors').load('/Account/Index'); }, 3000); // every 3 sec
+        });
+
+        $("#transactionMode").change(function () {
+            //alert('hi');
+            if ($("#transactionMode option:selected").val() == "112369") {
+                $("#transferAccounts").hide();
+                $("#cashAccount").show();
+
+            } else {
+                $("#transferAccounts").show();
+                $("#cashAccount").hide();
+            }
+        });
+        $("#voucherType").change(function () {
+            //alert('hi');
+            if ($("#voucherType option:selected").val() == "112556") {
+                $("#txtDebit").hide();
+                $("#txtCredit").show();
+                $("#lblDebit").hide();
+                $("#lblCredit").show();
+
+            } else {
+                $("#txtDebit").show();
+                $("#txtCredit").hide();
+                $("#lblDebit").show();
+                $("#lblCredit").hide();
+            }
+        });
+    </script>
+}
+

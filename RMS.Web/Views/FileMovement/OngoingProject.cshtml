@@ -1,0 +1,103 @@
+﻿@using RMS.Utility
+@using RMS.Web.Extensions
+
+@model RMS.Web.Models.ViewModel.FileMovementViewModel
+@{
+    ViewBag.Title = "Flow Setup Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .webgrid-header th {
+        color: white;
+       
+    }
+    .webgrid-header th a {
+        color: white;
+    }
+</style>
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+           On Going Project Information
+        </div>
+        <div class="panel-body">
+            @*<table>
+                <tr>
+                    <td><h4 style ="padding-right:20px"> On Going Project </h4style></td>
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "FileMovement", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.ProjectFileMovements1.ProjectName, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Project Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>*@
+
+            @{ int rowNo = 0; }
+            <div class="">
+
+                <table class="table table-bordered table-hover table-striped">
+
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">Project Name</td>
+                        <td style="text-align: center; font-size: 15px">Project Type</td>
+                        <td style="text-align: center; font-size: 15px">Project Category</td>
+                        <td style="text-align: center; font-size: 15px">PDF</td>
+                    </tr>
+
+                    @foreach (var item in Model.Demands)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.FileNo</td>
+                            <td style="">@item.CommonCode.TypeValue</td>
+                            <td style="">@item.CommonCode1.TypeValue</td>
+                            @if (item.DemandingUrl != null)
+                            {
+                                <td style="text-align: center; color: blue">
+
+                                    <a href="@Url.Action("Show", "Demand", new { url = item.DemandingUrl })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+
+
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+
+
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+        </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

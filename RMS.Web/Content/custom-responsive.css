@@ -1,0 +1,334 @@
+
+
+@media only screen and (min-width: 1200px) {
+	
+	.header-wrapper {
+	    margin: 5px 20px;
+	}
+	.header-wrapper .logo{
+		width: 50px;
+	}
+	.header-wrapper .logo-text {
+    	padding-top: 5px;
+	    font-size: 1.6em;
+	}
+	.header-wrapper .user-wrapper {
+	    margin-top: 13px;
+	}
+	.header-wrapper .user-wrapper ul li a {
+	    padding-right: 15px;
+	    font-size: 1.1em;
+	}
+	.header-wrapper .user-wrapper ul li a img {
+	    width: 25px;
+	}
+	.navbar {
+	    margin-top: 0;
+	}
+	.progress{
+	    width: 200px;
+	}
+	.login-wrapper {
+		
+	}
+	.login-inner-wrapper {
+	    padding-bottom: 10px;
+	}
+	.registration-wrapper {
+		
+	}
+	.login-wrapper .remember-checkbox {
+		display: inline-block;
+	    margin-right: 55px;
+	}
+	.login-wrapper a.forgotpass {
+	    font-size: 0.86em;
+	}
+	.registration-wrapper {
+		height: auto;
+	}
+	.registration-inner-wrapper {
+	    transform: translate(-50%, -50%);
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    padding: 20px;
+	}
+    .nav > li > a {
+        padding: 10px 15px;
+    }
+    .body-content {
+        margin-top: 120px;
+    }
+	.footer-section {
+    	padding: 3px 20px 0px;
+	}
+	.footer-left img {
+		width: 26px;
+		height: auto;
+		vertical-align: middle;
+	}
+	.footer-right-text img {
+		margin-right: 5px;
+		width: 26px;
+		height: auto;
+		vertical-align: middle;
+	}
+
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+	
+	.header-wrapper {
+	    margin: 5px 20px;
+	}
+	.header-wrapper .logo{
+		width: 35px;
+	}
+	.header-wrapper .logo-text {
+    	padding-top: 7px;
+	    font-size: 1.2em;
+	}
+	.header-wrapper .user-wrapper {
+	    margin-top: 8px;
+	}
+	.header-wrapper .user-wrapper ul li a {
+	    padding-right: 10px;
+	    font-size: 0.9em;
+	}
+	.header-wrapper .user-wrapper ul li a img {
+	    width: 19px;
+	}
+	.navbar {
+	    margin-top: 0;
+	}
+    .nav > li > a {
+        padding: 10px 10px;
+    }
+	.progress{
+	    width: 132px;
+	}
+	.login-wrapper {    
+	    
+	}
+	.login-inner-wrapper {
+	    padding-bottom: 10px;
+	}
+	.login-wrapper .remember-checkbox {
+		display: inline-block;
+	    margin-right: 55px;
+	}
+	.login-wrapper a.forgotpass {
+	    font-size: 0.8em;
+	}
+	.registration-wrapper {
+		height: auto !important;
+	}
+	.registration-inner-wrapper {
+	    transform: translate(0%, 00%);
+	    position: inherit;
+	    top: 0;
+	    left: 0;
+	    padding: 20px;
+	    margin-top: 73px;
+	    margin-bottom: 52px;
+	}
+    .body-content {
+        margin-top: 105px;
+    }
+	.footer-section {
+    	padding: 3px 20px 0px;
+	}
+	.footer-left img {
+		width: 27px;
+		height: auto;
+		vertical-align: middle;
+	}
+	.footer-right-text img {
+		margin-right: 5px;
+		width: 27px;
+		height: auto;
+		vertical-align: middle;
+	}
+
+}
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+	
+	.header-wrapper {
+	    margin: 5px 0;
+	}
+	.header-wrapper .logo{
+		width: 25px;
+	}
+	.header-wrapper .logo-text {
+    	padding-top: 3px;
+	    font-size: 1.1em;
+	}
+	.header-wrapper .user-wrapper {
+	    margin-top: 13px;
+	}
+	.header-wrapper .user-wrapper ul li a {
+	    padding-right: 20px;
+	    font-size: 0.9em;
+	}
+	.header-wrapper .user-wrapper ul li a img {
+	    width: 19px;
+	}
+	.navbar {
+	    margin-top: 0;
+	}
+    .nav > li > a {
+        padding: 10px;
+    }
+	.navbar-inverse .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
+	    color: #fff;
+	    background-color: rgba(0, 0, 0, 0.15);
+	}
+	.progress{
+	    width: 100%;
+	}
+	.login-wrapper {    
+	   	
+	}
+	.login-inner-wrapper {
+	    padding-bottom: 5px;
+	}
+	.login-wrapper .remember-checkbox {
+		display: block;
+	    margin-right: 0;
+	}
+	.login-wrapper a.forgotpass {
+	    font-size: 0.8em;
+	}
+	.registration-wrapper {
+		height: auto !important;
+	}
+	.registration-inner-wrapper {
+	    transform: translate(0%, 00%);
+	    position: inherit;
+	    top: 0;
+	    left: 0;
+	    padding: 10px 0 0;
+	    margin-top: 47px;
+	    margin-bottom: 70px;
+	}
+    .body-content {
+        margin-top: 125px;
+    }
+	.footer-section {
+    	padding: 5px 0;
+	}
+	.footer-left img {
+		width: 24px;
+		height: auto;
+		vertical-align: middle;
+	}
+	.footer-left-text {
+		padding-left: 5px;
+		font-size: 0.96em;
+	}
+	.footer-right-powered {
+		margin-right: 5px;
+		font-size: 0.96em;
+	}
+	.footer-right-text {
+		font-size: 0.96em;
+	}
+	.footer-right-text img {
+		margin-right: 5px;
+		width: 20px;
+		height: auto;
+		vertical-align: middle;
+	}
+
+}
+@media only screen and (max-width: 480px) {
+	
+	.header-wrapper {
+	    margin: 5px 0;
+	}
+	.header-wrapper .logo{
+		width: 25px;
+	}
+	.header-wrapper .logo-text {
+    	padding-top: 5px;
+		font-size: 0.79em;
+	}
+	.header-wrapper .user-wrapper {
+	    margin-top: 13px;
+	}
+	.header-wrapper .user-wrapper ul li a {
+	    padding-right: 15px;
+		font-size: 0.8em;
+	}
+	.header-wrapper .user-wrapper ul li a img {
+	    width: 19px;
+	}
+	.navbar {
+	    margin-top: 0;
+	}
+    .nav > li > a {
+        padding: 10px;
+    }
+	.navbar-inverse .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
+	    color: #fff;
+	    background-color: rgba(0, 0, 0, 0.15);
+	}
+	.progress{
+	    width: 100%;
+	}
+	.login-wrapper {    
+	    
+	}
+	.login-inner-wrapper {
+	    padding-bottom: 5px;
+	}
+	.login-wrapper .remember-checkbox {
+		display: block;
+	    margin-right: 0;
+	}
+	.login-wrapper a.forgotpass {
+	    font-size: 0.8em;
+	}
+	.registration-wrapper {
+		height: auto !important;
+	}
+	.registration-inner-wrapper {
+	    transform: translate(0%, 00%);
+	    position: inherit;
+	    top: 0;
+	    left: 0;
+	    padding: 10px 0 0;
+	    margin-top: 45px;
+	    margin-bottom: 60px;
+	}
+    .body-content {
+        margin-top: 125px;
+    }
+	.footer-section {
+    	padding: 5px 0;
+	}
+	.footer-left img {
+		width: 18px;
+		height: auto;
+		vertical-align: middle;
+	}
+	.footer-left-text {
+		padding-left: 5px;
+		font-size: 0.74em;
+	}
+	.footer-right-powered {
+		margin-right: 5px;
+		font-size: 0.74em;
+	}
+	.footer-right-text {
+		font-size: 0.74em;
+	}
+	.footer-right-text img {
+		margin-right: 5px;
+		width: 14px;
+		height: auto;
+		vertical-align: middle;
+	}
+
+}
+

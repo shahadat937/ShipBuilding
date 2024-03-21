@@ -1,0 +1,56 @@
+﻿@using System.Globalization
+@using RMS.Web.Extensions
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+<div>
+    @using (Html.BeginForm("ExportEBFTN", "ExcelDataRead", FormMethod.Post))
+    {
+        <div class="table-responsive">
+            
+            <table class="table table-bordered table-hover" style="font-size:12px;">
+                <thead style="background-color: mintcream">
+                    <tr>
+                        <td>@Html.Label("Remittance No")</td>
+                        <td>@Html.Label("Issuing Branch")</td>
+                        <td>@Html.Label("Payment Date")</td>
+                        <td>@Html.Label("Exchange Refference")</td>
+                        <td>@Html.Label("Account No")</td>
+                        <td>@Html.Label("Account Name")</td>
+                        <td>@Html.Label("Responding Branch")</td>
+                        <td>@Html.Label("USD Amount")</td>
+                        <td>@Html.Label("Exchange Rate")</td>
+                        <td>@Html.Label("BDT Amount")</td>
+                        <td>@Html.Label("Currency")</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.RemittInfoTemps)
+                    {
+                        <tr class="table-hover">
+                            <td>@Html.DisplayFor(modelItem => item.RemittanceNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ExchangeCompany)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PayinDateLocal, "{0:dd MMM yyyy}")</td>
+                            <td>@Html.DisplayFor(modelItem => item.Xpin)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.BranchCode)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PayoutAmount)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ExchangeRate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FAmount)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Ccy)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+       
+    <div><button id="verifyButton" style="height: 30PX;float:right" class="btn btn-primary">Export</button></div>
+        @*<div><input type="button" onclick="saveForm(this)" class="btn btn-primary" data-target="#EducationList" value="Export" /></div>*@
+        <p style="color:red">@TempData["Message"]</p>
+    }
+</div>
+
+
+
+
+

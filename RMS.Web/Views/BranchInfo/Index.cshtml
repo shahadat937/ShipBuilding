@@ -1,0 +1,269 @@
+﻿@model RMS.Web.Models.ViewModel.BranchInfoViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/App/treeViewNode.css" rel="stylesheet" />
+<style type="text/css">
+    .row{margin-top:-6px}
+
+</style>
+
+<div class="container" style="margin-top:10px !important">
+    @using (Html.BeginForm("Index", "BranchInfo", FormMethod.Get))
+    {
+        <div class="col-sm-12 col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="height:50px">
+
+                    <div class="col-sm-2 col-lg-2"><p style="font-weight:bold;margin-top:5px">Bank Name:</p></div>
+                    <div class="col-sm-8 col-lg-4">
+                        @Html.DropDownListFor(x => x.FifthLevel, Model.BankListItem, "--Select Bank--", new { @class = "dropdownsize form-control", tabindex = 2 })
+                        @*@Html.DropDownListFor(x => x.BranchCode, new SelectList(Model.BranchInfo.Where(x => x.BranchLevel == "1" && x.BranchCode != ""), "BranchCode", "BranchName"), "--Select Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })*@
+                    </div>
+                    <div class="col-sm-2 col-lg-6">
+                        <button id="findButton" class="btn btn-success" style="font-weight:bold">Go</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-md-4 col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">                  
+                    <h3 class="panel-title">Bank/Branch List</h3>
+                </div>
+            @*<br />
+@using (Html.BeginForm("Index", "BranchInfo", FormMethod.Post))
+            {
+                <div class="col-md-12 col-lg-12">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(x => x.FirstLevel, Model.BankListItem, "--Select Bank--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                    </div>
+                    <div class="col-md-2">
+                        <button id="findButton"  class="btn btn-primary">GO</button>
+                    </div>
+
+                </div>
+}*@
+@using (Html.BeginForm())
+{
+            <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:422px; width:337px">
+                <div class="tree">
+                    <ul>
+                        @foreach (var firstLevel in Model.BranchInfoTreeViews)
+                        {
+                            <li>
+                                <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span style="font-size: 14px; color: #006400">
+                                    @Html.ActionLink(firstLevel.BranchName + "[" + firstLevel.BranchCode + "]", "Index", "BranchInfo", new { BranchCode = firstLevel.BranchCode }, null)
+                                </span>
+                                <ul>
+                                    @foreach (var secondLevel in firstLevel.BranchInfoTrees)
+                                    {
+                                        <li>
+                                            <a></a><span>&nbsp;&nbsp;</span>
+                                            <span style="font-size: 14px; color: #800000">
+                                                @Html.ActionLink(secondLevel.BranchName + "[" + secondLevel.BranchCode + "]", "Index", "BranchInfo", new { BranchCode = secondLevel.BranchCode }, null)
+                                            </span>
+                                            <ul>
+                                                @foreach (var thirdLevel in secondLevel.BranchInfoTrees)
+                                                {
+                                                    <li>
+                                                        <a></a><span>&nbsp;&nbsp;</span>
+                                                        <span style="font-size: 14px; color: #1e90ff">
+                                                            @Html.ActionLink(thirdLevel.BranchName + "[" + thirdLevel.BranchCode + "]", "Index", "BranchInfo", new { BranchCode = thirdLevel.BranchCode }, null)
+                                                        </span>
+                                                        <ul>
+                                                            @foreach (var fourthLevel in thirdLevel.BranchInfoTrees)
+                                                            {
+                                                                <li>
+                                                                    <a></a><span>&nbsp;&nbsp;</span>
+                                                                    <span style="font-size: 14px; color: #1e90ff">
+                                                                        @Html.ActionLink(fourthLevel.BranchName + "[" + fourthLevel.BranchCode + "]", "Index", "BranchInfo", new { BranchCode = fourthLevel.BranchCode }, null)
+                                                                    </span>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+}
+
+        </div>
+    </div>
+
+    <div class="col-md-8 col-lg-8">
+@using (Html.BeginForm("Save", "BranchInfo", FormMethod.Post, new { @class = "UserForm" }))
+{
+    @*@Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)*@
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Bank/Branch Information </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-2 control-label">Parent Code</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.FirstLevel, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Parent Code" })
+                            </div>
+                        
+                            <label for="RoleId" class="col-md-2 control-label">Branch Code</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.BranchCode, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = "Branch Code" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-2 control-label">Branch Name</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.BranchName, new { @class = "textBoxsize form-control", tabindex = 3, placeholder = "Branch Name" })
+                            </div>
+
+                            <label for="PhoneNumber" class="col-md-2 control-label">Address</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.Address, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Address" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-2 control-label">Phone No</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.Telephone, new { @class = "textBoxsize form-control", tabindex = 5, autofocus = "autofocus", placeholder = "Phone No" })
+                            </div>
+                        
+                        <label for="RoleId" class="col-md-2 control-label">Fax No</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.Fax, new { @class = "textBoxsize form-control", tabindex = 6, autofocus = "autofocus", placeholder = "Fax No" })
+                        </div>
+                    </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-2 control-label">Email</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.Email, new { @class = "textBoxsize form-control", tabindex = 7, placeholder = "Email" })
+                            </div>
+
+                            <label for="PhoneNumber" class="col-md-2 control-label">Zone</label>
+                            <div class="col-md-4">
+                               @Html.DropDownListFor(x => x.ZoneCode, Model.ZoneListItem, "--Select Zone--", new { @class = "Type dropdownsize form-control", tabindex = 8})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-2 control-label">Contact Person</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.ContactPerson, new { @class = "textBoxsize form-control", tabindex = 9, placeholder = "Contact Person" })
+                            </div>
+                            <label for="PhoneNumber" class="col-md-2 control-label">Mobile No</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.Cellphone, new { @class = "textBoxsize form-control", tabindex = 10, placeholder = "Mobile No" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-2 control-label">Routing No.</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.OwnBranchCode, new { @class = "textBoxsize form-control", tabindex = 11, autofocus = "autofocus", placeholder = "Own Branch Code" })
+                            </div>
+                       
+                        <label for="RoleId" class="col-md-2 control-label">Swift Number</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.NativeBranchCode, new { @class = "textBoxsize form-control", tabindex = 12, autofocus = "autofocus", placeholder = "Native Branch Code" })
+                        </div>
+                    </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-2 control-label">Account No LC</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.AccountNoFL, new { @class = "textBoxsize form-control", tabindex = 13, autofocus = "autofocus", placeholder = "Account No Local Currency" })
+                            </div>
+
+                            <label for="RoleId" class="col-md-2 control-label">Account No FC</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.AccountNoFC, new { @class = "textBoxsize form-control", tabindex = 14, autofocus = "autofocus", placeholder = "Account No Foreign Currency" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-2 control-label">Country</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => x.CountryCode, Model.CountryListItem, "--Select Country--", new { @class = "Type dropdownsize form-control", tabindex = 15})
+                            </div>
+       
+                        <label for="RoleId" class="col-md-2 control-label">Currency</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.CurrencyCode, Model.CurrencyListItem, "--Select Currency--", new { @class = "Type dropdownsize form-control", tabindex = 16 })
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <p style="color:green">@TempData["message"]</p>
+                            </div>
+
+                            <div class="col-md-2">
+                                <input type="submit" id="btnSave" value="Save" class="btn btn-primary" tabindex=16 />
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ActionLink("Delete", "BDelete", "BranchInfo", new { BranchCode = Model.BranchCode, FifthLevel = Model.FifthLevel }, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pull-left" id="reportContainner">
+                </div>
+            </div>
+        </div>
+}
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/APP/treeView.js"></script>
+    <script type="text/javascript">
+        $('.showReportParameterFor').click(function () {
+            var url = $(this).attr('action');
+            $('#reportContainner').load(url);
+        });
+    </script>
+}

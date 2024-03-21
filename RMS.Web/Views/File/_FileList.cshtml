@@ -1,0 +1,38 @@
+﻿@model RMS.Web.Models.ViewModel.FileViewModel
+@{
+    Layout = null;
+}
+<table class="table table-bordered">
+    <thead style="background-color: #FFC7F5;">
+        <tr>
+            <td>File Name</td>
+            <td>File Code</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.Files.Any())
+        {
+            foreach (var file in Model.Files)
+            {
+                <tr>
+                    <td>@file.FileName</td>
+                    <td>@file.FileCode</td>
+                   
+                </tr>
+            }
+
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" style="text-align: center">No File Found!</td>
+               
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+

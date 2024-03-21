@@ -1,0 +1,168 @@
+﻿@using RMS.Utility
+<style>
+    /*.ft {
+        width: 100% !important;
+        left: 0 !important;
+        top: 0 !important;
+        background: #000080 !important;
+        z-index: 999 !important;
+    }*/
+     .bg {
+         /*background-image: url('../images/navyMesile.jpg');*/
+         /*width: 100%;
+        height: 300px;*/
+         /*background-repeat: no-repeat;*/
+         /*background-size: 100% 300px;*/
+         margin-left: -14px !important;
+         margin-right: -14px !important;
+         margin-top: 1px !important;
+         margin-bottom: 1px !important;
+     }
+    .top-left {
+        position: absolute;
+        top: 8px;
+        left: 16px;
+    }
+    .top-right {
+        position: absolute;
+        top: 8px;
+        right: 50px;
+    }
+    .inner {
+        width: 100%;
+        height: 300px;
+    }
+    .bb {
+        background: #e0eafc; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #e0eafc, #cfdef3); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #e0eafc, #cfdef3);
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bangladesh Navy</title>
+        <link rel="shortcut icon" href="~/1favicon.ico" />
+
+                       @*image Slider*@
+
+        <link href="~/css/Fonts/ImageSlider.css" rel="stylesheet" />
+        <link href="~/css/pageloaderCss.css" rel="stylesheet" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+<body class="container bb">
+    <!-- MAIN BODY SECTION -->
+    <div class="main-body ">
+        <!-- header-section -->
+        <header class=" ft">
+            <div class="header-wrapper bg">
+                <div class="col-md-12 slide">
+
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner inner">
+
+                            <div class="item active">
+                                <img src="~/images/SlideImage/banner_new.jpg" alt="Los Angeles" style="width:100%;height: 300px">
+                            </div>
+
+                            <div class="item">
+                                <img src="~/images/SlideImage/1st_slide.jpg" alt="Chicago" style="width: 100%; height: 300px">
+                            </div>
+
+                            <div class="item">
+                                <img src="~/images/SlideImage/5th_slide.jpg" alt="New york" style="width: 100%; height: 300px">
+                            </div>
+
+                            <a href="~/Home/Index" class="top-left">
+                               <img class="logo img-responsive " src="~/images/BangladeshNavy.png" width="80px" height="auto" alt="Logo of PBL"><p class="logo-text" style="font-size:18px; font-weight: bold; padding:10px 0 10px 0">Ship Building Information & Progress Monitoring Software Of Bangladesh Navy</p> 
+
+                            </a>
+                            <div class="user-wrapper top-right">
+                                @if (@PortalContext.CurrentUser.IsValidate == false)
+                                {
+                                    {
+                                        Html.RenderAction("Login", "Account");
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.Partial("_LoginPartial")
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-inverse">
+                <div class="">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        @if (@PortalContext.CurrentUser.IsValidate == false)
+                        {
+                            { Html.RenderAction("Login", "Account"); }
+                        }
+                        else
+                        {
+                            { Html.RenderAction("Menu", "Home"); }
+
+                        }
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="main-body-section">
+            <div class="loader"></div>
+            @RenderBody()
+          
+        </div>
+        <!-- FOOTER SECTION BEGINNING -->
+        <footer class="footer-section">
+            <div class="col-sm-6">
+                <div class="footer-left">
+                    @*Infinity Bank Limited*@
+                    @*<img src="~/images/PBL30.png" alt="">*@
+                    <span class="footer-left-text"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="footer-right">
+                    <span class="footer-right-powered">Powered by </span><span class="footer-right-text"><img src="~/images/InfinityLogo.png" alt=""> Infinity Technology International Limited</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/APP/datepicker.js"></script>
+    @RenderSection("scripts", required: false)
+
+    @*<script src="~/Scripts/APP/SetDate.js"></script>*@
+    <script src="~/Scripts/APP/AppTimeOut.js"></script>
+
+    <script src="~/Scripts/APP/PageLoader.js"></script>
+
+</body>
+
+</html>

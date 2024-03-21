@@ -1,0 +1,129 @@
+﻿@using RMS.Utility
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<meta name="description" content="">
+    <meta name="" content="">*@
+    <title>Bangladesh Navy</title>
+    <link rel="shortcut icon" href="~/1favicon.ico" />
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+  
+
+    @*<link href="~/css/pageloaderCss.css" rel="stylesheet" />*@
+</head>
+<body class="container">
+    <!-- MAIN BODY SECTION -->
+    <div class="main-body">
+        <!-- header-section -->
+        <header class="fixed-header-section">
+
+            <div class="header-wrapper">
+                <div class="col-sm-9 logo-wrapper">
+
+                    <p class="logo-text" style="font-size:26px; padding:10px 0 10px 0">Shipbuilding Information Management System of Bangladesh Navy</p>
+
+                    <a href="~/Home/Index">
+                       @* <img class="logo img-responsive" src="~/images/BangladeshNavy.png" width="60px" height="auto" alt="Logo of PBL"><p class="logo-text" style="font-size:22px; padding:10px 0 10px 0">Ship Building Information And Progress Monitoring Software Of Bangladesh Navy</p>*@
+
+                    </a>
+                </div>
+
+                <div class="col-sm-3 user-wrapper" style="float: right; padding-right: 30px">
+                    @if (@PortalContext.CurrentUser.IsValidate == false)
+                    {
+                        {
+                            Html.RenderAction("Login", "Account");
+                        }
+                    }
+                    else
+                    {
+                        @Html.Partial("_LoginPartial")
+                    }
+
+                </div>
+            </div>
+
+
+            <!-- /header-section -->
+            <!-- NavBar Section -->
+            <nav class="navbar navbar-inverse">
+                <div class="">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        @if (@PortalContext.CurrentUser.IsValidate == false)
+                        {
+                            { Html.RenderAction("Login", "Account"); }
+                        }
+                        else
+                        {
+                            { Html.RenderAction("Menu", "Home"); }
+                        }
+
+                        <ul class="nav custom-nav navbar-nav navbar-right custom-navbar-right" style="margin-top: 8px;">
+                            <li>
+                                @if (@PortalContext.CurrentUser.IsValidate == false)
+                                {
+                                    { Html.RenderAction("Login", "Account"); }
+                                }
+                                @*else
+                                {
+                                    <div class="dropdown">
+                                        @{ Html.RenderAction("Notification", "Home"); }
+                                    </div>
+
+                                }*@
+
+                            </li>
+
+                            <li>
+                                <a href="#">
+
+                                </a>
+                            </li>
+
+                        </ul> <!-- / Progress-Bar -->
+
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <!-- /NavBar Section -->
+        </header>
+        <div class="main-body-section">
+            <div class="container1 body-content" style="padding-left:-1px !important; padding-right:-1px !important">
+                @*<div class="loader"></div>*@
+                @RenderBody()
+            </div>
+        </div>
+
+
+        <!-- FOOTER SECTION ENDING -->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/APP/datepicker.js"></script>
+    @RenderSection("scripts", required: false)
+    @*<script src="~/Scripts/APP/custom.js"></script>*@
+    @*<script src="~/Scripts/APP/SetDate.js"></script>*@
+    <script src="~/Scripts/APP/AppTimeOut.js"></script>
+    @*<script src="~/Scripts/APP/circularDetailEdit.js"></script>*@
+    @*<script src="~/Scripts/APP/PageLoader.js"></script>*@
+    <link href="~/Content/NotificationCSS.css" rel="stylesheet" />
+</body>
+</html>

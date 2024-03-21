@@ -1,0 +1,72 @@
+﻿@using RMS.Utility
+@model RMS.Model.NotificationCustomModel
+@{
+    Layout = null;
+}
+@if (PortalContext.CurrentUser.RoleId == 3)
+{
+    <i class="fa fa-bell-o" style="color:white"></i>
+    if (ViewBag.count != null)
+    {
+        <a href="" data-toggle="dropdown">
+            <span id="idCounts" class="badge" style="margin-left:-8px"><b>@ViewBag.count</b></span>
+        </a>
+    }
+
+    <ul class="dropdown-menu">
+        <li>
+
+            <a href="@Url.Action("OwnBankAccountPayeeDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Own Bank Account Payee Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.OwnBankAccountPayeeDueList</b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("CashPayeeDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Cash Payee Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.CashPayeeDueList</b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("BEFTNDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">BEFTN Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.BEFTNDueList</b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("StopPaymentDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Stop Payment Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.StopPaymentDueList</b>
+            </a>
+
+        </li>
+    </ul>
+
+}
+@if (PortalContext.CurrentUser.RoleId == 4)
+{
+    <i class="fa fa-bell-o" style="color:white"></i>
+    if (ViewBag.count != null)
+    {
+        <a href="" data-toggle="dropdown">
+            <span id="idCounts" class="badge" style="margin-left:-8px"><b>@ViewBag.count</b></span>
+        </a>
+    }
+    <ul class="dropdown-menu">
+        <li>
+
+            <a href="@Url.Action("CashPayeeDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Cash Payee Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.CashPayeeDueList</b>
+            </a>
+
+        </li>
+    </ul>
+
+}

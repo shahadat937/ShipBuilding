@@ -1,0 +1,76 @@
+﻿@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+    ViewBag.Title = "RemittanceInfoInquery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+<br/>
+
+@using (Html.BeginForm("RemittanceInfoInqueryPara", "PaymentJBL", FormMethod.Post, new { @class = "UserForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="container">
+        <div>
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Column Name</legend>
+                <table>
+                    <tr>
+                        <td>Parameter Name</td>
+                        <td>@Html.DropDownListFor(x => x.RemittanceHeaderId, Model.RemittanceHeaderSelectdItemList, "-Select-", new { @class = "form-control" })</td>
+                    </tr>
+                    <tr>
+                        <td>Condition</td>
+                        <td id="findButton">@Html.DropDownListFor(x => x.ConditionId, Model.ConditionSelectdItemList, "-Select-", new { @class = "form-control" })</td>
+                        
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+   
+
+}
+@using (Html.BeginForm("ShowInqueryData", "PaymentJBL", FormMethod.Post, new { @class = "yyyy" }))
+{
+    <div class="container" >
+        <div>
+            <div id="ParameterContainner">
+
+            </div>
+        </div>
+    </div>  
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('#findButton').click(function () {
+            var form = $(this).parents('form:first');
+            var url = form.attr('action');
+
+            $.ajax({
+                url: url,
+                data: form.serialize(),
+                dataType: 'html',
+                type:'POST'
+            }).done(function (result) {
+                $('#ParameterContainner').html(result);
+            }); 
+        });
+
+        $('#PreviewButton').click(function () {
+            var form = $(this).parents('form:first');
+            var url = form.attr('action');
+
+            $.ajax({
+                url: url,
+                data: form.serialize(),
+                dataType: 'html',
+                type: 'POST'
+            }).done(function (result) {
+                $('#ParameterContainner').html(result);
+            });
+        });
+    </script>
+}

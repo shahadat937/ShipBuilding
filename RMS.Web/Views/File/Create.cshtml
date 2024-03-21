@@ -1,0 +1,166 @@
+﻿@model RMS.Web.Models.ViewModel.FileViewModel
+@{
+    ViewBag.Title = "Crate";
+}
+
+
+<div class="container1" style="font-family:arial">
+    <div class="panel panel-info ">
+        <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+            File Upload
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("Create", "File", null,FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(x=>x.File.FileId);
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">Staff Requirment &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(x => x.File.StuffRequirementId, Model.StaffReqSelectListItems, "--Select--", new { id = "ddlProject", @class = "form-control" , required = "required"})
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.File.StuffRequirementId)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">File Code &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(x => x.File.FileCode, null, new { id = "txtFileName", @class = "form-control" , required = "required"})
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.File.FileCode)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">File Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(x => x.File.FileName, null, new { id = "txtFileName", @class = "form-control" , required = "required"})
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.File.FileName)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">Department &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(x => x.File.DepartmentId, Model.DeptSelectListItems, "--Select--", new { id = "ddlProject", @class = "form-control" , required = "required"})
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.File.DepartmentId)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">File Status &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(x => x.File.FleStetus, null, new { id = "txtFileName", @class = "form-control" , required = "required"})
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.File.FleStetus)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">File URL &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                <input type="file" id="file" name="upload" class="form-control"  required />
+                                @*@Html.TextBox("file", "", new {type = "file"})*@
+                                @*@Html.TextBoxFor(m => m.File.FileUrl, new { type = "file", @class = "form-control" })*@
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.File.FileUrl)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                @Html.ActionLink("Back To List", "Index", "File", null, new {@class = "btn btn-info"})
+                                <input type="submit" id="btnCreateFile" class="btn btn-primary pull-right" value="Create" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                        @if (@Model.SuccessMessage !=null)
+                        {
+                            <div style="color:green">@Model.SuccessMessage</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.FailedMessage</div>
+                        }
+                    
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+
+</div>
+
+
+@section scripts{
+    <script>
+        //$('#btnCreateFile').unbind('click').bind('click', function () {
+        //    var form = $("#formCreateFile");
+        //    if (jQuery.validator && jQuery.validator.unobtrusive) {
+        //        form.validate();
+        //        if (!form.valid()) {
+        //            return false;
+        //        } else {
+        //            var data = form.serialize();
+        //            var button = $('#btnCreateFile');
+        //            var target = $(button.attr('data-target'));
+        //            $.ajax(
+        //                {
+        //                    url: "/File/Create",
+        //                    method: "post",
+        //                    data: data,
+        //                    dataType: "html",
+        //                    success: function (resp) {
+        //                        $("#divContent").html(resp);
+        //                    },
+        //                    error: function (err) {
+                               
+        //                    }
+        //                });
+        //        }
+        //    }
+
+        //});
+    </script>
+}

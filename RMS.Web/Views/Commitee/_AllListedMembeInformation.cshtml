@@ -1,0 +1,84 @@
+﻿@model RMS.Web.Models.ViewModel.CommiteeViewModel
+
+<style type="text/css">
+    .hed {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    th {
+        color: white;
+    }
+</style>
+@*<header style="margin-top: -10px;padding-left: 25px">
+    <div class="hed"><h2 style="text-align: center">All Committe Information</h2></div>
+</header>*@
+
+<div class="col-md-12 column">
+    <table class="table table-bordered table-hover" id="tab_logic">
+        <thead style="background-color: #571845">
+            <tr>
+                <th class="text-center">
+                    Committe Name
+                </th>
+                <th class="text-center">
+                    Member Name
+                </th>
+                <th class="text-center">
+                    Work Place
+                </th>
+                <th class="text-center">
+                    Phone Number
+                </th>
+                @*<th class="text-center">
+                    Department
+                </th>*@
+                <th class="text-center">
+                    Committe Designation
+                </th>
+                <th class="text-center">
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllCommitteListed)
+            {
+                <tr>
+                    <td>
+                        @item.CommitteNameList.CommitteName
+                    </td>
+                    <td>
+                        @item.Member.MemberName
+                    </td>
+                    <td>
+                        @item.WorkPlace
+                    </td>
+                    <td>
+                        @item.Member.PhoneNo
+                    </td>
+                    @*<td>
+                        @item.Department.Name
+                    </td>*@
+                    <td>
+                        @item.CommonCode.TypeValue
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Delete", "Commitee", new { id = item.CommiteeId,fileIdentity=item.FileNo,committeIdentity =item.CommitteName })" class="btn btn-warning">
+                            Delete
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    @*<div class="row">
+        <div class="col-sm-offset-2" id="newpost" style="color:green; padding-left:3px;">
+            <h2><p>@TempData["uodMes"]</p></h2>
+        </div>
+    </div>*@
+</div>
+

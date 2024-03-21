@@ -1,0 +1,121 @@
+﻿@model RMS.Web.Models.ViewModel.NoticeViewModel
+@{
+    ViewBag.Title = (Model.Notice.NoticeIdentity > 0) ? "Edit" : "Add";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "Notice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">Notice Inforamtion</div>
+        <div class="panel-body">
+            @if (ViewBag.Title == "Edit")
+            {
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Serial Number:</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.Notice.NoticeIdentity, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.HiddenFor(x => x.Notice.NoticeIdentity)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Title <span style="color: red">*</span>  :</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(x => x.Notice.Titile, new { @class = "textBoxsize form-control", placeholder = "Enter Notice Title", tabindex = 1 })
+                            @Html.ValidationMessageFor(x => x.Notice.Titile)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Description</label>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Notice.Description, new { style = "width: 1055px;height:150px", placeholder = "Enter Description", tabindex = 2 })
+                            @Html.ValidationMessageFor(model => model.Notice.Description)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Publish Date:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Notice.PublishDate, "{0: dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker", placeholder = "dd MMM yyyy" })
+                            @Html.ValidationMessageFor(x => x.Notice.PublishDate)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Expire Date:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Notice.ExpireDate, "{0: dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker", placeholder = "dd MMM yyyy" })
+                            @Html.ValidationMessageFor(x => x.Notice.ExpireDate)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Notice File(PDF File) <span style="color: red">*</span>  :</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", @class = "btn btn-info form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>*@
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form_group">
+                        <div class="col-md-12" style="text-align:left">
+                            @Html.ActionLink("Back to list", "Index", "Notice", new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form_group">
+                        <div class="col-md-12" style="text-align:right">
+                            <input type="submit" value="Save" class="btn btn-info" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

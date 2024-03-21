@@ -1,0 +1,106 @@
+﻿@*@using ClosedXML.Excel
+    @using DocumentFormat.OpenXml.Bibliography
+    @using Excel.Log
+    @using RMS.Model*@
+    @using System.Data    @using RMS.Utility
+
+@model RMS.Web.Models.ViewModel.StaffRequirementViewModel
+@{
+    ViewBag.Title = "Staff Requirement Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Staff Requirement Information
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td>@Html.ActionLink("Add New", "Create", "StaffRequirement", new { @class = "btn btn-info" })</td>
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "StaffRequirement", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.StaffRequirement.Title, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Title" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div class="row">
+                <div class=" col-sm-12  col-md-12  col-lg-12" id="divContent" style="text-align: center">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-md-12">
+                        @if (Model.FailedMessage != null)
+                        {
+                            <div style="color: red">@Model.FailedMessage</div>
+                        }
+                        else
+                        {
+                           <div style="color: green">@Model.SuccessMessage</div> 
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.StaffRequirements, rowCount: Model.StaffRequirements.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new {StuffRequirementId = "grid"},
+                        tableStyle: "webgrid-table webgrid",
+                        headerStyle: "webgrid-header",
+                        footerStyle: "webgrid-footer",
+                        alternatingRowStyle: "webgrid-alternating-row",
+                        selectedRowStyle: "webgrid-selected-row",
+                        rowStyle: "webgrid-row-style",
+                        firstText: "First",
+                        lastText: "Last",
+                        nextText: "Next",
+                        mode: WebGridPagerModes.All,
+                        previousText: "Previous",
+                        columns: grid.Columns(
+                            grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount/grid.PageCount)/grid.RowsPerPage)*grid.RowsPerPage*grid.PageIndex),
+                            grid.Column("StuffRequirementId", header: "Stuff Requirement Id"),
+                                     grid.Column("Title", header: "File Title"),
+                            grid.Column("ControlType.ControlName", header: "Control Type"),
+                            grid.Column("Status1.FileStatus", header: "Status"),
+                            grid.Column("Accept", canSort: false, format: @<text> @Html.ActionLink("Accept", "Accept", "StaffRequirement", new { st = 2, StuffRequirementId = item.StuffRequirementId }, new { @class = "btn btn-info" })</text>),
+                            grid.Column("Hold", canSort: false, format: @<text> @Html.ActionLink("Hold", "Accept", "StaffRequirement", new { st = 12, StuffRequirementId = item.StuffRequirementId }, new { @class = "btn btn-info" })</text>)
+                    @*grid.Column("Delete", canSort: false, format: @<text> @Html.ActionLink("Delete", "Delete", "User", new { UserId = item.UserId }, new { @class = "btn btn-primary" })</text>)*@
+                            ))
+                    ;
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

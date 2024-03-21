@@ -1,0 +1,20 @@
+﻿@model RMS.Web.Models.ViewModel.TenderViewModel
+@{
+    Layout = null;
+}
+<tr>
+    <td>
+        @Html.TextBoxFor(x => Model.TenderChildDictionary[Model.Key].FieldName, new { id = "fieldName", @class = "form-control", required = "required" })
+    </td>
+    <td>
+        @Html.TextAreaFor(x => Model.TenderChildDictionary[Model.Key].FieldValue, new { id = "fieldValue", @class = "form-control", required = "required", @maxlength = "1498" })
+    </td>
+    <td>
+        @Html.CheckBoxFor(x => Model.TenderChildDictionary[Model.Key].IsChecked, new { @checked = "checked" })
+    </td>
+    <td>
+        <input class="btnAdd btn btn-danger" type="button" name="name" value="X" onclick="removeRow(this)" />
+    </td>
+
+</tr>
+

@@ -1,0 +1,48 @@
+﻿@model  RMS.Web.Models.ViewModel.ProjectViewModel
+@{
+    Layout = null;
+}
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+</style>
+<div class="col-md-2 col-sm-2 col-xs-2"></div>
+<div class="col-md-8 col-sm-8 col-xs-8">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">Project Update</div>
+        <div class="panel-body">
+            @{ int rowNo = 0; }
+            <div class="">
+
+                <table class="table table-bordered table-hover table-striped">
+
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">Project Description</td>
+                        <td style="text-align: center; font-size: 15px">Complete</td>
+                        <td style="text-align: center; font-size: 15px">Remarks</td>
+
+                    </tr>
+
+                    @foreach (var item in Model.ProjectNotes)
+                    {
+                        <tr>
+                            <td style="" class="col-md-1">@(rowNo += 1)</td>
+
+                            <td style="" class="col-md-6">@item.Parameter</td>
+                            <td style="" class="col-md-5">@item.Complete</td>
+                            <td style="" class="col-md-5">@item.Value</td>
+
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,24 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    Layout = null;
+}
+<tr>
+
+    <td>
+        @Html.DropDownListFor(model => Model.FinancialInstallmentDictionary[Model.Key].FinancialYearId,
+                           Model.FinancialYears.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Value, Selected = (x.Id == Model.FinancialInstallmentDictionary[Model.Key].FinancialYearId) }).ToList(),
+          "--Select--",
+              new { @class = "form-control", required = "required" })
+        @*@Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[Model.Key].InstallmentNo, new { id = "fieldName", @class = "txtMember form-control", required = "required" })*@
+    </td>
+    <td>
+        @Html.TextBoxFor(x => Model.FinancialInstallmentDictionary[Model.Key].Percentage, new { id = "fieldName", @class = "txtMember form-control" })
+    </td>
+    <td>
+        @Html.TextBoxFor(x => Model.FinancialInstallmentDictionary[Model.Key].Amount, new { id = "term", @class = "form-control" })
+    </td>
+    <td>
+        <input class="btnAdd btn btn-danger" type="button" name="name" value="X" onclick="removeRow(this)" />
+    </td>
+
+</tr>

@@ -1,0 +1,164 @@
+﻿@model RMS.Web.Models.ViewModel.StaffRequirementViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<link href="~/css/ReadOnlyNotSpan.css" rel="stylesheet" />
+<div class="container" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Create Staff Requiremenrt
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color: green;text-align: center">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color: red; text-align: center">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("CreateValue", "StaffRequirement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.StaffRequirement.StuffRequirementId)
+                    @Html.HiddenFor(x => x.FlowSerial)
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File No &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @*@Html.HiddenFor(x => x.ValidationCheckBySubject, new { id = "subHiddenId", @class = "subHiddenClass" })*@
+
+                                    @Html.DropDownListFor(model => model.StaffRequirement.FileNo, Model.ProjectSelectList, "--select--", new { @class = "form-control", required = "required", @readonly = true })
+
+
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.StaffRequirement.FileNo)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Committee Name </label>
+                                <div class="col-md-5">
+
+                                    @Html.DropDownListFor(model => model.StaffRequirement.CommitteID, Model.CommitteSelectListItems, "--select--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.StaffRequirement.CommitteID)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-sm-3 col-md-3 col-lg-3">Flow Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                    <div class="col-md-5">
+
+                                        @Html.DropDownListFor(model => model.StaffRequirement.FlowId, Model.FlowSelectListItems, "--select--", new {  @class = "form-control", required = "required" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.ValidationMessageFor(x => x.StaffRequirement.FlowId)
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Staff Requirement Title &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.StaffRequirement.Title, null, new { id = "txtMemberName", @class = "txtMember form-control", placeholder = "Enter Tile", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.StaffRequirement.Title)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Status &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.StaffRequirement.Status, Model.StatusSelectList, "--select--", new { @id = "ddlAppType", @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.StaffRequirement.Status)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Attached File </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.ImageUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Issue Date &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.StaffRequirement.CreateDate, "{0:dd MMMM yyyy}", new { id = "txtEmail", @class = "txtMember form-control datepicker", required = "required" })
+
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.StaffRequirement.CreateDate)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks</label>
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.StaffRequirement.Remarks, new { id = "txtMemberName", @class = "txtMember form-control", placeholder = "Enter Tile" })
+
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.ImageUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To Flow Info", "TreeMenuIndex", "FlowSetup", null, new { @class = "btn btn-info pull-left" }) &nbsp;
+
+                                    @Html.ActionLink("Show All", "Index", "StaffRequirement", new { projectId = Model.StaffRequirement.FileNo, flowserial = Model.FlowSerial }, new { @class = "btn btn-info" })
+                                    @*@Html.ActionLink("Show All", "Index", "StaffRequirement", new { fileId = Model.StaffRequirement.FileNo, flowserial = Model.FlowSerial, StuffRequirementId = Model.StaffRequirement.StuffRequirementId }, new { @class = "btn btn-info" })*@
+                                    <input type="submit" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

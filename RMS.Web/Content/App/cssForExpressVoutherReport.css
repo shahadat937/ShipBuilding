@@ -1,0 +1,39 @@
+﻿
+.firstTable {
+    background-color: #ffffff;
+    /*padding: 3px;*/
+    font-size: xx-small;
+    font-family:Verdana;
+    width:100%;
+}
+.innerTable {
+    background-color: #ffffff;
+    /*padding: 3px;*/
+    font-size: xx-small;
+    font-family: Verdana;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #333;
+    border-top: 1px solid #333;
+}
+.headerBoder {
+    text-align: center;
+    /*padding: 3px;*/
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #333;
+    border-top: 1px solid #333;
+}
+.rowleft {
+    text-align: left;
+}
+.rowRight {
+    text-align: right;
+}
+.Rowhieght {
+    height: 1px;
+}
+.SeperateCustomerCopy {
+    height: 70px;
+}
+

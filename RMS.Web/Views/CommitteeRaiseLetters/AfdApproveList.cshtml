@@ -1,0 +1,70 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.CommitteeRaiseLetterViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.FlowSerial)
+@Html.HiddenFor(x => x.FormId)
+@Html.HiddenFor(x => x.FileNo)
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+          AFD Letter Approve
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover table-striped">
+
+                <tr style="background-color: #654FA1;color: white">
+                    <td style="text-align: center; font-size: 15px">Serial No</td>
+                    <td style="text-align: center; font-size: 15px">Project Name</td>
+                    <td style="text-align: center; font-size: 15px">Reference</td>
+                    <td style="text-align: center; font-size: 15px">Decision</td>
+                    <td style="text-align: center; font-size: 15px">Remarks</td>
+                    <td style="text-align: center; font-size: 15px">Approve Document</td>
+
+                </tr>
+                @{ int rowNo = 0; }
+                @foreach (var item in Model.AFDLetterApproves)
+                {
+                    <tr>
+                        <td style="">@(rowNo += 1)</td>
+                        <td style="">@item.AFDLetter1.Demand.FileNo</td>
+                        <td style="">@item.Reference</td>
+                        <td style="">@item.Decition</td>
+                        <td style="">@item.Remarks</td>
+
+
+                        @if (item.ApproveUrl != null)
+                        {
+
+                            <td style="text-align: center; color: blue">
+                                <a href="@Url.Action("Show", "CommitteeRaiseLetters", new { url = item.ApproveUrl })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="text-align: center; color: blue">
+                                @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                            </td>
+                        }
+
+                    </tr>
+                }
+            </table>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <a href="@Url.Action("AfdApproveIndex", "CommitteeRaiseLetters", new { fileId = Model.FileNo,flowserial = Model.FlowSerial, formId = Model.FormId })" class="btn btn-info">
+                           Back
+                            <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

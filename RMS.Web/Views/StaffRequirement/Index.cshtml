@@ -1,0 +1,123 @@
+﻿@model RMS.Web.Models.ViewModel.StaffRequirementViewModel
+@{
+    ViewBag.Title = "Staff Requirement Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Staff Requirement Information
+        </div>
+        <div>
+
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    @*<td>@Html.ActionLink("Add New", "Create", "StaffRequirement", new { fileId = Model.StaffRequirement.FileNo, flowserial = Model.FlowSerial, StuffRequirementId = Model.StaffRequirement.StuffRequirementId }, new { @class = "btn btn-info" })</td>*@
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "StaffRequirement", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearchKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "File Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn">@*<i class="fa fa-search" aria-hidden="true"></i>*@ Search</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-md-12">
+                        @if (Model.FailedMessage != null)
+                        {
+                            @*if (Model.IsSucceed == 1)
+                                {
+                                    <div style="color:green">@Model.Message</div>
+                                }
+                                else
+                                {*@
+                            <div style="color:red">@Model.FailedMessage</div>
+                            //}
+                        }
+                    </div>
+                </div>
+            </div>
+            @{ int rowNo = 0; }
+            <div class="">
+                <table class="table table-bordered table-hover table-striped">
+
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">File Name</td>
+                        <td style="text-align: center; font-size: 15px">Status</td>
+                      
+                        @*<td style="text-align: center; font-size: 15px">Edit</td>*@
+                        <td style="text-align: center; font-size: 15px">File PDF</td>
+                        @*<td style="text-align: center; font-size: 15px">Approve Document</td>*@
+
+                    </tr>
+
+                    @foreach (var item in Model.StaffRequirements)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.Title</td>
+                            <td style="">@item.Status1.FileStatus</td>
+                          
+                            @*<td>
+                                    <a href="@Url.Action("Create", "StaffRequirement", new { StuffRequirementId = item.StuffRequirementId })" class="btn btn-warning">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    </a>
+                                </td>*@
+                            @if (item.FileUrl != null)
+                            {
+
+                                <td style="text-align: center; color: blue">
+                                    <a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                </td>
+                            }
+                            @*@if (item.ApproveFile != null)
+                            {
+
+                                <td style="text-align: center; color: blue">
+                                    <a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.ApproveFile})'"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                </td>
+                            }*@
+
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+    </div>
+    @Html.ActionLink("Back", "Create", "StaffRequirement", new { fileId = Model.StaffRequirement.FileNo, flowserial = Model.FlowSerial }, new { @class = "btn btn-info" })
+
+
+</div>
+
+
+
+
+
+

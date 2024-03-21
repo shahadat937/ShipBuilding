@@ -1,0 +1,78 @@
+﻿@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+    ViewBag.Title = "CashPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <fieldset>
+        <legend>Cash Payment Download</legend>
+        <div class="img-responsive table-responsive">
+            <div id="container">
+
+                <p></p>
+                @using (Html.BeginForm("CashPayment", "PaymentJBL", FormMethod.Get, new { @class = "RemittanceForm", @id = "formId" }))
+                {
+                    <table>
+                        <tr>
+                            <td>@Html.Label("Security Code")</td>
+                            <td>:</td>
+                            <td>@Html.TextBoxFor(x => x.SecurityCode, new { palaceholder = "Enter Security Code",id="txtSecurityCode" })</td>
+                            <td><button id="findButton" style="width: 95PX;height: 30PX;float:right" class="btn btn-primary">Search... </button></td>
+                        </tr>
+                    </table>
+                    
+                    <table>
+                        @if (TempData["Msg"] != null)
+                        {
+                            <p style="color:red"> @TempData["Msg"].ToString()</p>
+                        }
+                    </table>
+                }
+
+                @using (Html.BeginForm("CashPaidMarked", "PaymentJBL", FormMethod.Post, new { @class = "RemittanceForm1", @id = "formId1" }))
+                    {
+
+                        <table>
+                            <div class="containerForCashPayementHo">
+                                @Html.Partial("~/Views/PaymentJBL/_PaymentJBL.cshtml", Model)
+                            </div>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>@Html.HiddenFor(x => x.SecurityCode, new { @class = "textBoxsize form-control", placeholder = "Enter Security Code" })</td>
+                                @if (Model.SearchStatus)
+                                {
+                                    <td style="float: right;margin-left:212px"><input type="submit" id="paymentButto" style="width: 95PX; height: 30PX" class="btn btn-primary" value="Payment" /></td>
+
+                                }
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td style="float: right;margin-left:212px"><input type="submit" id="btnPrint" style="width: 95PX; height: 30PX" class="btn btn-primary" value="Print" /></td>
+                            </tr>
+
+                        </table>
+                 }
+                
+            </div>
+        </div>
+    </fieldset>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $('#btnPrint').unbind('change').bind('change', function () {
+            var securityCode = $('#txtSecurityCode').val();
+            $.Ajax({
+                url: '/PaymentJBL/ExpressVoucher/',
+                data: { SecurityCode: securityCode }
+            }).done(function (visitor) {
+                //$('.VisitorNameTextBoxFor').val(visitor.VisitorName);
+                //$('.AddressTextBoxFor').val(visitor.Address);
+            });
+        });
+
+    </script>
+}

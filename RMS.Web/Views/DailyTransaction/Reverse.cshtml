@@ -1,0 +1,110 @@
+﻿@using System.Globalization
+@model RMS.Web.Models.ViewModel.DailyTransactionViewModel
+
+@{
+    ViewBag.Title = "Transaction Verify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Reverse", "DailyTransaction", FormMethod.Post, new { @class = "verifyTransaction" }))
+{
+    <div class="">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="text-align:center"> Reverse Cover Fund Transaction</div>
+            <div class="panel-body">
+                <table class="table table-responsive table-bordered table-hover">
+                    <thead style="background-color: #32CD32;">
+                        <tr>
+                            <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                            <th>Sl No</th>
+                            <th>Voucher No</th>
+                            <th>Account Code</th>
+                            <th>Transaction Date</th>
+                            <th>Amount(Cr.) in BDT</th>
+                            <th>Amount(Dr.) in BDT</th>
+                            <th>Exchange Rate</th>
+                            <th>Amount(Cr.) in USD</th>
+                            <th>Amount(Dr.) in USD</th>
+                            <th>Currency</th>
+                            <th>Transaction type</th>
+                            <th>Transaction Mode</th>
+                            <th>Description</th>
+                            <th>Exchange Company</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DailyTransactions)
+                        {
+                            <tr class="table-hover">
+                                <td><input type="checkbox" value="@item.DailyTransactionIdentity" name="NoOfTransaction" /></td>
+                                <td>@Html.DisplayFor(modelItem => item.DailyTransactionIdentity)</td>
+                                <td>@Html.DisplayFor(modelItem => item.VoucherNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AccountInformation.AccountHead)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TransDate)</td>
+                                <td style="text-align: right">@Html.DisplayFor(modelItem => item.FCredit)</td>
+                                <td style="text-align: right">@Html.DisplayFor(modelItem => item.FDebit)</td>
+                                <td style="text-align: right">@Html.DisplayFor(modelitem => item.ExchangeRate)</td>
+                                <td style="text-align: right">@Html.DisplayFor(modelItem => item.Credit)</td>
+                                <td style="text-align: right">@Html.DisplayFor(modelItem => item.Debit)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CommonCode.TypeValue)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BranchInfo.BranchName)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div><button id="verifyButton" style="float:right" class="btn btn-info">Reverse</button></div>
+                <div>
+                    @if (Model.IsSucceed == 1)
+                    {
+                        <div style="color:green">@Model.Message</div>
+                    }
+                    else
+                    {
+                        <div style="color:red">@Model.Message</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+    </script>
+}

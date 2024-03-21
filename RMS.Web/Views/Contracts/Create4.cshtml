@@ -1,0 +1,145 @@
+﻿@model RMS.Web.Models.ViewModel.ContractViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Contract  Add
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "Contracts", null, FormMethod.Post, new { id = "formCreateContract" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Contract.ContractFileId)
+                    @*<div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-sm-3 col-md-3 col-lg-3">Contract File &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                    <div class="col-md-5">
+                                        @Html.DropDownListFor(x => x.Contract.ContractFileId, Model.ContractFileSelectedItems, "--Select Category--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.ValidationMessageFor(x => x.Contract.ContractFileId)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Field &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.Contract.FieldId, Model.ContractFieldSelectedItems, "--Select A Field--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Contract.FieldId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Field Value &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Contract.FieldValue, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Contract.FieldValue)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "Contracts", null, new { @class = "btn btn-info" })
+                                    <input type="button" id="btnCreateContract" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Contract  Created Successfully!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="FailedMessage" style="color:red">Contract Creation Failed!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="contractCreatePartial">
+
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-2.1.3.js"></script>
+<script src="~/Scripts/AppScripts/ajax.js"></script>
+@section scripts{
+    <script>
+        $("#btnCreateContract").click(function () {
+            var data = $('#formCreateContract').serialize();
+            console.log(data);
+            alert("L");
+
+            $.ajax({
+                url: "/Contracts/Create",
+                type: 'post',
+                data: data,
+                dataType: 'html',
+                success: successFunc,
+                error: errorFunc
+            }); 
+            successFunc = function (response) {
+                alert("L22");
+                $('#contractCreatePartial').hide();
+                $('#contractCreatePartial').html(response);
+            }
+            errorFunc = function (response) {
+                $('#myFailedModel').modal('show');
+            }
+        });
+    </script>
+}
+
+
+
+

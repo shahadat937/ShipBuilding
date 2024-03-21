@@ -1,0 +1,89 @@
+﻿@using System.Web.UI.WebControls
+@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+    ViewBag.Title = "CashPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <fieldset>
+        <legend>Old Account Payee Remittances</legend>
+        <div class="img-responsive table-responsive">
+            <div id="container">
+
+                <p></p>
+                @using (Html.BeginForm("AccountPaidData", "PaymentJBL", FormMethod.Post, new { @class = "RemittanceForm", @id = "formId" }))
+                {
+                    <table>
+                        <tr>
+                            <td>Payment Mode</td>
+                            <td>:</td>
+                            <td>@Html.DropDownListFor(x => x.IssuePaymentCode,Model.PaymentModeSelectListItems)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.Label("Date From")</td>
+                            <td>:</td>
+                            <td>
+                                @Html.EditorFor(x => x.FromDate, new { htmlAttributes = new { @class = "datepicker"} })
+                            </td>
+                            <td>@Html.Label("Date To")</td>
+                            <td>:</td>
+                            <td>
+                                @Html.EditorFor(x => x.ToDate, new { htmlAttributes = new { @class = "datepicker" } })
+                            </td>
+                            <td><button id="findButton" style="width: 95PX;height: 30PX;float:right" class="btn btn-primary">Search... </button></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <table class=" table table-bordered">
+                        <tr>
+                            <th>File Name</th>
+                            <th>File Date</th>
+                            <th>No of Remittance</th>
+                            <th>Total Amount</th>
+                            <th>Download</th>
+                        </tr>
+                        @if (Model.JRemittanceInfos.Count > 0)
+                        {
+                            foreach (var item in Model.JRemittanceInfos)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.FileName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FileDate)</td>
+                                    <td style="text-align: center">@Html.DisplayFor(modelItem => item.NoOfRemittance)</td>
+                                    <td style="text-align: right">@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                    <td>@Html.ActionLink("Download", "JOldAccDataByPaymentType", "PaymentJBL", new { PaymentType = item.PaymentType, DateOfPayment = item.FileDate, IssuePaymentCode=Model.IssuePaymentCode,FileName=item.FileName }, null)</td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>@Html.ActionLink("Download All", "OldDataForAllExport", "PaymentJBL", new { IssuePaymentCode = Model.IssuePaymentCode, DateFrom = Model.FromDate, DateTo = Model.ToDate }, null)</td>
+                        </tr>
+                    </table>
+                    <table>
+                        @if (TempData["Msg"] != null)
+                        {
+                            <p style="color:red"> @TempData["Msg"].ToString()</p>
+                        }
+                    </table>
+                }
+            </div>
+        </div>
+    </fieldset>
+</div>
+@section scripts
+{
+
+    <script type="text/javascript">
+        $(function () {
+            $('th a, tfoot a').on('click', function () {
+                $('form').attr('action', $(this).attr('href')).submit();
+                return false;
+            });
+        });
+    </script>
+}

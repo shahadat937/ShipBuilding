@@ -1,0 +1,87 @@
+﻿@model RMS.Web.Models.ViewModel.ReportingViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/AppStyles/AccordianMenu.css" rel="stylesheet" />
+
+<h2>Index</h2>
+
+<div style="padding:10px; border:1px solid black">
+    <div><a href="@Url.Action("Report",new {format= "PDF"})"> Get Report PDF</a></div>
+    <div><a href="@Url.Action("Report", new { format = "Excel" })"> Get Report Excel</a></div>
+    <div><a href="@Url.Action("Report", new { format = "Word" })"> Get Report Word</a></div>
+    <div><a href="@Url.Action("Report", new { format = "Image" })"> Get Report Image</a></div>
+</div>
+<div id='cssmenu'>
+
+    <ul>
+        @foreach (var firstLevel in Model.ReportingTreeViews)
+        {
+            <li class='active'><a href='#'><span>@firstLevel.ReportName</span></a></li>
+            <li class='has-sub'>
+                <ul>
+                    @foreach (var secondLevel in firstLevel.ReportingTrees)
+                    {
+                        <li class='active'><a href='#'><span>@secondLevel.ReportName</span></a></li>
+
+                        <li class='has-sub'>
+                            <ul>
+                                @foreach (var thirLevel in secondLevel.ReportingTrees)
+                                {
+                                    <li class='active'><a href='#'><span>@thirLevel.ReportName</span></a></li>
+                                }
+                            </ul>
+
+                        </li>
+                    }
+                </ul>
+
+            </li>
+        }
+    </ul>
+
+    <ul>
+        <li class='active'><a href='#'><span>Home</span></a></li>
+        <li class='has-sub'>
+            <a href='#'><span>Products</span></a>
+            <ul>
+                <li><a class="reportView"> Get Report PDF</a></li>
+                <li><a href="@Url.Action("Report", new { format = "Excel" })" style="cursor: pointer"> Get Report Excel</a></li>
+                <li class='last'><a href="@Url.Action("Report", new { format = "Word" })"> Get Report Word</a></li>
+            </ul>
+        </li>
+        <li class='has-sub'>
+            <a href='#'><span>About</span></a>
+            <ul>
+                <li><a href='#'><span>Company</span></a></li>
+                <li class='last'><a href='#'><span>Contact</span></a></li>
+            </ul>
+        </li>
+        <li class='last'><a href='#'><span>Contact</span></a></li>
+    </ul>
+</div>
+<div id="reportParameterContainnerView">
+
+</div>
+<input type="button" class="reportView" value="click me" />
+@section scripts
+{
+    <script src="~/Scripts/APP/AccordianMenu.js"></script>
+
+    <script type="text/javascript">
+
+        $('.reportView').unbind('click').bind('click', function () {
+            var url = '/Report/ReportParameter';
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (response) {
+
+                    $("#reportParameterContainnerView").html("");
+                    $("#reportParameterContainnerView").append(response);
+                }
+            });
+        });
+
+    </script>
+}

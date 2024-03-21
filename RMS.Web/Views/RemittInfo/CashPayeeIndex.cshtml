@@ -1,0 +1,209 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Spot Cash Payment";
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("CashPayeeIndex", "RemittInfo", FormMethod.Post))
+        {
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Security Code:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.SecurityCode, new { @class = "textBoxsize form-control", tabindex = 1, placeholder = "Security Code/PIN" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.SecurityCode)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" style="text-align:left">
+                    <div class="form-group">
+                        <input type="submit" value="Payment Process" class="btn btn-info" />
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+        @using (Html.BeginForm("MakeCashPayment", "RemittInfo", FormMethod.Post, new { @class = "verifyTransaction" }))
+        {
+            if (Model.RemittInfo != null)
+            {
+                if (Model.RemittInfo.Status == "01")
+                {
+                    @Html.HiddenFor(x => x.RemittInfo.RemittInfoIdentity)
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Remitter Name:</label>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(x => x.RemittInfo.ApplicantName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Beneficiary Name:</label>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(x => x.RemittInfo.BeneficiaryName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Exchange Company:</label>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(x => x.RemittInfo.BranchInfo2.BranchName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Beneficiary Address:</label>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(x => x.RemittInfo.BeneficiaryAddress)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Originationg Country:</label>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(x => x.RemittInfo.CommonCode3.TypeValue)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Amount in BDT:</label>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(x => x.RemittInfo.Amount)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Valid Photo ID Type:</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.PaymentIdType, Model.PaymentPhotoIdTypeSelectListItems, "-Select Payment Photo ID type-", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Beneficiary Mobile No.:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.RemittInfo.BeneficiaryCellPhone, new { @class = "form-control", tabindex = 2, palceholder = "Beneficiary Mobile Number" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Photo ID number:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.PaymentIdNumber, new { @class = "form-control", tabindex = 3, palceholder = "ID number" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Remarks:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.RemittInfo.Remarks, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Payment Branch:</label>
+                                <div class="col-md-8">
+                                    @if (PortalContext.CurrentUser.RoleId == 4)
+                                    {
+                                        @Html.DropDownListFor(x => x.RemittInfo.RespondingBranch, Model.BranchInfosSelectdItemList, new { @class = "form-control", @readonly = "readonly" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(x => x.RemittInfo.RespondingBranch, Model.BranchInfosSelectdItemList, "-Select Payment Branch-", new { @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-8">
+                                    <input type="submit" value="Make Payment" class="btn btn-info" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+    </script>
+}

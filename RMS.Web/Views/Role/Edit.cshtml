@@ -1,0 +1,90 @@
+﻿@model RMS.Web.Models.ViewModel.RoleViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { @class = "UserForm" }))
+{
+    @Html.Label("Hi");
+   
+}
+
+
+<script type="text/javascript">
+
+
+    function myFunction() {
+        var uri = "http://localhost:6023/User/Edit";
+        var res = encodeURI(uri);
+        document.getElementById("demo").innerHTML = res;
+    }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function showhide() {
+        var div = document.getElementById("newpost");
+        if (div.style.display !== "none") {
+            div.style.display = "none";
+        }
+    }
+
+    function toUnicode(elmnt) {
+        var next;
+        if (elmnt.value.length == elmnt.maxLength) {
+            next = elmnt.tabIndex + 1;
+            //look for the fields with the next tabIndex
+            var f = elmnt.form;
+            for (var i = 0; i < f.elements.length; i++) {
+                if (next <= f.elements[i].tabIndex) {
+                    f.elements[i].focus();
+                    break;
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+    $('.dropdown').change(function () {
+        var $DistrictNamedropdown = $(this);
+        var targetClass = $DistrictNamedropdown.attr('TargetClass');
+        var url = $DistrictNamedropdown.attr('action');
+        var districtCode = $DistrictNamedropdown.val();
+        var option = {
+            url: url,
+            type: 'GET',
+            dataType: 'JSON',
+            data: { districtCode: districtCode }
+        };
+        $.ajax(option).done(function (branchdata) {
+            if (branchdata.length > 0) {
+                ClearDropDownList(targetClass);
+                $("." + targetClass).append('<option value="">---Select Branch---</option>').val("");
+                $.each(branchdata, function () {
+                    $("." + targetClass).append($("<option />").val(this.BranchName).text(this.BranchName));
+                });
+            } else {
+                NotFoundData(targetClass);
+            }
+
+        });
+    });
+
+    function ClearDropDownList(selector) {
+        $('.' + selector)
+            .find('option').remove();
+
+    };
+
+    function NotFoundData(targetClass) {
+        $('.' + targetClass)
+            .append($('<option>').text("Not Found").attr('value', ""));
+    };
+
+</script>

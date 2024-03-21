@@ -1,0 +1,73 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.TenderViewModel
+@{
+    //ViewBag.Title = "Commitee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.FlowSerial)
+@Html.HiddenFor(x => x.TenderSecification.FileNo)
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Tender Specification Information
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    @*<td>@Html.ActionLink("Add New", "Create", "Tender", new { @class = "btn btn-info" })</td>*@
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "Tender", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearchKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn">@*<i class="fa fa-search" aria-hidden="true"></i>*@ Search</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+
+            <div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.TenderSecifications, rowCount: Model.TenderSecifications.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new { TenderIdentity = "grid" },
+                        tableStyle: "webgrid-table webgrid",
+                        headerStyle: "webgrid-header",
+                        footerStyle: "webgrid-footer",
+                        alternatingRowStyle: "webgrid-alternating-row",
+                        selectedRowStyle: "webgrid-selected-row",
+                        rowStyle: "webgrid-row-style",
+                        firstText: "First",
+                        lastText: "Last",
+                        nextText: "Next",
+                        mode: WebGridPagerModes.All,
+                        previousText: "Previous",
+                        columns: grid.Columns(
+                            grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                            grid.Column("Title", header: "Title"),
+                                     grid.Column("Capability", header: "Draught"),
+                                                       grid.Column("EngineName", header: "Displacement  "),
+                                                       grid.Column("Power", header: "Speed"),
+                                     grid.Column("MadeBy", header: "Endurance ")
+                            @*grid.Column("Edit", canSort: false, format: @<text> @Html.ActionLink("Edit", "Create", "Tender", new { TenderId = item.TenderIdentity }, new { @class = "btn btn-info" })</text>)*@
+                    @*grid.Column("Delete", canSort: false, format: @<text> @Html.ActionLink("Delete", "Delete", "User", new { UserId = item.UserId }, new { @class = "btn btn-primary" })</text>)*@
+                            ))
+                    ;
+                }
+            </div>
+        </div>
+        @Html.ActionLink("Back To Crate Page", "Create", "Tender", new { fileId = Model.TenderSecification.FileNo, flowserial = Model.FlowSerial }, new { @class = "btn btn-info" })
+
+
+    </div>
+</div>
+

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<meta name="description" content="">
+    <meta name="" content="">*@
+    <title>Bangladesh Navy</title>
+    <link rel="shortcut icon" href="~/1favicon.ico" />
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+   
+    <div class="main-body">
+        <div class="col-md-12">
+            <div class="main-body-section">
+                <div class="container1 body-content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <!-- FOOTER SECTION BEGINNING -->
+        <footer class="footer-section">
+            <div class="col-sm-6">
+                <div class="footer-left">
+                    @*Infinity Bank Limited*@ 
+                    @*<img src="~/images/PBL30.png" alt="">*@
+                    <span class="footer-left-text"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="footer-right">
+                    <span class="footer-right-powered">Powered by </span><span class="footer-right-text"><img src="~/images/InfinityLogo.png" alt=""> Infinity Technology International Limited</span>
+                </div>
+            </div>
+        </footer>
+        <!-- FOOTER SECTION ENDING -->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/APP/datepicker.js"></script>
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/APP/custom.js"></script>
+    <link href="~/Content/NotificationCSS.css" rel="stylesheet" />
+</body>
+</html>

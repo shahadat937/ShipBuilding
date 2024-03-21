@@ -1,0 +1,66 @@
+﻿@model RMS.Web.Models.ViewModel.FormInfoViewModel
+@{
+    Layout = null;
+}
+<style>
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+</style>
+<div class="container" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-body">
+                <table class="table" id="customers">
+                    <tr class="row" >
+                        <th style="text-align: center">Project Name</th>
+                        <th style="text-align: center">File Name</th>
+                        <th style="text-align: center">Attachecd Document</th>
+                    </tr>
+                    @foreach (var item in Model.FormInfoes)
+                    {
+                        <tr class="row">
+                            <td>@item.ProjectName</td>
+                            <td>@item.FileName</td>
+                            @if (item.AttachedDocument != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FormPDFSearch", new { url = item.AttachedDocument })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

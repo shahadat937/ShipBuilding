@@ -1,0 +1,187 @@
+﻿@using RMS.BLL.TreeView
+@model RMS.Web.Models.ViewModel.FlowSetupViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+<style type="text/css">
+    #cre {
+        background-color: #0515B5;
+    }
+    .chkres {
+        background-color: #990000;
+    }
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+    h4 {
+        color: black;
+        background-color: white;
+        font-weight: bold;
+    }
+    label, input {
+        display: inline !important;
+        
+    }
+
+
+</style>
+@helper ShowCrudLink(FileCrafts control,int val)
+{  
+  
+    if (control.status != false)
+    {
+        <span style="display: inline;">
+            <input type="checkbox"  name="res" onclick="this.checked=!this.checked;" class="chkres" checked="@control.status" />
+            &nbsp;&nbsp;
+            <a href='@Url.Content(control.FormURL + "?fileId=" + control.ProjectId + "&flowserial=" + control.FlowSerial + "&formId=" + control.FileId)'><strong>GO</strong></a>
+        </span>
+    }
+    else if (control.status == false && val == 1)
+    {
+     
+        <span style="display: inline;">
+            <input type="checkbox" name="res"  onclick="this.checked=!this.checked;" class="chkres" checked="@control.status" />
+            &nbsp;&nbsp;
+            <a href='@Url.Content(control.FormURL + "?fileId=" + control.ProjectId + "&flowserial=" + control.FlowSerial + "&formId=" + control.FileId)'><strong>GO</strong></a>
+        </span>
+    }
+
+    @*@Html.ActionLink("Go", "SelfCreate", "SelfManagement", new { ControlShipInfoId = control.FormURL, id = "cre", Type = "Create" }, null)*@
+    @*@Html.ActionLink(" / Edit", "SelfCreate", "SelfManagement", new { ControlShipInfoId = control.FileId, id = "cre", Type = "Edit" }, null)
+    @Html.ActionLink(" / Delete", "Delete", "SelfManagement", new { ControlShipInfoId = control.FileId, id = "cre", Type = "Edit" }, null)*@
+    @*@Html.ActionLink(" / Download", "Download", "ControlShipInfo", new { ControlShipInfoId = control.SelfControlInfoIdentity, Type = "Download" }, null)*@
+
+
+}
+<link href="~/Content/App/treeView.css" rel="stylesheet" />
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading" style="color: white;text-align: center">File Information</div>
+    <div class="body">
+        @using (Html.BeginForm())
+        {
+            @*@Html.HiddenFor(model => model.SelfControlInfoIdentity)
+                @Html.HiddenFor(model => model.SelfControlInfoIdentity)
+                @Html.HiddenFor(model => model.SelfControlInfoIdentity)*@
+
+
+
+            <section class="search">
+
+                <div class="tree panel-body" style="overflow-x:scroll;overflow-y:scroll;height:422px; width:auto">
+                    <ul>
+                     
+                        @foreach (var ch1 in Model.ChartofAccounts)
+                        {
+                            <li>
+                                <a>  </a>
+
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span >
+                                                                             @ch1.FileName &nbsp; &nbsp;
+
+                                                                         </span>
+                              
+
+                                <ul>
+                                    @{
+
+                                        var count = 0;
+                                        foreach (var ch2 in ch1.Nodes.OrderBy(x => x.FlowSerial))
+                                        {
+                                            <li>
+                                                <a> </a>
+                                                <span> @ch2.FileName &nbsp; &nbsp; @ch2.FlowSerial</span>
+                                                <ul>
+                                                
+                                             
+                                               
+                                             
+                                                    @foreach (var ch3 in ch2.Nodes.OrderBy(x => x.taskSerial))
+                                                    {
+                                                        <li>
+                                                            <a>  </a>
+                                                            @if (ch3.status == false)
+                                                            {
+                                                                count++;
+                                                            }
+                                                            <span style="display: inline"> @ch3.FileName &nbsp; &nbsp; @ShowCrudLink(ch3, count)</span>
+
+                                                            @*<ul>
+                                                            @foreach (var ch4 in ch3.Nodes)
+                                                            {
+                                                                <li>
+                                                                    <a>   </a>
+                                                                    <span> @ch4.FileName &nbsp; &nbsp; @ShowCrudLink(ch4)</span>
+
+                                                                    <ul>
+                                                                        @foreach (var ch5 in ch4.Nodes)
+                                                                        {
+                                                                            <li>
+
+                                                                                <span>
+                                                                                    @ch5.FileName
+                                                                                    @Html.ActionLink("Edit", "Create", "ControlShipInfo", new { @class = "AjaxPopup", title = "Edit", @action = Url.Action("Create", "ControlShipInfo", new { ControlShipInfoId = ch5.FileId, ControlLevel = ch5.FileId }) })
+
+                                                                                </span>
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </li>
+                                                            }
+                                                        </ul>*@
+                                                        </li>
+                                                    }
+                                 
+                                                </ul>
+                                            </li>
+
+                                        }
+                                    }
+                                </ul>
+
+                            </li>
+                    }
+                    </ul>
+                </div>
+            </section>
+
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-offset-4" id="newpost" style="color:red; padding-left:3px;">
+        <h2><p>@TempData["Msg"]</p></h2>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+
+        $('.tree li').each(function () {
+            if ($(this).children('ul').length > 0) {
+                $(this).addClass('parent');
+            }
+        });
+
+        $('.tree li.parent > a').click(function () {
+            $(this).parent().toggleClass('active');
+            $(this).parent().children('ul').slideToggle('fast');
+        });
+        $('#all').click(function () {
+            $('.tree li').each(function () {
+                $(this).toggleClass('active');
+                $(this).children('ul').slideToggle('fast');
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+

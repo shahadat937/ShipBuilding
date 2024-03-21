@@ -1,0 +1,143 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center;">Remittance Payment</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("DownloadToDaysPayment", "RemittInfo", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "idForm" }))
+        {
+            if (Model.RemittInfosPaid.Count >= 0)
+            {
+                <div class="row" style="font-weight:bold;color:blue">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Number of Remittance (Today's):</label>
+                            <div class="col-md-6" style="text-align:left">
+                                @Html.DisplayFor(x => x.NumberOfRemittance)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Total Amount in BDT(Today's ):</label>
+                            <div class="col-md-6" style="text-align:left">
+                                @Html.DisplayFor(x => x.TotalAmountInBDT)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="col-md-12" style="text-align: right">
+                            @Html.ActionLink("Today's Payment List", "DownloadTodaysAccPaidData", "RemittInfo", new { @class = "btn btn-info" })
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="col-md-12">
+                            @Html.ActionLink("Refresh after payment", "AccountPayeeIndex", "RemittInfo", new { @class = "btn btn-info" })
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+    </div>
+
+</div>
+<div class="row">
+    @if (Model.Message != null)
+    {
+        if (Model.IsSucceed == 1)
+        {
+            <div style="color:red">@Model.Message</div>
+        }
+        else
+        {
+            <div style="color:green">@Model.Message</div>
+        }
+    }
+</div>
+<table class="table table-responsive table-bordered table-hover">
+    <thead style="background-color: #32CD32;">
+        <tr style="font-size:10px;">
+            @*<th>Exchange Company</th>*@
+            <th>Originating Country</th>
+            <th>Currency</th>
+            <th>Reference Number</th>
+            <th>Remitter Name</th>
+            <th>Beneficiary Name</th>
+            <th>Transaction Date</th>
+            @*<th>Amount in FC</th>
+                <th>Exchange Rate</th>*@
+            <th>Amount in BDT</th>
+            <th>Bank Name</th>
+            <th>District Name</th>
+            <th>Branch Name</th>
+            <th>Routing No.</th>
+            <th>Payment Type</th>
+            <th>Account Number</th>
+            <th>Make Payment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RemittInfos)
+        {
+            <tr style="font-size:10px;">
+                @*<td>@Html.DisplayFor(modelItem => item.BranchInfo2.BranchName)</td>*@
+                <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                <td>@Html.DisplayFor(modelItem => item.CommonCode.TypeValue)</td>
+                <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                <td>@Html.DisplayFor(modelItem => item.ApplicantName)</td>
+                <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                <td style="text-align: center">@Html.DisplayFor(modelItem => item.TransDate)</td>
+                @*<td style="text-align: center">@Html.DisplayFor(modelItem => item.FAmount)</td>
+                    <td style="text-align: center">@Html.DisplayFor(modelitem => item.ExchangeRate)</td>*@
+                <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo.BranchName)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo1.BranchName)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                @if (item.BranchInfo3.OwnBranchCode.Trim() == "")
+                {
+                    <td style="background-color:red">@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                }
+                @if (item.CommonCode2.CommonCodeID == 112395)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                }
+                else
+                {
+                    <td style="background-color:white">@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                }
+                <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.SecurityCode)</td>*@
+                <td>@Html.ActionLink("Make Payment", "MakeAccountPayment", "RemittInfo", new { RemittInfoIdentity = item.RemittInfoIdentity }, new { @class = "btn btn-info" })</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script>
+    @*$("#exchangeHouseNumber").click(function () {
+        var url = '@Url.Action("FindUploadedData", "RemittInfo", new { exchangeHouse = "----",uploadDate="--" })';
+        url = url.replace("----", $('#exchangeHouse').val());
+        url = url.replace("--", $('#uploadDate').val() + "|" + $('#exchangeHouse').val());
+        window.location = url;
+    });*@
+
+    $('#exchangeHouseNumber').click(function () {
+        var exchangeHouse = $('#exchangeHouse').val();
+        var uploadDate = $('#uploadDate').val(); // get the textbox value
+        if (uploadDate == '')
+            alert("Please select data uploaded date.");
+        var url = $(this).attr('href') + '&exchangeHouse=' + exchangeHouse + "&uploadDate=" + uploadDate; // build new url
+        location.href = url; // redirect
+        return false; // cancel default redirect
+    });
+</script>

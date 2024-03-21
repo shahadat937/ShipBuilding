@@ -1,0 +1,115 @@
+﻿
+@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+
+    Layout = null;
+}
+
+<table>
+  
+    <tr>
+        <td>@Html.Label("Remittane No")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.RemittanceNo)</td>
+        <td>@Html.HiddenFor(x => x.RemittanceNo)</td>
+    </tr>
+        <tr>
+            <td>@Html.Label("Sending Country")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.IssuingCountryName)</td>
+            <td>@Html.HiddenFor(x => x.IssuingCountryName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Remitter Name")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.ApplicantName)</td>
+            <td>@Html.HiddenFor(x => x.ApplicantName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Sending Date")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.TransDate)</td>
+            <td>@Html.HiddenFor(x => x.TransDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Amount(BDT)")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.FAmount)</td>
+            <td>@Html.HiddenFor(x => x.FAmount)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Beneficiary Name")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BeneficiaryName)</td>
+            <td>@Html.HiddenFor(x => x.BeneficiaryName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Beneficiary Address")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BeneficiaryAddress)</td>
+            <td>@Html.HiddenFor(x => x.BeneficiaryAddress)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Beneficiary Mobile")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BeneficiaryCellPhone)</td>
+            <td>@Html.HiddenFor(x => x.BeneficiaryCellPhone)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Branch Name")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BranchName)</td>
+            <td>@Html.HiddenFor(x => x.BranchName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Required ID Type")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.AccountNo)</td>
+            <td>@Html.HiddenFor(x => x.AccountNo)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Payment ID Type")</td>
+            <td>:</td>
+            <td>@Html.DropDownListFor(x => x.PaymentPhotoIdType, Model.CommonCodeSelectdItemList,"-Select-", new { @class = "dropdownsize form-control" })</td>
+            <td>@Html.ValidationMessageFor(m=>m.PaymentPhotoIdType)</td>
+
+        </tr>
+        <tr>
+            <td>@Html.Label("Payment ID Number")</td>
+            <td>:</td>
+            <td>@Html.TextBoxFor(x => x.PaymentPhotoIdNumber, new { @class = "textBoxsize form-control", placeholder = "Enter Valid Photo ID Number" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Remarks")</td>
+            <td>:</td>
+            <td>@Html.TextBoxFor(x => x.Remarks, new { @class = "textBoxsize form-control", placeholder = "Enter Remarks" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            
+            <td></td>
+            <td></td>
+            <td>@if (Model.Message == null)
+                {
+                    <input type="button" id="btnSave" onclick=" saveRemittance(this) " style="width: 115PX; height: 30PX; float: right" class="btn btn-primary" value="Make Payment" />
+                }
+            </td>
+            <td>@if (Model.Message == "Payment successfully done, please click on print button for voucher." || Model.Message == "The remittance is already paid.")
+                {   
+                <input type="button" id="btnSave"  onclick="printRemittance(this)" style="width: 115PX;height: 30PX;float:right"  class="btn btn-primary" value="Print Voucher" />
+                }
+            </td>
+        </tr>
+</table>
+
+<div>
+    <p style="color: red">@Model.Message</p> 
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,225 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.NSPCMeetingWorkViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                NSPC Meeting Work Information
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Edit", "NSPCMeetingWorks", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "formEditNSPCMeetingWork" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.NSPCMeetingWork.NSPCMeetingWorkId);
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">FileNo &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.NSPCMeetingWork.FileNo, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.FileNo)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Category &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.NSPCMeetingWork.CategoryId, Model.CommonCodeSelectedListItems, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.CategoryId)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File Url &nbsp;<i style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    <input type="file" id="file" name="upload" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.FileUrl)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Officer Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.NSPCMeetingWork.OfficerName, null, new { id = "OfficerName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.OfficerName)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">DescriptionBody &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.NSPCMeetingWork.DescriptionBody, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.DescriptionBody)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">ToAuthority &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.NSPCMeetingWork.ToAuthority, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.ToAuthority)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Issue Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.NSPCMeetingWork.IssueDate, "{0:dd MMMM yyyy}", new { id = "txtStartDate", @class = "datepicker form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.NSPCMeetingWork.IssueDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "NSPCMeetingWorks", null, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnEditNSPCMeetingWork" class="btn btn-info pull-right" value="Edit" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="SuccessMessage" style="color:green">NSPC Meeting Work Edited Successfully!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="FailedMessage" style="color:red">NSPC Meeting Work Edit Failed!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $('#btnEditNSPCMeetingWork').unbind('click').bind('click', function () {
+            var form = $('#formEditNSPCMeetingWork');
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    return false;
+                }
+                else {
+                    var data = form.serialize();
+                    $.ajax({
+                        url: "/NSPCMeetingWorks/Edit",
+                        type: 'POST',
+                        data: data,
+                        dataType: "html",
+                        success: successFunc,
+                        error: errorFunc
+                    });
+                    successFunc = function (response) {
+                        $('#mySuccessModel').modal('show');
+                    }
+                    errorFunc = function (response) {
+                        $('#myFailedModel').modal('show');
+                    }
+                }
+            }
+        });
+        $("#OfficerName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("AutoSearchResult")',
+                    type: "POST",
+                    dataType: "json",
+                    data: { prefix: GetCurrentSearchTerm(request.term) },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.MemberName, value: item.MemberName };
+                        }))
+
+                    }
+                })
+            },
+            select: function (event, ui) {
+                var LastValue = splitCurrentText(this.value);
+                LastValue.pop();
+                LastValue.push(ui.item.value);
+                LastValue.push("");
+                this.value = LastValue.join(",");
+                return false;
+            },
+            focus: function () {
+                return false;
+            }
+        });
+        function splitCurrentText(LastTerm) {
+
+            return LastTerm.split(/,\s*/);
+        }
+
+        function GetCurrentSearchTerm(LastTerm) {
+
+            return splitCurrentText(LastTerm).pop();
+        }
+    </script>
+}

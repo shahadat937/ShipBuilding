@@ -1,0 +1,69 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Send to BEFTN";
+    ViewBag.Title = "Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("ExportBEFTNFile", "RemittInfo", FormMethod.Post))
+        {
+            <h5>Export BEFTN File after Payment</h5>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Date of Payment:</label>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(x => x.RemittInfo.DateofPayment, "{0: dd MMMM yyyy}", new { @class = "textBoxsize form-control datepicker", id = "dateOfPayment" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.DateofPayment)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="col-md-6" style="text-align: left">
+                        <input type="submit" name="save" id="btnSave" value="Export All" class="btn btn-info" tabindex=7 />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Company:</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfo.ExchangeHouse, Model.ExchangeHouseSelectListItems, new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="col-md-6" style="text-align: left">
+                        <input type="submit" name="update" id="btnSave" value="Exchange House Wise" class="btn btn-info" tabindex=7 />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+

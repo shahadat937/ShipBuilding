@@ -1,0 +1,140 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.CommonCodeViewModel
+
+@{
+    ViewBag.Title = "Check Number";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center;">Add Check Number</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("SaveCheckNumber", "CommonCode", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Company:</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.CommonCode.BranchInfoIdentity, Model.ExchangeSelectListItems, "-Select Exchange Company", new { @class = "form-control", tabindex = 1, id = "exchangeHouse" })
+                            @Html.HiddenFor(x => x.CommonCode.BranchInfoIdentity)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="col-md-8" style="text-align:left">
+                            @Html.ActionLink("Find Check Number", "FindCheckNumber", "CommonCode", new { @class = "btn btn-info", id = "btnExchangeHouse" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">length of Check Number:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.LengthOfCheckNumber, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Length of Check Number" })
+                            @Html.ValidationMessageFor(x => x.LengthOfCheckNumber)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Starting Check Number:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.StartingCheckNumber, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Starting Check Number" })
+                            @Html.ValidationMessageFor(x => x.StartingCheckNumber)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Total Number of Check:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.TotalNumberofCheck, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Ending Check Number" })
+                            @Html.ValidationMessageFor(x => x.TotalNumberofCheck)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @*<label class="col-md-4 control-label"></label>*@
+                        <div class="col-md-8" style="text-align:left">
+                            <input type="submit" id="btnSave" value="Generate Check Number" class="btn btn-info" tabindex=13 />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed > 0)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+
+            </div>
+
+        }
+        <div class="row">
+            @{
+                var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                grid.Bind(Model.CommonCodes, rowCount: Model.CommonCodes.Count, autoSortAndPage: true);
+                grid.Pager(WebGridPagerModes.All);
+                @grid.GetHtml(htmlAttributes: new { CommonCodeInfoIdentity = "grid" },
+                    tableStyle: "webgrid-table webgrid",
+                    headerStyle: "webgrid-header",
+                    footerStyle: "webgrid-footer",
+                    alternatingRowStyle: "webgrid-alternating-row",
+                    selectedRowStyle: "webgrid-selected-row",
+                    rowStyle: "webgrid-row-style",
+                    firstText: "First",
+                    lastText: "Last",
+                    nextText: "Next",
+                    mode: WebGridPagerModes.All,
+                    previousText: "Previous",
+                    columns: grid.Columns(
+                        grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                        grid.Column("BranchInfo.BranchName", header: "Exchange Company"),
+                        grid.Column("Code", header: "Check Number"),
+                        grid.Column("TypeValue", header: "Length of Check Number"),
+                        grid.Column("Status", header: "Used for Payment"),
+                                                                                                                                               grid.Column("lastUpdate", header: "Generation Date", format: item => (item.lastUpdate == null) ? "" : item.lastUpdate.ToString("dd MMMM yyyy"))
+                        ))
+            }
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script>
+    @*$("#exchangeHouseNumber").click(function () {
+        var url = '@Url.Action("FindUploadedData", "RemittInfo", new { exchangeHouse = "----",uploadDate="--" })';
+        url = url.replace("----", $('#exchangeHouse').val());
+        url = url.replace("--", $('#uploadDate').val() + "|" + $('#exchangeHouse').val());
+        window.location = url;
+    });*@
+
+    $('#btnExchangeHouse').click(function () {
+        var exchangeHouse = $('#exchangeHouse').val();
+        if (exchangeHouse == '')
+            alert("Please select exchange house.");
+        var url = $(this).attr('href') + '&exchangeHouse=' + exchangeHouse; // build new url
+        location.href = url; // redirect
+        return false; // cancel default redirect
+    });
+</script>

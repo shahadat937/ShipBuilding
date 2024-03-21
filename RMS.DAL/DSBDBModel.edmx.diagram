@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3507978e80d241f887aec71d2c63a703" Name="Diagram1" ZoomLevel="49">
+        <EntityTypeShape EntityType="DSBDBModels.BranchInfo" Width="1.5" PointX="9.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.EventLog" Width="1.5" PointX="11.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectType" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.Reporting" Width="1.5" PointX="13.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.Role" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.Status" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.User" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.UserURLRight" Width="1.5" PointX="5.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.ZoneInfo" Width="1.5" PointX="15.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.BankInfo" Width="1.5" PointX="15.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DSBDBModels.UserBankInfo" Width="1.5" PointX="15.75" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="DSBDBModels.FK_User_Role" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DSBDBModels.DepartmentWiseMileStone" Width="1.5" PointX="7.875" PointY="6.625" />
+        <EntityTypeShape EntityType="DSBDBModels.DocumentInfo" Width="1.5" PointX="5.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DSBDBModels.MileStone" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DSBDBModels.Notice" Width="1.5" PointX="2.75" PointY="17.75" />
+        <EntityTypeShape EntityType="DSBDBModels.Project" Width="1.5" PointX="18.375" PointY="9.75" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectFinalStatu" Width="1.5" PointX="12.375" PointY="18.75" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectMovement" Width="1.5" PointX="18.375" PointY="15.75" />
+        <EntityTypeShape EntityType="DSBDBModels.File" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectFileMovement" Width="1.5" PointX="20.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectStatu" Width="1.5" PointX="20.375" PointY="6.75" />
+        <EntityTypeShape EntityType="DSBDBModels.TenderOffer" Width="1.5" PointX="20.375" PointY="13.75" />
+        <EntityTypeShape EntityType="DSBDBModels.PaymentSchedule" Width="1.5" PointX="20.375" PointY="9.75" />
+        <EntityTypeShape EntityType="DSBDBModels.WithdrawalLetterInfo" Width="1.5" PointX="0.75" PointY="22.75" />
+        <EntityTypeShape EntityType="DSBDBModels.Agendum" Width="1.5" PointX="7.375" PointY="21.75" />
+        <EntityTypeShape EntityType="DSBDBModels.Organization" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DSBDBModels.Member" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="DSBDBModels.FileMovement" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="DSBDBModels.FlowList" Width="1.5" PointX="8.375" PointY="17.75" />
+        <EntityTypeShape EntityType="DSBDBModels.NSPCMeetingWork" Width="1.5" PointX="3" PointY="27.5" />
+        <EntityTypeShape EntityType="DSBDBModels.YearCalender" Width="1.5" PointX="10.375" PointY="6.75" />
+        <EntityTypeShape EntityType="DSBDBModels.Department" Width="1.5" PointX="0.75" PointY="28.5" />
+        <AssociationConnector Association="DSBDBModels.FK_DepartmentWiseMileStone_Department" />
+        <EntityTypeShape EntityType="DSBDBModels.FlowSetup" Width="1.5" PointX="6" PointY="26.875" />
+        <AssociationConnector Association="DSBDBModels.FK_FlowSetup_Department" />
+        <EntityTypeShape EntityType="DSBDBModels.ContractFile" Width="1.5" PointX="3" PointY="10.5" />
+        <EntityTypeShape EntityType="DSBDBModels.ControlType" Width="1.5" PointX="7.75" PointY="33.5" />
+        <EntityTypeShape EntityType="DSBDBModels.StaffRequirement" Width="1.5" PointX="3" PointY="3.375" />
+        <AssociationConnector Association="DSBDBModels.FK_FileMovement_File" />
+        <AssociationConnector Association="DSBDBModels.FK_StaffRequirement_FileStatus" />
+        <EntityTypeShape EntityType="DSBDBModels.ContractField" Width="1.5" PointX="3" PointY="55.875" />
+        <EntityTypeShape EntityType="DSBDBModels.FileBackUp" Width="1.5" PointX="26.625" PointY="18.875" />
+        <EntityTypeShape EntityType="DSBDBModels.FormInfo" Width="1.5" PointX="24.375" PointY="19" />
+        <AssociationConnector Association="DSBDBModels.FK_FileBackUp_FormInfo" />
+        <EntityTypeShape EntityType="DSBDBModels.AFDLetter" Width="1.5" PointX="12.25" PointY="28.125" />
+        <EntityTypeShape EntityType="DSBDBModels.CommitteNameList" Width="1.5" PointX="13.375" PointY="33.375" />
+        <EntityTypeShape EntityType="DSBDBModels.CommitteInfo" Width="1.5" PointX="18.625" PointY="22.625" />
+        <AssociationConnector Association="DSBDBModels.FK_CommitteInfo_CommitteNameList" />
+        <AssociationConnector Association="DSBDBModels.FK_CommitteInfo_Member" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectInstallment" Width="1.5" PointX="14.5" PointY="27.375" />
+        <EntityTypeShape EntityType="DSBDBModels.FinancialYear" Width="1.5" PointX="14" PointY="37.25" />
+        <EntityTypeShape EntityType="DSBDBModels.BGPG" Width="1.5" PointX="18.5" PointY="32.625" />
+        <EntityTypeShape EntityType="DSBDBModels.FinancialInstallment" Width="1.5" PointX="16.25" PointY="32.5" />
+        <AssociationConnector Association="DSBDBModels.FK_BGPG_FinancialInstallment" />
+        <AssociationConnector Association="DSBDBModels.FK_FinancialInstallment_FinancialYear" />
+        <AssociationConnector Association="DSBDBModels.FK_ProjectInstallment_FinancialInstallment" />
+        <EntityTypeShape EntityType="DSBDBModels.ContractDeptOpinion" Width="1.5" PointX="12.25" PointY="22.375" />
+        <EntityTypeShape EntityType="DSBDBModels.StaffRequirementDeptOpinion" Width="1.5" PointX="17.25" PointY="27.375" />
+        <EntityTypeShape EntityType="DSBDBModels.TenderSpecDeptOpinion" Width="1.5" PointX="19.25" PointY="35.375" />
+        <AssociationConnector Association="DSBDBModels.FK_ContractDeptOpinion_Department" />
+        <AssociationConnector Association="DSBDBModels.FK_StaffRequirementDeptOpinion_Department" />
+        <AssociationConnector Association="DSBDBModels.FK_TenderSpecDeptOpinion_Department" />
+        <EntityTypeShape EntityType="DSBDBModels.FieldValueBack" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DSBDBModels.CommonCode" Width="1.5" PointX="0.75" PointY="38.5" />
+        <AssociationConnector Association="DSBDBModels.FK_CommitteInfo_CommonCode" />
+        <AssociationConnector Association="DSBDBModels.FK_ContractField_CommonCode" />
+        <AssociationConnector Association="DSBDBModels.FK_ProjectInstallment_CommonCode" />
+        <EntityTypeShape EntityType="DSBDBModels.TenderSpecificationChild" Width="1.5" PointX="12.25" PointY="41" />
+        <EntityTypeShape EntityType="DSBDBModels.CommitteeRaiseLetter" Width="1.5" PointX="12.25" PointY="53.625" />
+        <EntityTypeShape EntityType="DSBDBModels.FinanceMinistryLetter" Width="1.5" PointX="12.25" PointY="48.625" />
+        <EntityTypeShape EntityType="DSBDBModels.FileStore" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DSBDBModels.FileUploadForm" Width="1.5" PointX="12.25" PointY="59.25" />
+        <EntityTypeShape EntityType="DSBDBModels.AFDLetterApprove" Width="1.5" PointX="14.5" PointY="40.5" />
+        <AssociationConnector Association="DSBDBModels.FK_AFDLetterApprove_AFDLetter" />
+        <EntityTypeShape EntityType="DSBDBModels.ProjectNote" Width="1.5" PointX="12.25" PointY="44.75" />
+        <EntityTypeShape EntityType="DSBDBModels.TenderSpecOpinion" Width="1.5" PointX="12.25" PointY="64.625" />
+        <EntityTypeShape EntityType="DSBDBModels.ContractSign" Width="1.5" PointX="12.25" PointY="69.5" />
+        <EntityTypeShape EntityType="DSBDBModels.TenderSpecification" Width="1.5" PointX="3" PointY="38.375" />
+        <AssociationConnector Association="DSBDBModels.FK_TenderSecification_CommonCode" />
+        <EntityTypeShape EntityType="DSBDBModels.StaffRequirementOpinion" Width="1.5" PointX="12.25" PointY="74.5" />
+        <EntityTypeShape EntityType="DSBDBModels.ContractOpinion" Width="1.5" PointX="12.25" PointY="79.5" />
+        <EntityTypeShape EntityType="DSBDBModels.Demand" Width="1.5" PointX="10" PointY="34.125" />
+        <AssociationConnector Association="DSBDBModels.FK_AFDLetter_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_CommitteeRaiseLetter_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_Demand_CommonCode" />
+        <AssociationConnector Association="DSBDBModels.FK_Demand_CommonCode1" />
+        <AssociationConnector Association="DSBDBModels.FK_ContractDeptOpinion_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_ContractFile_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_ContractOpinion_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_ContractSign_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_Demand_ControlType" />
+        <AssociationConnector Association="DSBDBModels.FK_FileUploadForm_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_FinanceMinistryLetter_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_FinancialInstallment_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_FlowSetup_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_ProjectNote_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_StaffRequirementDeptOpinion_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_StaffRequirementOpinion_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_TenderSpecDeptOpinion_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_TenderSpecificationChild_Demand" />
+        <AssociationConnector Association="DSBDBModels.FK_TenderSpecOpinion_Demand" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

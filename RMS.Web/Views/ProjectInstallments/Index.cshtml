@@ -1,0 +1,48 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+            Payment Installment for @Html.DisplayFor(x => x.ProjectInstallment.ProjectName)
+        </div>     
+        <div class="panel-body">
+            <div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.ProjectInstallments, rowCount: Model.ProjectInstallments.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new { Id = "grid" },
+                        tableStyle: "webgrid-table webgrid",
+                        headerStyle: "webgrid-header",
+                        footerStyle: "webgrid-footer",
+                        alternatingRowStyle: "webgrid-alternating-row",
+                        selectedRowStyle: "webgrid-selected-row",
+                        rowStyle: "webgrid-row-style",
+                        firstText: "First",
+                        lastText: "Last",
+                        nextText: "Next",
+                        mode: WebGridPagerModes.All,
+                        previousText: "Previous",
+                        columns: grid.Columns(
+                            //grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                            grid.Column("ProjectName", header: "Project Name"),
+                            grid.Column("InstallmentName", header: "Installment Name"),
+                            grid.Column("Amount", header: "Amount"),
+                            grid.Column("Term", header: "Term"),
+
+                                grid.Column("Edit", canSort: false, format: @<text> @Html.ActionLink("Edit", "Edit", "ProjectInstallments", new { projectInstallmentId = item.InstallmentId}, new { @class = "btn btn-info" })</text>),
+                    grid.Column("Delete", canSort: false, format: @<text> @Html.ActionLink("Delete", "Delete", "ProjectInstallments", new { projectInstallmentId = item.InstallmentId}, new { @class = "btn btn-primary" })</text>)
+                                         ))
+                    ;
+                }
+            </div>
+            <br />
+            <br />
+            @Html.ActionLink("Go Back", "Create", "ProjectInstallments", new { projectID = Model.ProjectInstallment.ProjectId }, new { @class = "btn btn-info" })
+        </div>
+    </div>
+</div>

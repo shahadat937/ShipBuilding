@@ -1,0 +1,85 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RoleViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-info">
+    <div class="panel-heading" style="text-align: center;">
+        Application Roles
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr style="background-color: azure; font-weight: bold; color: black">
+                    <th style="text-align:center">
+                        Role ID
+                    </th>
+                    <th>
+                        Role Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th style="text-align:center">
+                        Active/Inactiove
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Roles)
+                {
+
+                    <tr>
+                        <td style="text-align: center">
+                            @item.RoleId
+                        </td>
+                        <td>
+                            @item.RoleName
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td style="text-align: center">
+                            @item.IsActive
+                        </td>
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

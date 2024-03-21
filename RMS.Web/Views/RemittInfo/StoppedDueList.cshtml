@@ -1,0 +1,50 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h5 style="text-align:center">Stopped Payment List</h5>
+<table>
+    <tr>
+        <td>Number of Transaction</td>
+        <td>:</td>
+        <td>@Model.RemittInfos.Count</td>
+    </tr>
+</table>
+<div class="">
+    @{
+        var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+        grid.Bind(Model.RemittInfos, rowCount: Model.RemittInfos.Count, autoSortAndPage: true);
+        grid.Pager(WebGridPagerModes.All);
+        @grid.GetHtml(htmlAttributes: new { UserId = "grid" },
+                tableStyle: "webgrid-table webgrid",
+                headerStyle: "webgrid-header",
+                footerStyle: "webgrid-footer",
+                alternatingRowStyle: "webgrid-alternating-row",
+                selectedRowStyle: "webgrid-selected-row",
+                rowStyle: "webgrid-row-style",
+                firstText: "First",
+                lastText: "Last",
+                nextText: "Next",
+                mode: WebGridPagerModes.All,
+                previousText: "Previous",
+                columns: grid.Columns(
+                                             grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                                               grid.Column("BranchInfo2.BranchName", header: "Exchange Company"),
+                                                                        grid.Column("CommonCode3.TypeValue", header: "Originating Country"),
+                                                               grid.Column("ExchangeRefference", header: "Reference Number"),
+                                                      grid.Column("ApplicantName", header: "Remitter Name"),
+                                                      grid.Column("BeneficiaryName", header: "Beneficiary Name"),
+                                                                        grid.Column("TransDate", header: "Transaction Date", format: (item) => string.Format("{0:dd MMM yyyy}", item.TransDate)),
+                                                               grid.Column("Amount", header: "Amount"),
+                                                               grid.Column("BranchInfo.BranchName", header: "Bank Name"),
+                                                               grid.Column("BranchInfo1.BranchName", header: "District"),
+                                                                                 grid.Column("BranchInfo3.BranchName", header: "Branch Name"),
+                                                               grid.Column("BankBrInfo", header: "Sending Branch Info"),
+                                                                        grid.Column("AccountNo", header: "Account Number"),
+                                                                                                                                                         grid.Column("SecurityCode", header: "Security Code")
+));
+    }
+</div>
+

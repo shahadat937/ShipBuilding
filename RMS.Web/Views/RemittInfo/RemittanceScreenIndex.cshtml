@@ -1,0 +1,212 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Remittance Screening with Sanction Screening System";
+    ViewBag.Title = "Screening";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("RemittanceScreenIndex", "RemittInfo", FormMethod.Post))
+        {
+
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Company:</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfo.ExchangeHouse, Model.ExchangeHouseSelectListItems, "-Select Exchange Company", new { @class = "form-control", tabindex = 1 })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.ExchangeHouse)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Upload Date:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.FileUploadDate, "{0: dd MMMM yyyy}", new { @class = "textBoxsize form-control datepicker" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.TransDate)
+                        </div>
+
+                    </div>
+                </div>
+                @*<div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Payment By:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(x => x.PaymentBy, Model.PaymentByListSelectListItems, "-Select Payment By", new { @class = "form-control", tabindex = 3 })
+                                @Html.ValidationMessageFor(x => x.PaymentBy)
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Batch No.:</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.RemittInfo.BatchNo, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Batch No." })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.BatchNo)
+                        </div>
+                        <div class="col-md-4" style="text-align:right">
+                            <input type="submit" id="btnSave" value="Find" class="btn btn-info" tabindex=13 />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-6 control-label">No. of Remittance:</label>
+                        <div class="col-md-6" style="color: blue; text-align: left">
+                            @Html.DisplayFor(x => x.NumberOfRemittance, new { @class = "form-control", tabindex = 5, @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-6">Due Amount(BDT):</label>
+                        <div class="col-md-6" style="color: blue; text-align: left">
+                            @Html.DisplayFor(x => x.TotalAmountInBDT, new { @class = "form-control", tabindex = 6, @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-6">NRTK Balance:</label>
+                        <div class="col-md-6" style="color: blue; text-align: left">
+                            @Html.DisplayFor(x => x.NRTKBalance, new { @class = "form-control", tabindex = 5, @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-7">Min Restricted Balance:</label>
+                        <div class="col-md-5" style="color: blue; text-align: left">
+                            @Html.DisplayFor(x => x.MinRestrictedBal, new { @class = "form-control", tabindex = 6, @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+        @using (Html.BeginForm("Screening", "RemittInfo", FormMethod.Post, new { @class = "verifyTransaction" }))
+        {
+            @Html.HiddenFor(x => x.PaymentBy)
+            @Html.HiddenFor(x => x.RemittInfo.ExchangeHouse)
+            @Html.HiddenFor(x => x.RemittInfo.FileUploadDate)
+            @Html.HiddenFor(x => x.RemittInfo.BatchNo)
+            @Html.HiddenFor(x => x.TotalAmountInBDT)
+            @Html.HiddenFor(x => x.MinRestrictedBal)
+            @Html.HiddenFor(x => x.NRTKBalance)
+            <div class="">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="text-align:center"> Available for Screening</div>
+                    <div class="panel-body">
+                        <table class="table table-responsive table-bordered table-hover">
+                            <thead style="background-color: #32CD32;">
+                                <tr style="font-size:10px;">
+                                    <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                                    <th>Originating Country</th>
+                                    <th>Reference Number</th>
+                                    <th>Remitter Name</th>
+                                    <th>Beneficiary Name</th>
+                                    <th>Transaction Date</th>
+                                    <th>Amount in BDT</th>
+                                    <th>Bank Name</th>
+                                    <th>District Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Payment Type</th>
+                                    <th>Risk Score</th>
+                                    <th>Role Violation</th>
+                                    <th>Screening Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RemittInfos)
+                                {
+                                    <tr style="font-size:10px;">
+                                        <td><input type="checkbox" value="@item.RemittInfoIdentity" name="NoOfTransaction" /></td>
+                                        <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ApplicantName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                                        <td style="text-align: center">@Html.DisplayFor(modelItem => item.TransDate)</td>
+                                        <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                                        <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo.BranchName)</td>
+                                        <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo1.BranchName)</td>
+                                        <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                                        @if (item.CommonCode2.CommonCodeID == 112395)
+                                        {
+                                            <td>@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color:white">@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                                        }
+                                        <td>@Html.DisplayFor(x => x.RemittInfo.RiskScore)</td>
+                                        <td>@Html.DisplayFor(x => x.RemittInfo.RuleViolation)</td>
+                                        <td>@Html.DisplayFor(x => x.RemittInfo.ScreeningMessage)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div><button id="verifyButton" style="float:right" class="btn btn-info">Screen with Sanction Screening</button></div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+    </script>
+}

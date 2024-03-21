@@ -1,0 +1,76 @@
+﻿@using RMS.Model
+
+@model IEnumerable<ChatData>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+@*@foreach (ChatData chatData in Model)
+    {
+        <li class="">
+            <a href="#" id="idMessageFrom" onclick="location.href = '@Url.Action("Index", "ChatDashboard", new { chatIdentity = chatData.ChatIdentity, MesseageFrom = chatData.MesseageFrom, messageTo=chatData.MessageTo,message = chatData.Messeage, messageDate = chatData.MesseageDate, status = chatData.Status})'"><b>From:</b> @chatData.MesseageFrom <b>Message:</b>@chatData.Messeage</a>
+        </li>
+    }*@
+
+
+@*<ul class="list-group">
+        @foreach (ChatData chatData in Model)
+        {
+            <li class="list-group-item">
+                <a href="#" id="idMessageFrom" onclick="location.href = '@Url.Action("Index", "ChatDashboard", new { chatIdentity = chatData.ChatIdentity, MesseageFrom = chatData.MesseageFrom, messageTo=chatData.MessageTo,message = chatData.Messeage, messageDate = chatData.MesseageDate, status = chatData.Status})'"><b>From:</b> @chatData.MesseageFrom<br /> <b>Message:</b>@chatData.Messeage</a>
+            </li>
+        }
+    </ul>*@
+
+
+<table class="table table-hover">
+
+    <tbody>
+
+        @foreach (ChatData chatData in Model)
+        {
+            <tr>
+                <td>
+                    <a href="#" id="idMessageFrom" onclick="location.href = '@Url.Action("Index", "ChatDashboard", new { chatIdentity = chatData.ChatIdentity, MesseageFrom = chatData.MesseageFrom, messageTo=chatData.MessageTo,message = chatData.Messeage, messageDate = chatData.MesseageDate, status = chatData.Status})'">@chatData.MesseageFrom</a>
+                </td>
+                <td>
+                    @chatData.Messeage
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+
+
+
+@*<li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Morbi leo risus</li>
+    <li class="list-group-item">Porta ac consectetur ac</li>
+    <li class="list-group-item">Vestibulum at eros</li>*@
+
+
+
+
+@*<script>
+        $('#idMessageFrom').click(function () {
+            $.ajax({
+                url: "/ChatDashboard/Index/",
+                method: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $('#divChatWindow').html(data);
+
+
+                }
+            });
+        });
+
+    </script>*@
+
+

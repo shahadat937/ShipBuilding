@@ -1,0 +1,245 @@
+﻿@using System.Activities.Expressions
+@model RMS.Web.Models.ViewModel.TenderViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    select[readonly] {
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Tender Specification Information
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color: green ;text-align: center">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color: red; text-align: center">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "Tender", FormMethod.Post, new { id = "formCreateCommitee", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TenderSecification.TenderIdentity)
+                    @Html.HiddenFor(x =>x.FlowSerial)
+                              <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File No &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.TenderSecification.FileNo, Model.ProjectSelectList, "--select--", new { @class = "form-control", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSecification.Title)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Title &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.TenderSecification.Title, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSecification.Title)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Issue Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.TenderSecification.CreateDate, "{0:dd MMMM yyyy}", new { id = "startDate", @class = "txtMember form-control datepicker", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSecification.CreateDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File Upload </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control " })
+                                    @*@Html.TextBoxFor(x => x.TenderSecification.MadeBy, null, new { id = "txtEmail", @class = "txtMember form-control", required = "required" })*@
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ImageUpload)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.TenderSecification.Remarks, null, new { id = "txtEmail", @class = "txtMember form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSecification.Remarks)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                            @*Dynamic Field Add*@
+
+                    <table class="table" id="tenderChildTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Parameter")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Description")
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TenderChildDictionary)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => Model.TenderChildDictionary[item.Key].FieldName, new { id = "fieldName", @class = "form-control", required = "required" })
+                                        @Html.HiddenFor(x => Model.TenderChildDictionary[item.Key].Id , new {id = "id"})
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(x => Model.TenderChildDictionary[item.Key].FieldValue, new { id = "fieldValue", @class = "form-control", required = "required", @maxlength = "1498" })
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(x => Model.TenderChildDictionary[item.Key].IsChecked, new { @checked = "checked" })
+                                    </td>
+                                    <td>
+                                        <input class="btn btn-danger" type="button" value="X" onclick="removeRow(this)" />
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><input class="btn btn-primary" type="button" onclick="addNewRow()" value="+" /></td>
+                            </tr>
+                  
+                        </tfoot>
+
+                    </table>
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        @*@Html.ActionLink("Show All", "Index", "Tender", new { fileId = Model.TenderSecification.FileNo, flowserial = Model.FlowSerial }, new { @class = "btn btn-info" }) &nbsp;*@
+
+                                        @Html.ActionLink("Back To Flow Info", "TreeMenuIndex", "FlowSetup", null, new { @class = "btn btn-info" })
+
+                                        <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-2">
+            <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" id="SuccessMessage" style="color:green">Tender Specification Created Successfully!</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="FailedMessage" style="color:red">Tender Specification Creation Failed!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @section scripts{
+        <script>
+            function removeRow(obj) {
+                var r = confirm("Are you confirm to delete this!");
+                if (r == true) {
+                    var option = {
+                        url: "/Tender/DeleteTenderChild?id=" + $("#id").val(),
+                        type: "Get",
+                        dataType: 'html'
+                    };
+                    jQuery.ajax(option).done(function (response) {
+                        var tr = jQuery(obj).closest('tr');
+                        tr.remove();
+                    });
+                   
+                }
+            }
+            function addNewRow() {
+                var option = {
+                    url: "/Tender/AddNewRow",
+                    type: "Get",
+                    dataType: 'html'
+                };
+                jQuery.ajax(option).done(function (response) {
+                    jQuery('#tenderChildTable > tbody:last').append(response);
+                });
+            }
+            //onkeypress = " return isNumberKey(event)"
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode;
+
+                if (charCode != 46 && charCode > 31
+                    && (charCode < 48 || charCode > 57))
+                    return false;
+
+                return true;
+            }
+
+        </script>
+
+
+
+    }
+
+

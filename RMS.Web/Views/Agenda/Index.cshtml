@@ -1,0 +1,76 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.AjendaViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Agenda Information
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td>@Html.ActionLink("Add New", "Create", "Demand", new { @class = "btn btn-info" })</td>
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "Demand", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearcKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+            @{ int rowNo = 0; }
+            <div class="">
+
+                <table class="table table-bordered table-hover table-striped">
+
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">File No</td>
+                        <td style="text-align: center; font-size: 15px">Subject</td>
+                        <td style="text-align: center; font-size: 15px">Heading</td>
+                        <td style="text-align: center; font-size: 15px">Formula</td>
+                        <td style="text-align: center; font-size: 15px">Edit</td>
+                        <td style="text-align: center; font-size: 15px">PDF</td>
+
+                    </tr>
+
+                    @foreach (var item in Model.Agendums)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.FileNo</td>
+                            <td style="">@item.Subject</td>
+                            <td style="">@item.Heading</td>
+                            <td style="">@item.Formula</td>
+                            <td>
+                                <a href="@Url.Action("Create", "Agenda", new { AjendaId = item.Id })" class="btn btn-warning">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                            <td style="text-align: center; color: blue">
+                                <a href="#" style="" onclick="location.href = '@Url.Action("Show", "Agenda", new { url = item.FileUrl })'"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+             
+            </div>
+
+        </div>
+    </div>
+
+</div>

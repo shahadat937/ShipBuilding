@@ -1,0 +1,234 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("UpdateExchangeHouse", "RemittInfo", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.RemittInfoExchangeHouse.RemittInfoExchangeHouseIdentity)
+    @Html.HiddenFor(x => x.RemittInfoExchangeHouse.FileUploadDate)
+    @Html.HiddenFor(x=> x.RemittInfoExchangeHouse.BatchNo)
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center">Paid Remittance Modification of Exchange House</div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Company:</label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(x => x.RemittInfoExchangeHouse.BranchInfo2.BranchName, new { @class = "form-control", tabindex = 1 })
+                            @Html.HiddenFor(x => x.RemittInfoExchangeHouse.ExchangeHouse)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-4 control-label">Reference No.:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(x => x.RemittInfoExchangeHouse.ExchangeRefference, new { @class = "textBoxsize form-control", tabindex = 2, placeholder = "Reference Number" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Date of Payment:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfoExchangeHouse.DateofPayment, "{0:dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker", tabindex = 5 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Branch Information:</label>
+                        <div class="col-md-8">
+                            @Html.DisplayFor(x => x.RemittInfoExchangeHouse.BankBrInfo, new { @class = "textBoxsise form-control", tabindex = 6 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Remitter Name:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfoExchangeHouse.ApplicantName, new { @class = "textBoxsize form-control", tabindex = 7 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Beneficiary Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfoExchangeHouse.BeneficiaryName, new { @class = "textBoxsize form-control", tabindex = 10 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Bank Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.BankCode, Model.BankSelectListItems, "-Select Bank-", new { @class = "BankName dropdownsize form-control", @TargetClass = "DistrictName", tableindex = 13, @action = "/RemittInfo/GetDistrictByBankCode" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">District Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DistrictCode, Model.DistrictSelectListItems, new { @class = "DistrictName dropdownsize form-control", tableindex = 14, @TargetClass = "BranchName", @action = "/RemittInfo/GetBranchNameByDistrict" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Branch Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfoExchangeHouse.RespondingBranch, Model.BranchInfosSelectdItemList, "-Select Branch name-", new { @class = "BranchName dropdownsize form-control", tableindex = 15 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-md-4"></label>
+                    <div class="col-md-4" style="text-align:left">
+                        @Html.ActionLink("Back to List", "FindUploadedDataExchangeHouse", "RemittInfo", new { exchangeHouse = Model.RemittInfoExchangeHouse.ExchangeHouse, uploadDate = Model.RemittInfoExchangeHouse.FileUploadDate, BatchNo = Model.RemittInfoExchangeHouse.BatchNo }, new { @class = "btn btn-danger" })
+                    </div>
+                    <div class="col-md-4" style="text-align:right">
+                        <input type="submit" value="Update Information" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" style="text-align:left">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @if (Model.Message != null)
+                            {
+                                if (Model.IsSucceed == 1)
+                                {
+                                    <div style="color:green">@Model.Message</div>
+                                }
+                                else
+                                {
+                                    <div style="color:red">@Model.Message</div>
+                                }
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $('.BankName').change(function () {
+            var $BankNamedropdown = $(this);
+            var targetClass = $BankNamedropdown.attr('TargetClass');
+            var url = $BankNamedropdown.attr('action');
+
+            var bankCode = $BankNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { bankCode: bankCode }
+            };
+            $.ajax(option).done(function (districts) {
+                if (districts.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(districts, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        $('.DistrictName').change(function () {
+            var $DistrictNamedropdown = $(this);
+            var targetClass = $DistrictNamedropdown.attr('TargetClass');
+            var url = $DistrictNamedropdown.attr('action');
+            var districtCode = $DistrictNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { districtCode: districtCode }
+            };
+            $.ajax(option).done(function (branches) {
+                if (branches.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(branches, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchInfoIdentity).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+
+        $('.BranchName').change(function () {
+            var $AgentNamedropdown = $(this);
+            var targetClass = $AgentNamedropdown.attr('TargetClass');
+            var url = $AgentNamedropdown.attr('action');
+            var branchCode = $AgentNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { branchCode: branchCode }
+            };
+            $.ajax(option).done(function (agentList) {
+                if (agentList.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(agentList, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        function ClearDropDownList(selector) {
+            $('.' + selector)
+                .find('option').remove()
+                .end().append($('<option>').text("-Select-").attr('value', ""));
+        };
+
+        function NotFoundData(targetClass) {
+            $('.' + targetClass)
+                .append($('<option>').text("Not Found").attr('value', ""));
+        };
+
+        $("#userRoleId").change(function () {
+            //alert('hi');
+            if ($("#userRoleId option:selected").val() == "5") {
+                $("#exchangeHouseAndAgent").show();
+            } else {
+                $("#exchangeHouseAndAgent").hide();
+            }
+        });
+
+
+    </script>
+}

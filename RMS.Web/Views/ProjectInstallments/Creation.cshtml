@@ -1,0 +1,91 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Project Installment  Creation
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Creation", "ProjectInstallments", null, FormMethod.Post, new { id = "formEditContract" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ProjectInstallment.InstallmentId)
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Installment &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ProjectInstallment.InstallmentNo, Model.ProjectPaymentInstallment, "--Select Category--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.InstallmentNo)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ProjectInstallment.ProjectId, Model.ProjectSelectedList, "--Select Category--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.ProjectId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Amount &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ProjectInstallment.Amount, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.Amount)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "ProjectInstallments", null, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnEditContract" class="btn btn-info pull-right" value="Save" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

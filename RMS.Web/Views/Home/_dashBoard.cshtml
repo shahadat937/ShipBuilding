@@ -1,0 +1,270 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+<style type="text/css">
+    .progress {
+        height: 20px;
+        width: 80%;
+        padding: 0;
+    }
+
+        .progress .skill {
+            font: normal 12px "Open Sans Web";
+            line-height: 20px;
+            padding: 0;
+            margin: 0 0 0 1px;
+            text-transform: uppercase;
+        }
+
+            .progress .skill .val {
+                float: right;
+                font-style: normal;
+                margin: 0 1px 0 0;
+            }
+
+    .progress-bar {
+        text-align: left;
+        transition-duration: 3s;
+    }
+
+    .mmm {
+        padding: 2px;
+    }
+
+    .fnt {
+        font-weight: bold;
+    }
+
+    .ppp:hover {
+        background-color: #F5F5F5;
+    }
+</style>
+
+@*<div class="container">
+        <h2><marquee>Welcome to Bangladesh Navy</marquee></h2>
+    </div>*@
+<div class="panel panel-primary" style=" padding-top: 250px !important">
+    <div class="panel-heading" style="text-align:center;">
+        DSB Dashboard
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="container col-md-4">
+                @Html.HiddenFor(x => x.ProjectStatus.Count, new { Id = "totalCount" })
+                <table class="table table-bordered table-striped" style="width: 100%;box-shadow: 2px 2px 2px 2px #888888;">
+                    <thead style="text-align: center; font-weight: bold">
+                        <tr style="background: #000E22; ">
+                            <td colspan="4"><span style="color: white">Project Details</span></td>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center">
+                        @for (int i = 0; i < Model.ProjectStatus.Count; i++)
+                        {
+                            <tr style=" font-weight: bold">
+
+                                @if (Model.ProjectStatus[i].ProjectType.Trim() == "6")
+                                {
+
+                                    <td class="ppp"> <a href="@Url.Action("Index", "Project", new { ProjectId = Model.ProjectStatus[i].ProjectId })">@Model.ProjectStatus[i].ProjectName</a></td>
+
+
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                @*<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>*@
+                <canvas id="myChart" height="200"></canvas>
+            </div>
+
+        </div>
+        @*<div class="col-sm-12 col-md-12 col-lg-12" >
+                <div class="container col-md-12" style="overflow: scroll; border: 1px solid #808080; padding: 10px; min-height: 290px; box-shadow: 2px 2px 2px 2px #888888">
+                    <h4 style="text-align: center; font-weight: bold; "> Project Status</h4>
+                    @Html.HiddenFor(x => x.ProjectStatus.Count, new { Id = "totalCount" })
+                    <h4>Project Implementation Stage</h4>
+                    <div>
+                        @for (int i = 0; i < Model.ProjectStatus.Count; i++)
+                        {
+                            var fName = "OnprogVal" + i;
+                            var pName = "Onprog" + i;
+                            var ariava = Model.ProjectStatus[i].CompleteMileStone;
+                            if (Model.ProjectStatus[i].ProjectType.Trim() == "6")
+                            {
+                                if (Model.ProjectStatus[i].IsComplete == true)
+                                {
+                                    <div class="row mmm">
+                                        <div class="col-md-12">
+                                            <div class="form_group">
+                                                <div class="col-md-2 fnt">@Model.ProjectStatus[i].ProjectName</div>
+                                                <div class="progress skill-bar col-md-10 mmmmm">
+                                                    <div class="progress-bar progress-bar-success pbl" style="background: green" id="@{@pName}" role="progressbar" aria-valuenow=@ariava aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="skill"> <a href="@Url.Action("ProjectStatus", "FileMovement", new { ProjectId = Model.ProjectStatus[i].ProjectId })" ><i class="val" id="@{@fName}" style="color: white">@ariava</i></a></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row mmm">
+                                        <div class="col-md-12">
+                                            <div class="form_group">
+                                                <div class="col-md-2 fnt">@Model.ProjectStatus[i].ProjectName</div>
+                                                <div class="progress skill-bar col-md-10 mmmmm">
+                                                    <div class="progress-bar progress-bar-success pbl" id="@{@pName}" role="progressbar" aria-valuenow=@ariava aria-valuemin="0" aria-valuemax="100">
+
+                                                        <span class="skill"> <a href="@Url.Action("ProjectStatus", "FileMovement", new { ProjectId = Model.ProjectStatus[i].ProjectId })"><i class="val" id="@{@fName}" style="color: white">@ariava</i></a></span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>*@
+        <div class="col-sm-12 col-md-12 col-lg-12" style="padding-top: 20px">
+            <div class="col-md-4">
+                <div class="panel-heading" style="text-align: center; color: white; background: #000E22 !important">
+                    Total Project
+                </div>
+                <br />
+                <table class=" table table-hover table-bordered fnt" style="box-shadow: 2px 2px 2px 2px #888888;">
+                    <tr><td>Total Number Of Project :</td><td><button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("AllProjectList", "FileMovement")'">@Model.ProjectCount</button></td></tr>
+                    @*<tr><td>Total Number Of Current Project :</td><td>@Model.CutrrentProject</td></tr>*@
+                    <tr><td>Total Number Of On going Project :</td><td><button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("OngoingProject", "FileMovement")'">@Model.OngoingProject</button></td></tr>
+                    <tr><td>Total Number Of Completed Project :</td><td><button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CompleteProject", "FileMovement")'">@Model.CompleteProject</button></td></tr>
+                </table>
+
+
+                @*<div class="col-md-5">
+                        <button class="btn btn-primary">File Format</button>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">
+                        <button class="btn btn-primary">Note</button>
+                    </div>*@
+
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <table class="table table-bordered table-striped" style="width: 100%;box-shadow: 2px 2px 2px 2px #888888;">
+                    <thead style="text-align: center; font-weight: bold">
+                        <tr style="background: #000E22; ">
+                            <td colspan="4"><span style="color: white">Pending Projects</span></td>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center">
+                        <tr style="font-weight: bold">
+                            <td>Project Name</td>
+                            <td>Pending Department</td>
+                            <td>No. Of Days</td>
+                        </tr>
+                        @foreach (var item in Model.PendingInfoes)
+                        {
+                            <tr>
+                                <td>@item.ProjectName</td>
+                                <td>@item.DeptName</td>
+                                <td>@item.PendingDays</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <table class="table table-bordered table-striped" style="width: 100%;box-shadow: 2px 2px 2px 2px #888888;">
+                    <thead style="text-align: center; font-weight: bold">
+                        <tr style="background: #000E22; ">
+                            <td colspan="4"><span style="color: white">Yearly Project Status</span></td>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center">
+                        <tr style=" font-weight: bold">
+                            <td>Year</td>
+                            <td>Project Started</td>
+                            <td>Project Completed</td>
+                        </tr>
+                        @foreach (var item in Model.AllProjectStatus)
+                        {
+                            <tr>
+                                <td>@item.EndDate</td>
+                                <td>@item.TotalProject</td>
+                                <td>@item.CompleteProject</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/APP/Chart.js"></script>
+@section scripts
+{
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.progress .progress-bar').css("width",
+                function () {
+                    return $(this).attr("aria-valuenow") + "%";
+                }
+            );
+
+
+
+        });
+
+
+        $(document).ready(function () {
+            //line
+
+            var option = {
+                url: "/Home/ProjectStatusForPicChart",
+                type: "Get",
+            };
+            jQuery.ajax(option).done(function (response) {
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'pie',
+                    legend: {
+                        verticalAlign: "center",
+                        horizontalAlign: "right"
+                    },
+                    data: {
+                        labels: ["Total Project", "Ongoing Project","Completed Project"],
+                        datasets: [{
+                            backgroundColor: [
+                              "#2ecc71",
+                              "#e74c3c",
+                              "#BDD5FC"
+                            ],
+                            data: [response.TotalProject, response.OngoingProject, response.CompleteProject]
+                        }]
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+
+

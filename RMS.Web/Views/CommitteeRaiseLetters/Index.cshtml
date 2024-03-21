@@ -1,0 +1,208 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.CommitteeRaiseLetterViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+           @Model.FormName
+        </div>
+        <div class="panel-body">
+            @*<table>
+                <tr>
+                    <td>
+                        @using (Html.BeginForm("SearchByKey", "CommitteeRaiseLetters", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearchKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>*@
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-md-12">
+                            <h4 class="h4 text-info">@Model.Message</h4>
+                    </div>
+                </div>
+            </div>
+            @{ int rowNo = 0; }
+            <div class="">
+                @if (Model.CommitteeRaiseLetters.Count > 0)
+                {
+                    <table class="table table-bordered table-hover table-striped">
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">File No</td>
+                        <td style="text-align: center; font-size: 15px">Type Value</td>
+                        <td style="text-align: center; font-size: 15px">Issue Date</td>
+                        <td style="text-align: center; font-size: 15px">File PDF</td>
+                        
+
+                    </tr>
+
+                    @foreach (var item in Model.CommitteeRaiseLetters)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.Demand.FileNo</td>
+                            <td style="">@item.CommonCodeTypeValue</td>
+                            @if (item.IssueDate != null)
+                            {
+                                <td style="">@Convert.ToDateTime(item.IssueDate).ToString("yyyy MMMM dd")</td>
+                            }
+                            else
+                            {
+                                <td style=""></td>
+
+                            }
+             
+                            @if (item.AttachedDocument != null)
+                            {
+
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "CommitteeRaiseLetters", new { url = item.AttachedDocument })" style=""  target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+                
+
+                        </tr>
+                    }
+                </table>
+                }
+                else if (Model.AFDLetters.Count > 0)
+                {
+                                    <table class="table table-bordered table-hover table-striped">
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">File No</td>
+                        <td style="text-align: center; font-size: 15px">Type Value</td>
+                        <td style="text-align: center; font-size: 15px">Issue Date</td>
+                        <td style="text-align: center; font-size: 15px">File PDF</td>
+                        
+                    </tr>
+
+                    @foreach (var item in Model.AFDLetters)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.Demand.FileNo</td>
+                            <td style="">@item.CommonCodeTypeValue</td>
+                            @if (item.IssueDate != null)
+                            {
+                                <td style="">@Convert.ToDateTime(item.IssueDate).ToString("yyyy MMMM dd")</td>
+                            }
+                            else
+                            {
+                                <td style=""></td>
+
+                            }
+                            @if (item.AttachedDocument != null)
+                            {
+
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "CommitteeRaiseLetters", new { url = item.AttachedDocument })" style=""  target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+               
+
+                        </tr>
+                    }
+                </table>
+                }
+                else if (Model.FininMinistryLetters.Count > 0)
+                {
+                                    <table class="table table-bordered table-hover table-striped">
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">File No</td>
+                        <td style="text-align: center; font-size: 15px">Type Value</td>
+                        <td style="text-align: center; font-size: 15px">Issue Date</td>
+                        <td style="text-align: center; font-size: 15px">File PDF</td>
+                        @*<td style="text-align: center; font-size: 15px">Approve Document</td>*@
+
+                    </tr>
+
+                    @foreach (var item in Model.FininMinistryLetters)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.Demand.FileNo</td>
+                            <td style="">@item.CommonCodeTypeValue</td>
+                            @if (item.IssueDate != null)
+                            {
+                                <td style="">@Convert.ToDateTime(item.IssueDate).ToString("yyyy MMMM dd")</td>
+                            }
+                            else
+                            {
+                                <td style=""></td>
+
+                            }
+
+                            @if (item.AttachedDocument != null)
+                            {
+
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "CommitteeRaiseLetters", new { url = item.AttachedDocument })" style=""  target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+                            @*@if (item.ApproveUrl != null)
+                            {
+
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "CommitteeRaiseLetters", new { url = item.ApproveUrl })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                </td>
+                            }*@
+
+                        </tr>
+                    }
+                </table>
+                }
+
+            </div>
+
+        </div>
+    </div>
+    @Html.ActionLink("Back Edit Mode", "Create", "CommitteeRaiseLetters", new { fileId = Model.CommitteeRaiseLetter.FileNo, flowserial = Model.FlowSerial, formId = Model.FormId }, new { @class = "btn btn-info" })
+
+
+</div>

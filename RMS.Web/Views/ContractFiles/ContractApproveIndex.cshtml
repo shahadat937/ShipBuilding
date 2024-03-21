@@ -1,0 +1,183 @@
+﻿@using Antlr.Runtime.Tree
+@model RMS.Web.Models.ViewModel.ContractFileViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Contract File Approve
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("ContractFileUpdate", "ContractFiles", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "formCreateContractFile" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ContractFile.ContractFileId)
+                    @Html.HiddenFor(x => x.FileSerial)
+                   <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green;text-align: center">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color: red; text-align: center">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ContractFile.DemandId, Model.DemandSelectListItems, "--Select Project--", new { @class = "form-control watt", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.DemandId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.FileName, null, new { id = "txtName", @class = "txtMember form-control", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.FileName)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Reference &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i> </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.Reference, null, new { @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.Reference)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                  <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Decision : </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.Decition, null, new { @class = "txtMember form-control"})
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.Decition)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Is Approved </label>
+                                <div class="col-md-5">
+                                    @Html.CheckBoxFor(x => x.ContractFile.IsApproved, new { id = "approvBtn" })
+
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.ContractFile.IsApproved)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row approvDate">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approve Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.ContractFile.ApproveDate, "{0:dd MMMM yyyy}", new { id = "txtStartDate", @class = "datepicker form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ContractFile.ApproveDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row approvDoc" style="display: none">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approval Document</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ApproveDocument, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control " })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.ApproveDocument)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rem">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks </label>
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.ContractFile.ApproveRemarks,  new { id = "txtName", @class = "txtMember form-control"})
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.ApproveRemarks)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @*@Html.ActionLink("Add Content", "Create", "ContractFields", new { Id = Model.ContractFile.DemandId }, new { @class = "btn btn-info" })*@
+                                    <input type="submit" id="btnCreateContractFile" class="btn btn-info pull-right" value="Create" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(function () {
+            $("#approvBtn").click(function () {
+                if ($(this).is(':checked')) {
+                    $(".approvDoc").show();
+                    $(".approvDate").show();
+                    $(".rem").show();
+                }
+                else {
+                    $(".approvDoc").hide();
+                    $(".approvDate").hide();
+                    $(".rem").hide();
+                }
+            });
+        });
+        $(document).ready(function () {
+            if ($("#approvBtn").is(':checked')) {
+                $(".approvDoc").show();
+                $(".approvDate").show();
+                $(".rem").show();
+            }
+            else {
+                $(".approvDoc").hide();
+                $(".approvDate").hide();
+                $(".rem").hide();
+            }
+        });
+    </script>
+}

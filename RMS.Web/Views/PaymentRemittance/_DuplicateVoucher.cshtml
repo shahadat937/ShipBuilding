@@ -1,0 +1,102 @@
+﻿@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+
+    Layout = null;
+}
+<table>
+    <tr>
+        <td>@Html.Label("Remittane No")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.RemittanceNo)</td>
+        <td>@Html.HiddenFor(x => x.RemittanceNo)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Sending Country")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.IssuingCountryName)</td>
+        <td>@Html.HiddenFor(x => x.IssuingCountryName)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Remitter Name")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.ApplicantName)</td>
+        <td>@Html.HiddenFor(x => x.ApplicantName)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Sending Date")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.TransDate)</td>
+        <td>@Html.HiddenFor(x => x.TransDate)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Amount(BDT)")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.FAmount)</td>
+        <td>@Html.HiddenFor(x => x.FAmount)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Beneficiary Name")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.BeneficiaryName)</td>
+        <td>@Html.HiddenFor(x => x.BeneficiaryName)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Beneficiary Address")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.BeneficiaryAddress)</td>
+        <td>@Html.HiddenFor(x => x.BeneficiaryAddress)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Beneficiary Mobile")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.BeneficiaryCellPhone)</td>
+        <td>@Html.HiddenFor(x => x.BeneficiaryCellPhone)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Payment Branch")</td>
+        <td>:</td>
+        <td>@Model.PaymentBranchName [@Model.NativeBranchCode],@Model.PaymentDistrictName</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Date of Payment")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.DateofPayment)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Payment ID Type")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.PaymentPhotoIdType)</td>
+
+    </tr>
+    <tr>
+        <td>@Html.Label("Payment ID Number")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.PaymentPhotoIdNumber)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Payment By")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.PaymentBy)</td>
+    </tr>
+    <tr>
+        <td>@Html.Label("Remarks")</td>
+        <td>:</td>
+        <td>@Html.DisplayFor(x => x.Remarks)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><input type="button" id="btnSave" onclick="printRemittance(this)" style="width: 95PX;height: 30PX;float:right" class="btn btn-primary" value="Print" /></td>
+    </tr>
+</table>
+
+<div>
+    <p style="color: red">@Model.Message</p>
+</div>
+
+
+
+
+
+
+

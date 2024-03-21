@@ -1,0 +1,230 @@
+﻿@model RMS.Web.Models.ViewModel.CommiteeViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Commitee Information
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "Commitee", FormMethod.Post, new { id = "formCreateCommitee", onsubmit = "return false;" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x=>x.Commitee.CommiteeId);
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Staff Reqirement &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.Commitee.StuffRequirementId, Model.StaffReqSelectListItems, "--Select--", new { id = "ddlProject", @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Commitee.StuffRequirementId)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Commitee Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Commitee.Name, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Commitee.Name)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Commitee Head &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Commitee.CommitteeHead, null, new { id = "txtEmail", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Commitee.CommitteeHead)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Email &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Commitee.Email, null, new { id = "txtEmail", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Commitee.Email)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Phone No &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Commitee.PhoneNo, null, new { id = "txtPhoneNo", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Commitee.PhoneNo)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-3 col-lg-3">Department &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(x => x.Commitee.DepartmentId, Model.DeptSelectListItems, "--Select--", new { id = "ddlProject", @class = "form-control", required = "required" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.ValidationMessageFor(x => x.Commitee.DepartmentId)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Designation &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Commitee.Designation, null, new { id = "txtPhoneNo", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Commitee.Designation)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-sm-3 col-md-3 col-lg-3">Upload Image </label>
+                                    <div class="col-md-5">
+
+                                        @Html.TextBoxFor(m => m.Image, new { type = "file", @class = "form-control btn btn-info" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.ValidationMessageFor(x => x.Member.ImageUrl)
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "Commitee", null, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-2">
+        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Commitee Created Successfully!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="FailedMessage" style="color:red">Commitee Creation Failed!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+
+        $('#btnCreateCommitee').unbind('click').bind('click', function () {
+            var form = $("#formCreateCommitee");
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    return false;
+                } else {
+                    var data = form.serialize();
+                    var button = $('#btnCreateCommitee');
+                    var target = $(button.attr('data-target'));
+                    $.ajax(
+                        {
+                            url: "/Commitee/Create",
+                            method: "post",
+                            data: data,
+                            dataType: "html",
+                            success: function(resp) {
+                                $("#mySuccessModel").modal('show');
+                                $(".txtMember").val('');
+                            },
+                            error: function(err) {
+                                $("#mySuccessModel").modal('show');
+                            }
+                        });
+                }
+            }
+
+        });
+
+
+        //$('#formCreateMember').submit(function () {
+        //    $.ajax({
+        //        url: "/Member/Create",
+        //        type: 'POST',
+        //        data: new FormData(this),
+        //        processData: false,
+        //        contentType: false,
+        //    }).done(function (response) {
+        //        $("#mySuccessModel").modal('show');
+        //        $(".txtMember").val('');
+
+
+        //    });
+        //});
+
+    </script>
+
+
+
+}

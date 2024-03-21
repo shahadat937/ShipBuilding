@@ -1,0 +1,67 @@
+﻿@using System.Globalization
+@using RMS.Web.Extensions
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    ViewBag.Title = "Generate BFTN File";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+
+
+<div class="container">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">
+            <h4>Remittance Transaction Export</h4>
+        </legend>
+
+        <div style="text-align:right;">
+            <div style=" display:inline-block;">Record:</div>
+            <div style="color: red; display:inline-block;">@Html.Label(Model.RemittInfoTemps.Count.ToString(CultureInfo.InvariantCulture))</div>
+        </div>
+     
+            <div class="row">
+                <table class="table">
+                    @using (Html.BeginForm("ExportEBftnIndex", "ExcelDataRead", FormMethod.Get, new { @class = "submit-allow ignore-validation" }))
+                    {
+                        <tr></tr>
+                        <tr>
+                            <td>
+
+                                Exchange Company
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(x => x.ExchangeCode, Model.ExchangesSelectdItemList, "-Select-", new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Serach Value" })
+                            </td>
+
+                            <td>
+                                Payment Type
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(x => x.exchange, Model.PaymentModeSelectListItems, "--Select Payment Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td>
+                                Import Date
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(x => x.exchangedate, new { @class = "textBoxsize form-control datepicker", tabindex = 1, autofocus = "autofocus", @Value = @DateTime.Now.ToShortDateString(), placeholder = "dd MMM yyyy" })
+                            </td>
+                            <td></td>
+                            <td>
+                                <button id="verifyButton" style="height: 30PX;float:left" class="btn btn-primary">Search</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div id="EducationList">
+                @{
+                    Html.RenderPartial("~/Views/ExcelDataRead/_exportBftnIndex.cshtml", Model);
+                }
+
+            </div>
+</fieldset>
+</div>

@@ -1,0 +1,116 @@
+﻿
+@model  RMS.Web.Models.ViewModel.ProjectViewModel
+@{
+    Layout = null;
+}
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+    .hed {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    th {
+        color: white;
+    }
+</style>
+
+<div class="col-md-10 col-sm-6 col-xs-10">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">Tender Specification</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-4 col-lg-4">Tender Specification Status:</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.SpProjectTaskStatuse.tenderStatus)
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-4 col-lg-4">PDF :</label>
+                        @if (Model.SpProjectTaskStatuse.tenderStatus == "Yes")
+                        {
+                            <div class="col-md-5">
+                                <a href="@Url.Action("Show", "Demand", new { url = Model.SpProjectTaskStatuse.TenderFile })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-5">
+                            </div>
+                        }
+
+                        <div class="col-md-3">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 column">
+                    <table class="table table-bordered table-hover" id="tab_logic">
+                        @foreach (var group in Model.AllCommitteListed)
+                        {
+                             <thead style="background-color: #571845">
+                                 <tr style="background-color: #571845"><th colspan="4" class="text-center">@group.Key</th></tr>
+                            <tr>                               
+                                <th class="text-center">
+                                    Member Name
+                                </th>
+                                <th class="text-center">
+                                    Work Place
+                                </th>
+                                <th class="text-center">
+                                    Phone Number
+                                </th>                               
+                                <th class="text-center">
+                                    Committe Designation
+                                </th>
+                       
+                            </tr>
+                        </thead>
+                        
+                             <tbody>
+                            @foreach (var item in group.Values)
+                            {
+                               
+                                     <tr>
+                          
+                                    <td>
+                                        @item.Member.MemberName
+                                    </td>
+                                    <td>
+                                        @item.WorkPlace
+                                    </td>
+                                    <td>
+                                        @item.Member.PhoneNo
+                                    </td>                                  
+                                    <td>
+                                        @item.CommonCode.TypeValue
+                                    </td>
+                              
+                                </tr>
+                               
+                               
+                            }
+
+                        </tbody>
+
+                        }
+                    </table>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

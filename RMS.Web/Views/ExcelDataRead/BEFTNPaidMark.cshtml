@@ -1,0 +1,145 @@
+﻿@using System.Globalization
+@using RMS.Web.Extensions
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    ViewBag.Title = "Transaction Verify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+
+
+    <div class="container">
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">
+                <h4>Remittance Transaction Paid Marks</h4>
+            </legend>
+            <div style="text-align:right;">
+                <div style=" display:inline-block;">Record:</div>
+                <div style="color: red; display:inline-block;">@Html.Label(Model.RemittInfos.Count.ToString(CultureInfo.InvariantCulture))</div>
+            </div>
+            <div class="row">
+                <table class="table">
+                    @using (Html.BeginForm("BEFTNPaidMark", "ExcelDataRead", FormMethod.Get, new { @class = "submit-allow ignore-validation" }))
+                    {
+                      
+                            <tr>
+                                <td>
+
+                                    Exchange Company
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(x => x.ExchangeCode, Model.ExchangesSelectdItemList, "-Select-", new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Serach Value" })
+                                </td>
+
+                                <td>
+                                    Payment Type
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(x => x.exchange, Model.PaymentModeSelectListItems, "--Select Payment Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                                </td>
+                            </tr>
+                            <tr>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    Import Date
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.exchangedate, "{0: dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker", tabindex = 1, autofocus = "autofocus", @Value = @DateTime.Now.ToShortDateString(), placeholder = "dd MMM yyyy" })
+                                </td>
+                               <td></td>
+                                <td>
+                                    <button id="verifyButton" style="height: 30PX;float:left" class="btn btn-primary">Search</button>
+                                </td>
+                            </tr>
+                        }
+                </table>
+            </div>
+@using (Html.BeginForm("PaidMark", "ExcelDataRead", FormMethod.Post, new { @class = "UserForm" }))
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" style="font-size:12px;">
+            <thead style="background-color: mintcream">
+                <tr>
+                    <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                    <td>@Html.Label("Remittance No")</td>
+                    <td>@Html.Label("Issuing Branch")</td>
+                    <td>@Html.Label("Payment Date")</td>
+                    <td>@Html.Label("Exchange Refference")</td>
+                    <td>@Html.Label("Account No")</td>
+                    <td>@Html.Label("Account Name")</td>
+                    <td>@Html.Label("Responding Branch")</td>
+                    <td>@Html.Label("USD Amount")</td>
+                    <td>@Html.Label("Exchange Rate")</td>
+                    <td>@Html.Label("BDT Amount")</td>
+                    <td>@Html.Label("Currency")</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.RemittInfos)
+                {
+                    <tr class="table-hover">
+                        <td><input type="checkbox" value="@item.RemittanceNo" name="NoOfTransaction" /></td>
+                        <td>@Html.DisplayFor(modelItem => item.RemittanceNo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IssuingBranch)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DateofPayment, "{0:dd MMM yyyy}")</td>
+                        <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RespondingBranch)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ExchangeRate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FAmount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CurrencyCode)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+            <div><button id="verifyButton" style="height: 30PX;float:right" class="btn btn-primary">Paid Mark</button></div>
+    <p style="color:red">@TempData["Message"]</p>
+}
+        </fieldset>
+    </div>
+
+
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+    </script>
+}

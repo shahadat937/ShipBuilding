@@ -1,0 +1,123 @@
+﻿@model RMS.Web.Models.ViewModel.TenderViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    select[readonly] {
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Tender Specification Information
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color: green ;text-align: center">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color: red; text-align: center">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("TenderTypeSave", "Tender", FormMethod.Post, new { id = "formCreateCommitee", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TenderSecification.TenderIdentity)
+                    @Html.HiddenFor(x => x.FlowSerial)
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File No &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.TenderSecification.FileNo, Model.ProjectSelectList, "--select--", new { @class = "form-control", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSecification.Title)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Tender Type &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.TenderSecification.TenderType, Model.TenderingSelectListItems, "--select--", new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSecification.TenderType)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ImageUpload)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @*@Html.ActionLink("Back To List", "Index", "Tender", null, new { @class = "btn btn-info" })*@
+                                    <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-2">
+        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Tender Specification Created Successfully!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="FailedMessage" style="color:red">Tender Specification Creation Failed!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

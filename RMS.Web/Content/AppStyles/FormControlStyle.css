@@ -1,0 +1,31 @@
+﻿    label, input {
+        display: block;
+        font-size: 12px;
+    }
+
+    .form_group {
+        display: block;
+        font-size: 12px;
+    }
+
+    input.text {
+        margin-bottom: 5px;
+        width: 400px;
+        padding: .4em;
+    }
+    select.text {
+        margin-bottom: 5px;
+        width: 400px;
+        padding: .4em;
+    }
+
+    .field-validation-error {
+        color: #ff0000;
+        font-size: 12px;
+    }
+
+    .input-validation-error {
+        border: 1px solid #ff0000;
+        background-color: #ffeeee;
+        font-size: 12px;
+    }

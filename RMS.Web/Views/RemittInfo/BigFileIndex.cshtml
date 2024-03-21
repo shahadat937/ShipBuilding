@@ -1,0 +1,186 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-info">
+    <div class="panel-heading" style="text-align:center;">Upload Unpaid Remittace File For Big Number of Transaction(>100)</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("BigFileUpload", "RemittInfo", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "idForm" }))
+        {
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" style="margin-top:5px;">Exchange Company:</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemitInfoFirstTable.ExchangeHouse, Model.ExchangeHouseSelectListItems, "-Select Exchange Company", new { @class = "form-control", id = "exchangeHouse", tabindex = 1 })
+                            @Html.HiddenFor(x => x.RemitInfoFirstTable.ExchangeHouse)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Upload Date:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemitInfoFirstTable.FileUploadDate, "{0:dd MMMM yyyy}", new { @class = "form-control datepicker", tabindex = 2, placeholder = "File Upload Date", id = "uploadDate" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Batch No.:</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.RemitInfoFirstTable.BatchNo, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Batch No.", id = "batchNo" })
+                            @Html.ValidationMessageFor(x => x.RemitInfoFirstTable.BatchNo)
+                        </div>
+                        @*<div class="col-md-4" style="text-align:right">
+                                <input type="submit" id="btnSave" value="Find" class="btn btn-info" tabindex=13 />
+                            </div>*@
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group" style="text-align:right">
+                        @*<a id="exchangeHouseNumber" class="btn btn-info" href="#">Find Uploaded Data</a>*@
+                        @Html.ActionLink("Find Uploaded Data", "FindUploadedDataForBig", "RemittInfo", new { @class = "exchangeHouseNumber btn btn-info" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" style="margin-top:5px;">Exchange Rate:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemitInfoFirstTable.ExchangeRate, new { @class = "textboxsize form-control", tabindex = 2, placeholder = "Exchange Rate" })
+                            @Html.ValidationMessageFor(x => x.RemitInfoFirstTable.ExchangeRate)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" style="margin-top:5px;">Select File:</label>
+                        <div class="col-md-8">
+                            <input type="file" id="dataFile" name="Upload" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group" style="text-align:right">
+                        <input type="submit" name="save" value="Upload" class="btn btn-info" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group" style="text-align:right">
+                        @Html.ActionLink("Accept & Matching", "AcceptAndMatching", "RemittInfo", new { @class = "exchangeHouseNumber btn btn-info" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+@if (Model.RemitInfoFirstTables.Count > 0)
+{
+    <div class="row" style="font-weight:bold;color:blue">
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label class="col-md-6 control-label">Number of Remittance:</label>
+                <div class="col-md-6" style="text-align:left">
+                    @Html.DisplayFor(x => x.NumberOfRemittance)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-md-6 control-label">Total Amount in BDT:</label>
+                <div class="col-md-6" style="text-align:left">
+                    @Html.DisplayFor(x => x.TotalAmountInBDT)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1" style="text-align:right">
+            @*<div class="col-md-12" style="text-align: right">
+                    @Html.ActionLink("Export", "DataExport", "RemittInfo", new { ExchangeHouse = Model.RemittInfo.ExchangeHouse, FileUploadDate = Model.RemittInfo.FileUploadDate }, new { @class = "btn btn-info" })
+                </div>*@
+        </div>
+    </div>
+}
+
+
+<table class="table table-bordered" style="font-size:10px;margin-top:0px;">
+
+    <thead style="background-color: #32CD32;">
+        <tr style="text-align:justify">
+            <th>Originating Country</th>
+            <th>Reference Number</th>
+            <th>Remitter Name</th>
+            <th>Beneficiary Name</th>
+            <th>Transaction Date</th>
+            <th>Amount in BDT</th>
+            <th>Bank Name</th>
+            <th>District Name</th>
+            <th>Branch Name</th>
+            <th>Routing No.</th>
+            <th>Account Number</th>
+            @*<th>Security Code</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RemitInfoFirstTables)
+        {
+            <tr class="table table-bordered">
+                <td>@Html.DisplayFor(modelItem => item.CountryCode)</td>
+                <td>@Html.DisplayFor(modelItem => item.ReferenceNo)</td>
+                <td>@Html.DisplayFor(modelItem => item.RemitterName)</td>
+                <td>@Html.DisplayFor(modelItem => item.BeneficairyName)</td>
+                <td style="text-align: center">@Html.DisplayFor(modelItem => item.TransactionDate)</td>
+                <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BankName)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.DistrictName)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchName)</td>
+                <td>@Html.DisplayFor(modelItem => item.RoutingNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script>
+    @*$("#exchangeHouseNumber").click(function () {
+        var url = '@Url.Action("FindUploadedData", "RemittInfo", new { exchangeHouse = "----",uploadDate="--" })';
+        url = url.replace("----", $('#exchangeHouse').val());
+        url = url.replace("--", $('#uploadDate').val() + "|" + $('#exchangeHouse').val());
+        window.location = url;
+    });*@
+
+    $('.exchangeHouseNumber').click(function () {
+        var exchangeHouse = $('#exchangeHouse').val();
+        var uploadDate = $('#uploadDate').val(); // get the textbox value
+        var batchNo = $('#batchNo').val();
+        if (uploadDate == '')
+            alert("Please select data uploaded date.");
+        var url = $(this).attr('href') + '&exchangeHouse=' + exchangeHouse + "&uploadDate=" + uploadDate + "&batchNo=" + batchNo; // build new url
+        location.href = url; // redirect
+        return false; // cancel default redirect
+    });
+</script>

@@ -1,0 +1,117 @@
+﻿@*@using ClosedXML.Excel
+    @using DocumentFormat.OpenXml.Bibliography
+    @using Excel.Log
+    @using RMS.Model*@
+@using RMS.Utility
+@using RMS.Web.Extensions
+
+@model RMS.Web.Models.ViewModel.FileMovementViewModel
+@{
+    ViewBag.Title = "Flow Setup Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Complete Project Information
+        </div>
+        <div class="panel-body">
+      
+            @*<div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.Demands, rowCount: Model.Demands.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new { DemandId = "grid" },
+                        tableStyle: "webgrid-table webgrid",
+                        headerStyle: "webgrid-header",
+                        footerStyle: "webgrid-footer",
+                        alternatingRowStyle: "webgrid-alternating-row",
+                        selectedRowStyle: "webgrid-selected-row",
+                        rowStyle: "webgrid-row-style",
+                        firstText: "First",
+                        lastText: "Last",
+                        nextText: "Next",
+                        mode: WebGridPagerModes.All,
+                        previousText: "Previous",
+                        columns: grid.Columns(
+                            grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                             grid.Column("Project Name", canSort: false, format: @<text><a href="@Url.Action("Index", "Project", new {ProjectId = item.DemandId})">@item.FileNo</a></text>),
+
+                                                                         grid.Column("CommonCode.TypeValue", header: "Project Type"),
+                                                                                  grid.Column("CommonCode1.TypeValue", header: "Project Category")
+
+
+
+
+                  ))
+                    ;
+                }
+            </div>*@
+            @{ int rowNo = 0; }
+            <div class="">
+
+                <table class="table table-bordered table-hover table-striped">
+
+
+                    <tr style="background-color: #654FA1;color: white">
+                        <td style="text-align: center; font-size: 15px">Serial No</td>
+                        <td style="text-align: center; font-size: 15px">Project Name</td>
+                        <td style="text-align: center; font-size: 15px">Project Type</td>
+                        <td style="text-align: center; font-size: 15px">Project Category</td>
+                        <td style="text-align: center; font-size: 15px">PDF</td>
+                    </tr>
+
+                    @foreach (var item in Model.Demands)
+                    {
+                        <tr>
+                            <td style="">@(rowNo += 1)</td>
+                            <td style="">@item.FileNo</td>
+                            <td style="">@item.CommonCode.TypeValue</td>
+                            <td style="">@item.CommonCode1.TypeValue</td>
+                            @if (item.DemandingUrl != null)
+                            {
+                                <td style="text-align: center; color: blue">
+
+                                    <a href="@Url.Action("Show", "Demand", new { url = item.DemandingUrl })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" /></a>
+
+
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    
+                                </td>
+                            }
+                       
+                       
+                     
+                        </tr>
+                    }
+                </table>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

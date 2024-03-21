@@ -1,0 +1,173 @@
+﻿@model RMS.Web.Models.ViewModel.ContractViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Contract  Add
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "Contracts", null, FormMethod.Post, new { id = "formCreateContract" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Contract.ContractFileId)
+                     @*<div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Contract File &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.Contract.ContractFileId, Model.ContractFileSelectedItems, "--Select Category--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Contract.ContractFileId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="row">        
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Field &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.Contract.FieldId, Model.ContractFieldSelectedItems, "--Select Category--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                    @Html.TextBoxFor(x => x.Contract.FieldValue, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                 </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Contract.FieldId)
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Field Value &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Contract.FieldValue, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Contract.FieldValue)
+                                </div>
+
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Field Value &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Contract.FieldValue, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Contract.FieldValue)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "Contracts", null, new { @class = "btn btn-info" })                              
+                                    <input type="button" id="btnAddRow" class="btn btn-info pull-right" value="Add New" />
+                                    <input type="submit" id="btnCreateContract" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Contract  Created Successfully!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="FailedMessage" style="color:red">Contract Creation Failed!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $('#btnCreateContract').unbind('click').bind('click', function () {
+            var form = $('#formCreateContract');
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    return false;
+                }
+                else {
+                    var data = form.serialize();
+                    $.ajax({
+                        url: "/Contracts/Create",
+                        type: 'POST',
+                        data: data,
+                        dataType: "html",
+                        success: successFunc,
+                        error: errorFunc
+                    });
+                    successFunc = function (response) {
+                        $('#mySuccessModel').modal('show');
+                    }
+                    errorFunc = function (response) {
+                        $('#myFailedModel').modal('show');
+                    }
+                }
+                 $(document).ready(function () {
+            var counter = 0;
+
+            $("#btnAddRow").on("click", function () {
+                var newRow = $("<tr>");
+                var cols = "";
+                cols += ' <td><label >Field &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label></td>';
+
+                cols += '<td><select class="form-control" id="ca" name="@Html.NameFor(x => x.Contract.ContractFileId)"><option value="">-Select-</option><option value="10002">Agenda</option><option value="10003"> Tender Specification</option><option value="10004"> Tender Specification Openion</option><option value="10005"> Tender</option><option value="10006"> Committe</option><option value="10007"> Agenda</option><option value="10008"> Tender Specification Dept Openion</option><option value="10009"> Committe Raise Letter</option></select></td>';
+                cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+                newRow.append(cols);
+
+                $("table.order-list").append(newRow);
+                counter++;
+
+
+            });
+
+
+            $("table.order-list").on("click", ".ibtnDel", function (event) {
+                $(this).closest("tr").remove();
+                counter -= 1;
+            });
+        });
+    </script>
+}

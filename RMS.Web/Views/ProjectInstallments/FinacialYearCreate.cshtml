@@ -1,0 +1,122 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="font-family:arial">
+
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Payment Installment  Add For @Html.DisplayFor(x => x.Demand.FileNo)
+            </div>
+            <div class="col-sm-12 col-lg-12">
+                @if (@Model.Message != null)
+                {
+                    <div style="color:green">@Model.Message</div>
+                }
+                else
+                {
+                    <div style="color:red">@Model.Message</div>
+                }
+
+            </div>
+
+            <div class="panel-body">
+                @using (Html.BeginForm("FinacialYearCreate", "ProjectInstallments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Demand.DemandId)
+                    <table class="table" id="projectInstallmentTablee">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Financial Year")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Percentage")
+                                </th>
+                                <th style="text-align:center">@Html.DisplayName("Amount")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.FinancialInstallmentDictionary)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DropDownListFor(model => Model.FinancialInstallmentDictionary[item.Key].FinancialYearId,
+Model.FinancialYears.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Value, Selected = (x.Id == Model.FinancialInstallmentDictionary[item.Key].FinancialYearId) }).ToList(),
+          "--Select--",
+              new { @class = "form-control", required = "required", @id = "ddl" })
+                                      
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(x => Model.FinancialInstallmentDictionary[item.Key].Percentage, new { id = "amount", @class = "form-control" ,@readonly="true"})
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(x => Model.FinancialInstallmentDictionary[item.Key].Amount, new { @class = "form-control",@readonly="true" })
+                                        @Html.HiddenFor(x => x.FinancialInstallmentDictionary[item.Key].FinancialInstallmentId)
+                                    </td>
+                                    @if (Model.FinancialInstallmentDictionary[item.Key].FinancialInstallmentId > 0)
+                                    {
+                                    <td>@Html.ActionLink("Add", "Create", "ProjectInstallments", new { financialID = Model.FinancialInstallmentDictionary[item.Key].FinancialInstallmentId, projectIdenty =Model.Demand.DemandId }, new { @class = "btn btn-info" })</td>
+                                        
+                                    }
+
+                                    <td>@Html.ActionLink("Delete", "Delete", "ProjectInstallments", new { financialID = Model.FinancialInstallmentDictionary[item.Key].FinancialInstallmentId, projectIdenty = Model.Demand.DemandId }, new { @class = "btn btn-info" })</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><input class="btn btn-primary" type="button" onclick="addNewRow()" value="+" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Go Back", "Create", "ProjectPayments", new { id = Model.Demand.DemandId }, new { @class = "btn btn-info" })
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-primary right" />
+                                </td>
+
+                            </tr>
+                            <tr>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        function removeRow(obj) {
+            var r = confirm("Are you confirm to delete this!");
+            if (r == true) {
+                var tr = jQuery(obj).closest('tr');
+                tr.remove();
+            }
+        }
+        function addNewRow() {
+            var option = {
+                url: "/ProjectInstallments/AddFinancialRow",
+                type: "Get",
+                dataType: 'html'
+            }
+            jQuery.ajax(option).done(function (response) {
+                jQuery('#projectInstallmentTablee > tbody:last').append(response);
+            });
+        }
+    </script>
+}
+
+
+
+

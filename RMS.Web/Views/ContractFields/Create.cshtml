@@ -1,0 +1,105 @@
+﻿@model RMS.Web.Models.ViewModel.ContractFieldViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Contract Field Add
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "ContractFields", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ContractField.ContractFileId)                 
+                    <table class="table" id="contractFieldTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Parameter")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Description")
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ContractFieldDictionary)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DropDownListFor(model => Model.ContractFieldDictionary[item.Key].FieldName,
+                                            Model.ContractFieldItem.Select(x => new SelectListItem() { Value = x.Value.ToString(), Text = x.Text, Selected = (x.Value == Model.ContractFieldDictionary[item.Key].FieldName) }).ToList(),
+                                            "Select",
+                                            new { @class = "form-control", required = "required" })
+
+                                        @*@Html.TextBoxFor(x => Model.ContractFieldDictionary[item.Key].FieldName, new { id = "fieldName", @class = "form-control", required = "required" })*@
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(x => Model.ContractFieldDictionary[item.Key].FieldValue, new { id = "fieldValue", @class = "form-control", required = "required", @maxlength = "1498" })
+                                    </td>
+                                    <td>
+                                        <input class="btn btn-danger" type="button" value="X" onclick="removeRow(this)" />
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><input class="btn btn-primary" type="button" onclick="addNewRow()" value="+" /></td>
+                            </tr>
+                            <tr>
+                                <td>@Html.ActionLink("Go Back", "Create", "ContractFiles", new { fileId = Model.ContractField.ContractFileId }, new { @class = "btn btn-info" })</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-primary right" />
+                                </td>
+
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                }
+                <div class="col-sm-12 col-lg-12">
+                    @if (@Model.Message != null)
+                    {
+                        <div style="color:green">@Model.Message</div>
+                    }
+                    else
+                    {
+                        <div style="color:red">@Model.Message</div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        function removeRow(obj) {
+            var r = confirm("Are you confirm to delete this!");
+            if (r == true) {
+                var tr = jQuery(obj).closest('tr');
+                tr.remove();
+            }
+        }
+        function addNewRow() {
+            var option = {
+                url: "/ContractFields/AddNewRow",
+                type: "Get",
+                dataType: 'html'
+            };
+            jQuery.ajax(option).done(function (response) {
+                jQuery('#contractFieldTable > tbody:last').append(response);
+            });
+        }
+    </script>
+}

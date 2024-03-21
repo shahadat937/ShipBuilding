@@ -1,0 +1,166 @@
+﻿@model RMS.Web.Models.ViewModel.ContractFileViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Contract Approval
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("ApprovalContract", "ContractFiles", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ContractFile.ContractFileId)
+                    @Html.HiddenFor(x => x.FileSerial)
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ContractFile.DemandId, Model.DemandSelectedItems, "--Select Project--", new { @class = "form-control watt", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.DemandId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.FileName, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.FileName)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Issue Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.ContractFile.IssueDate, "{0:dd MMMM yyyy}", new { id = "txtStartDate", @class = "datepicker form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ContractFile.IssueDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.Remarks, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.Remarks)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approval</label>
+                                <div class="col-md-5">
+                                    @Html.CheckBoxFor(x => x.ContractFile.IsApproved, new { id = "IsApproved", @class = "txtMember form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.IsApproved)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="approvalFile">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approval File</label>
+                                <div class="col-md-5">
+                                    <input type="file" id="file" name="upload" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.ApprovalFileUrl)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    <input type="submit" id="btnCreateContractFile" class="btn btn-info pull-right" value="Create" />
+                                    @Html.ActionLink("Add Content", "Create", "ContractFields", new { Id = Model.ContractFile.DemandId, flowSerial = Model.FileSerial }, new { @class = "btn btn-info" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Contract File Created Successfully!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="FailedMessage" style="color:red">Contract File Creation Failed!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#approvalFile').hide();
+            //var val = $('#approved').val();
+            //if (val == true) {
+            //    $('#approvalFile').hide();
+            //}
+            //else {
+            $('#IsApproved').change(function () {
+                if (this.checked)
+                    $('#approvalFile').fadeIn('slow');
+                else
+                    $('#approvalFile').fadeOut('slow');
+            });
+            ////}
+        });
+    </script>
+}

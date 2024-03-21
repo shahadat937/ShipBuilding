@@ -1,0 +1,54 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.TenderSpecOpinionViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.FormId)
+@Html.HiddenFor(x => x.FileSerial)
+@Html.HiddenFor(x => x.TenderSpecOpinion.FileNo)
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            @Model.FormName
+        </div>
+        <div class="panel-body">
+        
+            <div>
+                <h4 class="h4 text-info">@Model.Message</h4>
+            </div>
+            <div class="">
+                @{
+                    var grid = new WebGrid(canPage: true, rowsPerPage: AppConfig.PageSize, canSort: true, ajaxUpdateContainerId: "grid");
+                    grid.Bind(Model.TenderSpecOpinions, rowCount: Model.TenderSpecOpinions.Count, autoSortAndPage: true);
+                    grid.Pager(WebGridPagerModes.All);
+                    @grid.GetHtml(htmlAttributes: new { Id = "grid" },
+                        tableStyle: "webgrid-table webgrid",
+                        headerStyle: "webgrid-header",
+                        footerStyle: "webgrid-footer",
+                        alternatingRowStyle: "webgrid-alternating-row",
+                        selectedRowStyle: "webgrid-selected-row",
+                        rowStyle: "webgrid-row-style",
+                        firstText: "First",
+                        lastText: "Last",
+                        nextText: "Next",
+                        mode: WebGridPagerModes.All,
+                        previousText: "Previous",
+                        columns: grid.Columns(
+                            grid.Column("Serial No", canSort: false, format: item => item.WebGrid.Rows.IndexOf(item) + 1 + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage) * grid.RowsPerPage * grid.PageIndex),
+                                     grid.Column("Demand.FileNo", header: "File"),
+                            grid.Column("TenderName", header: "TenderName"),
+                            //grid.Column("TenderUrl", header: "TenderUrl"),
+                            grid.Column("IssueDate", header: "IssueDate")
+                            ))
+                    ;
+                }
+            </div>
+
+        </div>
+    </div>
+    <a href="@Url.Action("Create", "TenderSpecOpinions", new { fileId = Model.TenderSpecOpinion.FileNo, formId = Model.FormId, flowserial =Model.FileSerial })" class="btn btn-info">
+        Back To Crate Page
+        @*<span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>*@
+    </a>
+</div>

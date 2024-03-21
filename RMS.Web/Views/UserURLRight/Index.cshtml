@@ -1,0 +1,100 @@
+﻿@model RMS.Web.Models.ViewModel.UserURLRightViewModel
+@{
+    ViewBag.Title = "User Rights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">
+        Menu Rights of Application Role
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Index", "UserURLRight", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Application Role</label>
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(model => model.UserUrlRight.UserId, Model.RoleSelectedItemList, "--Select Application Role--", new { @class = "dropdownsize form-control", tabindex = 1, id = "ddRoleName" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.ActionLink("Go", "Index", "UserURLRight", new { @class = "btn btn-info", id = "btnRole" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="col-md-12">
+                        @if (Model.Message != null)
+                        {
+                            if (Model.IsSucceed == 1)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        @using (Html.BeginForm("UpdateUserRights", "UserURLRight", FormMethod.Post))
+        {
+
+            <div class="row">
+                <div class="table-responsive">
+                    <div class="text-right">
+                        <button id="btnUpdate" class=" btn btn-info ">Update</button>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead style="background-color: azure;color: white">
+                            <tr style="background-color: #6A5ACD;">
+                                <th style="text-align:center"> @Html.Label("Menu Id")</th>
+                                <th class="text-center">@Html.Label("Role Name")</th>
+                                <th style="text-align: center;">@Html.Label("Menu Object Name")</th>
+                                <th style="text-align: center;">@Html.Label("URL")</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var index = 0; index < Model.UserURLRights.Count; index++)
+                            {
+                                <tr>
+
+                                    <td style="text-align:center;padding-top: 15px">
+                                        @Html.DisplayFor(modelItem => Model.UserURLRights[index].MenuId)
+                                        @Html.HiddenFor(modelItem => Model.UserURLRights[index].MenuId)
+                                        @Html.HiddenFor(modelItem => Model.UserURLRights[index].UserId)
+                                    </td>
+                                    <td>@Html.TextBoxFor(modelItem => Model.UserURLRights[index].MenuObjectName, new { @class = "form-control long-textbox", style = "width:100%" })</td>
+                                    <td>
+                                        @Html.TextBoxFor(modelItem => Model.UserURLRights[index].UrlLink, new { @class = "form-control long-textbox", @readonly = "readonly", style = "width:100%" })
+                                    </td>
+                                    <td style="width: 50px;padding-top:15px">@Html.CheckBoxFor(modelItem => Model.UserURLRights[index].Visible)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $('#btnRole').click(function () {
+            var roleName = $("#ddRoleName").val();
+            //alert(selectedValues);
+
+            if (roleName == '')
+                alert("Please select Role.");
+            var url = $(this).attr('href') + '&roleName=' + roleName; // build new urls
+         
+            location.href = url; // redirect
+            return false; // cancel default redirect
+        });
+    </script>
+}

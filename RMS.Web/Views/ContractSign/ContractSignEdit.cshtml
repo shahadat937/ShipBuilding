@@ -1,0 +1,122 @@
+﻿@model RMS.Web.Models.ViewModel.ContractSignViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    .required {
+        color: red;
+        font-size: 18px;
+    }
+</style>
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+               Contract Sign
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12" style="text-align: center">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color:green">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color:red">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Save", "ContractSign", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ContractSign.id);
+                    @Html.HiddenFor(x => x.FileId);
+                    @Html.HiddenFor(x => x.FlowSerial);
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Project  &nbsp;<span class="required">*</span></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.ContractSign.Demandid, Model.ProjectSelectListItems, "--Select--", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ContractSign.Demandid)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Reference :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ContractSign.Reference, null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">SendName &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ContractSign.SendName, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ContractSign.SendName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">SendDate </label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ContractSign.SendDate, "{0:dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker", tabindex = 5 })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">FilePath &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.DemandingUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                    @Html.ValidationMessageFor(x => x.DemandingUpload)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Remarks </label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ContractSign.Remarks, null, new { id = "txtName", @class = "txtMember form-control" })
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @*<a href="@Url.Action("Index", "ContractSign")" class="btn btn-info">Show All</a>*@
+                                    <a href="@Url.Action("Index", "ContractSign", new {flowserial = Model.FlowSerial, proId = Model.ContractSign.Demandid })" class="btn btn-info">
+                                        Show All
+                                        <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+                                    </a>
+
+                                    <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

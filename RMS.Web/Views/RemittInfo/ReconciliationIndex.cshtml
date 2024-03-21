@@ -1,0 +1,218 @@
+﻿@using Microsoft.Windows.Design.Model
+@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Final Verification of all Matched Data for Reconciliation";
+    ViewBag.Title = "Verification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("FinalVerification", "RemittInfo", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Payment Date From:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.FromDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", tabindex = 2, placeholder = "Date From", id = "paymentDateFrom" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Payment Date To:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.ToDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", tabindex = 2, placeholder = "Date To", id = "paymentDateTo" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group" style="text-align:right">
+                        @*<a id="exchangeHouseNumber" class="btn btn-info" href="#">Find Uploaded Data</a>*@
+                        @Html.ActionLink("Find Uploaded Data", "ReconciliationIndex", "RemittInfo", new { id = "btnFindUploadedData", @class = "btn btn-info" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+
+        }
+        @using (Html.BeginForm("FinalVerifyPaidData", "RemittInfo", FormMethod.Post, new { @class = "verifyTransaction" }))
+        {
+            @Html.HiddenFor(x => x.FromDate)
+            @Html.HiddenFor(x => x.ToDate)
+            @Html.HiddenFor(x => x.RemittInfo.FileUploadDate)
+            @Html.HiddenFor(x => x.RemittInfo.BatchNo)
+            @Html.HiddenFor(x => x.TotalAmountInBDT)
+            @Html.HiddenFor(x => x.MinRestrictedBal)
+            @Html.HiddenFor(x => x.NRTKBalance)
+            <div class="">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" style="text-align:center"> Data of Remit Infinity</div>
+                            <div class="">
+                                <table class="table table-bordered">
+                                    <tr style="font-size: 10px;font-weight:bold">
+                                        <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                                        <th>Reference Number</th>
+                                        <th>Exchange Company</th>
+                                        <th>Payout Amount</th>
+                                        <th>Payment Branch</th>
+                                        <td>Date of Payment</td>
+                                    </tr>
+                                    @foreach (var item in Model.RemittInfos)
+                                    {
+
+                                        <tr style="font-size:10px;">
+                                            <td><input type="checkbox" value="@item.RemittInfoIdentity" name="NoOfTransaction" id="idCheckBox" /></td>
+                                            <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo2.BranchName)</td>
+                                            <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.DateofPayment)</td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" style="text-align:center"> Data of Exchange Company</div>
+                            <div class="">
+                                <table class="table table-bordered">
+                                    <tr style="font-size: 10px; font-weight: bold">
+                                        <th>Reference Number</th>
+                                        <th>Exchange Company</th>
+                                        <th>Payout Amount</th>
+                                        <th>Payment Branch</th>
+                                        <th>Date of Payment</th>
+                                    </tr>
+                                    @foreach (var item in Model.RemittInfoExchangeHouses)
+                                    {
+
+                                        <tr style="font-size:10px;">
+                                            <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo2.BranchName)</td>
+                                            <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo1.BranchName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.DateofPayment)</td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" style="text-align:center"> Data of CBS</div>
+                            <div class="">
+                                <table class="table table-bordered">
+                                    <tr style="font-size: 10px; font-weight: bold">
+                                        <th>Reference Number</th>
+                                        <th>Exchange Company</th>
+                                        <th>Payout Amount</th>
+                                        <th>Payment Branch</th>
+                                        <th>Date of Payment</th>
+                                    </tr>
+                                    @foreach (var item in Model.RemittInfoCoreBankings)
+                                    {
+
+                                        <tr style="font-size:10px;">
+                                            <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo2.BranchName)</td>
+                                            <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.DateofPayment)</td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div><button id="verifyButton" style="float:right" class="btn btn-info">Verify Matched Data</button></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script>
+    @*$("#exchangeHouseNumber").click(function () {
+        var url = '@Url.Action("FindUploadedData", "RemittInfo", new { exchangeHouse = "----",uploadDate="--" })';
+        url = url.replace("----", $('#exchangeHouse').val());
+        url = url.replace("--", $('#uploadDate').val() + "|" + $('#exchangeHouse').val());
+        window.location = url;
+    });*@
+
+    $('#btnFindUploadedData').click(function () {
+        var dateFrom = $('#paymentDateFrom').val();
+        var dateTo = $('#paymentDateTo').val(); // get the textbox value
+        if (dateTo == '' && dateFrom == '')
+            alert("Please select uploaded date.");
+        var url = $(this).attr('href') + '?&dateFrom=' + dateFrom + "&dateTo=" + dateTo; // build new url
+        location.href = url; // redirect
+        return false; // cancel default redirect
+    });
+
+    $("tr:odd").css("background-color", "#bbf");
+    $(function () {
+        $('#verifyTransaction').unbind('click').bind('click', function () {
+            var form = $(this).parents("form:first");
+            var url = form.attr('action');
+            var type = form.attr('method');
+            var option = {
+                url: url,
+                dataType: 'html',
+                type: type,
+                data: form.serialize(),
+            };
+
+            if ($.validator && $.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    return false;
+                } else {
+                    $.ajax(option).done(function (htmlRespons) {
+                        $("#containnerInfo").html("");
+                        $("#containnerInfo").append(htmlRespons);
+                    });
+                }
+            }
+        });
+        $('#selectAll').click(function (e) {
+            $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+        });
+    });
+
+</script>

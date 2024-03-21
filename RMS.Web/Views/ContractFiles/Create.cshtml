@@ -1,0 +1,111 @@
+﻿@using Antlr.Runtime.Tree
+@model RMS.Web.Models.ViewModel.ContractFileViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container" style="font-family:arial">
+
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Contract File Add
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "ContractFiles", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ContractFile.ContractFileId)
+                    @Html.HiddenFor(x => x.FileSerial)
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green;text-align: center">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color: red; text-align: center">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ContractFile.DemandId, Model.DemandSelectListItems, "--Select Project--", new { @class = "form-control watt", @id = "ddlDemandId", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.DemandId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.FileName, null, new { id = "txtName", @class = "txtMember form-control", required = "required", @maxlength = "254" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.FileName)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Attached File </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.ImageUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Issue Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.ContractFile.IssueDate, "{0:dd MMMM yyyy}", new { id = "txtStartDate", @class = "datepicker form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ContractFile.IssueDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ContractFile.Remarks, null, new { id = "txtName", @class = "txtMember form-control", @maxlength = "254" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ContractFile.Remarks)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Add Content", "Create", "ContractFields", new { Id = Model.ContractFile.DemandId }, new { @class = "btn btn-info" }) 
+                                    <input type="submit" id="btnCreateContractFile" class="btn btn-info pull-right" value="Create" />
+                                                                       
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+  
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model RMS.Web.Models.ViewModel.FinancialInstallmentViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Organization Information
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "FinancialInstallment", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "formCreateOrganization" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.FinancialYear.Id)
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Finantial Year &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.FinancialYear.Value, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.FinancialYear.Value)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Show All Data", "Index", "FinancialInstallment", null, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnCreateOrganization" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.SuccessMessage != null)
+                            {
+                                <div style="color:green">@Model.SuccessMessage</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.FailedMessage</div>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+

@@ -1,0 +1,354 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoTempViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" type="text/css" />
+<script src="~/Content/Popup/jquery.validate.min.js"></script>
+<script src="~/Content/Popup/jquery.validate.unobtrusive.min.js"></script>
+<style type="text/css">
+    .row{margin-top:5px;}
+
+</style>
+@using (Html.BeginForm("Update", "ExcelDataRead", FormMethod.Post, new { @class = "UserForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="container">
+        <div class="aaa">
+            <fieldset class="scheduler-border">
+                @Html.HiddenFor(model => model.RemittanceNo)                
+                <br/>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-5 control-label">X Pin</label>
+                            <div class="col-md-7">
+                                @Html.HiddenFor(x => x.ExchangeCompany)
+                                @Html.HiddenFor(x => x.ExchangeRate)
+                                @Html.HiddenFor(x => x.PayoutAmount)
+                                @Html.HiddenFor(x => x.Commission)
+                                @Html.HiddenFor(x => x.VAT)
+                                @Html.TextBoxFor(x => x.Xpin , new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="RoleId" class="col-md-5 control-label">Payin Date Local</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.PayinDateLocal,"{0: dd MMM yyyy}", new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus" })
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Account No</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.AccountNo, new { @class = "textBoxsize form-control", tabindex = 3 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Account Type</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.AccountType, Model.AccTypeSelectdItemList, "--Account Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Account Name</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.AccountName, new { @class = "textBoxsize form-control", tabindex = 4 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Payment Type</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.IssuePaymentCode, Model.PaymentSelectdItemList, "--Payment Code--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Transaction Mode</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.TransactionMode, Model.TransModeSelectdItemList, "--Transaction Mode--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Bank Branch</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.BankBranch, new { @class = "textBoxsize form-control", tabindex = 4 })
+                            </div>
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Bank Name</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.BankName, new { @class = "textBoxsize form-control", tabindex = 3 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Payout Amount</label>
+                            <div class="col-md-7">
+                                @*@Html.DropDownListFor(x => x.CurrencyCode, Model.CurrencySelectdItemList, "--Select Currency--", new { @class = "Type dropdownsize form-control", tabindex = 2 })*@
+                                @Html.TextBoxFor(x => x.FAmount, new { @class = "textBoxsize form-control", tabindex = 3, @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Partner Ref No</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.PartnerRefNo, new { @class = "textBoxsize form-control", tabindex = 3 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Remitter Name</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.RemitterName, new { @class = "textBoxsize form-control", tabindex = 4 })
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Remitter Phone</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.RemitterPhone, new { @class = "textBoxsize form-control", tabindex = 3 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Remittance Type</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.RemittanceType, Model.AccountTypeSelectdItemList, "--Remittance Type--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Beneficiary Bank Name</label>
+                            <div class="col-md-7">
+                                @*@Html.TextBoxFor(x => x.BeneficiaryBankName, new { @class = "textBoxsize form-control", tabindex = 4 })*@
+                                @Html.DropDownListFor(x => x.BeneficiaryBankName, Model.BankInfoSelectList, "-- Select Bank --", new { @class = "Type dropdownsize form-control dropdown", tabindex = 2, @TargetClass = "branchname", @action = "/ExcelDataRead/SelectionValue" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="RoutingNumber" class="col-md-5 control-label">Branch Name</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.Branchname, Model.BranchInfosSelectdItemList, "--Select Branch--", new { @class = "Type dropdownsize form-control branchname", tabindex = 2 })
+                                @*@Html.TextBoxFor(x => x.RoutingNumber, new { @class = "textBoxsize form-control", tabindex = 4 })*@
+                            </div>
+                        </div>
+                    </div>                  
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-5 control-label">Orginating Country</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.OriginatingCountry, Model.CountrySelectdItemList, "--Select Country--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+
+                            </div>
+                        </div>
+                        
+                    </div>                
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Currency</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.Ccy, Model.CurrencySelectdItemList, "--Select Currency--", new { @class = "Type dropdownsize form-control", tabindex = 2 })
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Sending Agent</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.SendingAgent, new { @class = "textBoxsize form-control", tabindex = 4 })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">Txns</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.Txns, new { @class = "textBoxsize form-control", tabindex = 4 })
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-5 control-label">PRN</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.PRN, new { @class = "textBoxsize form-control", tabindex = 4 })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">                            
+                            <div class="col-md-12">
+                                @Html.ActionLink("Show All Information", "Index", "ExcelDataRead", new { ExchangeCompany = Model.ExchangeCompany, IssuePaymentCode = Model.IssuePaymentCode }, new { @class = "btn btn-success", tabindex = 17 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">                            
+                            <div class="col-md-12">
+                                <input type="submit" id="btnSave" value="Update" class="btn btn-primary" tabindex=16 />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-4" id="newpost" style="color:red; padding-left:3px;">
+                        <p>@TempData["message"]</p>
+                    </div>
+                
+                    @if (ViewData["Error"] != null)
+                    {
+                        <div class="red">
+                            <p><strong>Error:</strong> @ViewData["Error"].ToString()</p>
+                        </div>
+                    }
+                </div>
+                
+            </fieldset>
+        </div>
+    </div>
+}
+
+
+    <script type="text/javascript">
+        
+
+        function myFunction() {
+            var uri = "http://localhost:6023/User/Edit";
+            var res = encodeURI(uri);
+            document.getElementById("demo").innerHTML = res;
+        }
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function showhide() {
+            var div = document.getElementById("newpost");
+            if (div.style.display !== "none") {
+                div.style.display = "none";
+            }
+        }
+
+        function toUnicode(elmnt) {
+            var next;
+            if (elmnt.value.length == elmnt.maxLength) {
+                next = elmnt.tabIndex + 1;
+                //look for the fields with the next tabIndex
+                var f = elmnt.form;
+                for (var i = 0; i < f.elements.length; i++) {
+                    if (next <= f.elements[i].tabIndex) {
+                        f.elements[i].focus();
+                        break;
+                    }
+                }
+            }
+        }
+       
+
+      
+     
+
+
+        $('.dropdown').change(function () {
+            var $DistrictNamedropdown = $(this);
+            var targetClass = $DistrictNamedropdown.attr('TargetClass');
+            var url = $DistrictNamedropdown.attr('action');
+            var districtCode = $DistrictNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { districtCode: districtCode }
+            };
+            $.ajax(option).done(function (branchdata) {
+                if (branchdata.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $("." + targetClass).append('<option value="">---Select Branch---</option>').val("");
+                    $.each(branchdata, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchName).text(this.BranchName));
+                    });
+                } else {
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        function ClearDropDownList(selector) {
+            $('.' + selector)
+                .find('option').remove();
+
+        };
+
+        function NotFoundData(targetClass) {
+            $('.' + targetClass)
+                .append($('<option>').text("Not Found").attr('value', ""));
+        };
+
+    </script>
+
+
+

@@ -1,0 +1,85 @@
+﻿@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+
+    Layout = null;
+}
+
+<table >
+    @if (Model.SearchStatus)
+    {
+        <tr>
+            <td>@Html.Label("Remittane No")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.RemittanceNo)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Sending Country")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.IssuingCountryName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Remitter Name")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.ApplicantName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Sending Date")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.TransDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Amount(BDT)")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.FAmount)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Beneficiary Name")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BeneficiaryName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Beneficiary Address")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BeneficiaryAddress)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Beneficiary Mobile")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BeneficiaryCellPhone)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Branch Name")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.BranchName)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Required ID Type")</td>
+            <td>:</td>
+            <td>@Html.DisplayFor(x => x.AccountNo)</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Payment ID Type")</td>
+            <td>:</td>
+            <td>@Html.DropDownListFor(x => x.PaymentPhotoIdType, Model.CommonCodeSelectdItemList, new { @class = "dropdownsize form-control" })</td>
+        </tr>
+        <tr>
+            <td>@Html.Label("Payment ID Number")</td>
+            <td>:</td>
+            <td>@Html.TextBoxFor(x => x.PaymentPhotoIdNumber, new { @class = "textBoxsize form-control", placeholder = "Enter Valid Photo ID Number" })</td>
+        </tr>
+         <tr>
+            <td>@Html.Label("Remarks")</td>
+            <td>:</td>
+            <td>@Html.TextBoxFor(x => x.Remarks, new { @class = "textBoxsize form-control", placeholder = "Enter Remarks" })</td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+

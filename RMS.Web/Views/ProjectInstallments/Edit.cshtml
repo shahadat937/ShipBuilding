@@ -1,0 +1,111 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="container" style="font-family:arial">
+  
+    <div class="col-md-12">
+
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Update Installment For @Html.DisplayFor(x=>x.ProjectInstallment.ProjectName)
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Edit", "ProjectInstallments", null, FormMethod.Post, new { id = "formEditContract" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ProjectInstallment.InstallmentId)
+                    @Html.HiddenFor(x=>x.ProjectInstallment.ProjectId)
+                     <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ProjectInstallment.ProjectId, Model.ProjectSelectedList, "--Select Category--", new { @class = "form-control watt", @id="ddlProjectId" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.ProjectId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Installment Phase &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.ProjectInstallment.InstallmentNo, Model.ProjectPaymentInstallment, "--Select Category--", new { @class = "form-control watt", id = "ddCCs", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.InstallmentNo)
+                                </div>
+                            </div>
+                        </div>
+                    </div>               
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Amount &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.ProjectInstallment.Amount, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.Amount)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Term &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                @*<div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.ProjectInstallment.Term, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>*@
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.ProjectInstallment.Term, new { @cols = "100", @rows = "8", @style = "width:100%;" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.ProjectInstallment.Term)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "ProjectInstallments", new { projectID=Model.ProjectInstallment.ProjectId}, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnEditContract" class="btn btn-info pull-right" value="Update" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>               
+                 
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script type="text/javascript">
+    $('#ddlProjectId').attr('disabled', true);
+
+</script>
+}

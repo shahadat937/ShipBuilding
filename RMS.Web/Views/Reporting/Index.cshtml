@@ -1,0 +1,85 @@
+﻿@model RMS.Web.Models.ViewModel.ReportingViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/App/treeView.css" rel="stylesheet" />
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+
+<br/>
+<div class="container">
+    <div class="col-md-8 col-lg-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tree View Report </h3>
+            </div>
+            <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:432px; ">
+                <div class=" tree">
+                <ul>
+                    @foreach (var firstLevel in Model.ReportingTreeViews)
+                    {
+                        <li>
+                            <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span style="font-size: 20px; color: #006400; padding-left:10px">
+                                <a>@firstLevel.ReportName [@firstLevel.SlNo]</a>
+
+                            </span>
+
+                            <ul>
+                                @foreach (var secondLevel in firstLevel.ReportingTrees)
+                                {
+                                    <li>
+                                        <a></a><span>&nbsp;&nbsp;</span>
+                                        <span style="font-size: 20px; color: #800000">
+
+                                            <a class="showReportParameterFor" action="@Url.Action("ReportView", "Reporting", new { SlNo = secondLevel.SlNo })">@secondLevel.ReportName [@secondLevel.SlNo]</a>
+                                        </span>
+                                        @*<ul>
+                                        @foreach (var thirdLevel in secondLevel.ReportingTrees)
+                                        {
+                                            <li>
+                                                <a></a><span>&nbsp;&nbsp;</span>
+                                                <span style="font-size: 20px; color: #1e90ff">
+                                                    <a class="showReportParameterFor" action="@Url.Action("ReportView", "Reporting", new { SlNo = thirdLevel.SlNo})">@thirdLevel.ReportName [@thirdLevel.SlNo]</a>
+                                                </span>
+
+                                            </li>
+                                        }
+                                    </ul>*@
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Report Parametter </h3>
+            </div>
+            <div class="panel-body">
+                <div class="pull-left" id="reportContainner">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/APP/treeView.js"></script>
+    <script type="text/javascript">
+        $('.showReportParameterFor').click(function () {
+            var url = $(this).attr('action');
+            $('#reportContainner').load(url);
+        });
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@using RMS.Model
+@{
+    Layout = null;
+}
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+<div class="row">
+
+    <div class="col-sm-5 col-lg-5">
+        @Html.ListBoxFor(x => x.SelectedItems, Model.ItemListSelectList, new { id = "idSelectedItems", @class = "col-xs-12 col-sm-12 col-lg-12", selectionmode = "Multiple", size = "15" })
+    </div>
+
+    <div class="col-sm-1 col-lg-1">
+        <input type="button" class="btn btn-info" style="width :50px;" id="rightButton" onclick="moveRight()" value=">>" />
+        <br />
+        <br />
+        <input type="button" class="btn btn-info" style="width: 50px;" id="leftButton" onclick="moveLeft()" value="<<" />
+    </div>
+    <div class="col-sm-5 col-lg-5">
+        @Html.ListBoxFor(x => x.ChoiceSelectedItems, Model.ChoiceListSelectList, new { id = "idChoiceSelectedItems", @class = "col-xs-12 col-sm-12 col-lg-12", selectionmode = "Multiple", size = "15" })
+    </div>
+    <div class="col-sm-1 col-lg-1">
+        <input type="button" class="btn btn-info" style="width: 60px; display: none" id="upButton" onclick="moveUp()()" value="UP" />
+        <br />
+        <br />
+        <input type="button" class="btn btn-info" style="width: 60px; display: none" id="downButton" onclick="moveDown()" value="Down" />
+    </div>
+</div>
+<div class="row">
+    <br />
+    <div class="col-xs-12 col-sm-11 col-lg-11">
+        <input type="button" onclick="saveChoiceItems(this)" class="btn btn-primary pull-right" data-target="#choiceItemContainer" value="Save & Next" />
+    </div>
+</div>
+

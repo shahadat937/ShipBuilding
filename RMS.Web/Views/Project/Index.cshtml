@@ -1,0 +1,188 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.ProjectViewModel
+@{
+    ViewBag.Title = "File Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .tabs {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 20px;
+       
+    }
+    .nav-tabs li {
+        background: #956848;
+        /*background-color: white;*/
+    }
+    .aa {
+        color: #fff !important;
+    }
+    .nav-tabs li a:hover, .nav-tabs > .active > a {
+        color: #fff !important;
+        background-color: #f4511e !important;
+        background-image: none !important;
+    }
+
+    .nav-tabs li {
+        
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 2px 2px #888888;
+    }
+
+        .nav-tabs li:last-child {
+            margin-bottom: 0px;
+        }
+
+  
+</style>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="panel panel-info">
+    <div class="panel-heading custom-panel-heading"><h5 style="color:white;text-align: center">@Model.SpProjectTaskStatuse.FileNo</h5></div>
+        <div class="panel-body">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav"><a href="#BasicParticular" data-toggle="tab" class="aa">Basic Particulars</a></li>
+                    <li class="nav"><a href="#prev" data-toggle="tab" class="aa">Demanding Authority</a></li>
+                    <li class="nav"><a href="#typeOfItem" data-toggle="tab" class="aa">Type Of Item</a></li>
+                    <li class="nav"><a href="#staffRequirement" data-toggle="tab" class="aa">Staff Req </a></li>
+                    <li class="nav"><a href="#staffRequirementApprove" data-toggle="tab" class="aa">NSPC</a></li>
+                    <li class="nav"><a href="#comments" data-toggle="tab" class="aa">Comments</a></li>
+                    <li class="nav"><a href="#daftTenderSpecification" data-toggle="tab" class="aa">Committe</a></li>
+                    <li class="nav"><a href="#daftTenderSpecificationApprove" data-toggle="tab" class="aa">NSPC</a></li>
+                    <li class="nav"><a href="#aIP" data-toggle="tab" class="aa">AIP</a></li>
+                    <li class="nav"><a href="#tendering" data-toggle="tab" class="aa">Tendering (DGDP/NSSD,Dhaka)</a></li>
+                    <li class="nav"><a href="#tea" data-toggle="tab" class="aa">TE & A</a></li>
+                    <li class="nav"><a href="#fatPsi" data-toggle="tab" class="aa">FAT/PSI</a></li>
+                    <li class="nav"><a href="#trialReport" data-toggle="tab" class="aa">Trial Report</a></li>
+                    <li class="nav"><a href="#termsOfPayment" data-toggle="tab" class="aa">Terms Of Payment</a></li>
+                    <li class="nav"><a href="#contractSign" data-toggle="tab" class="aa">Final Contract</a></li>
+                    <li class="nav"><a href="#projectUpdate" data-toggle="tab" class="aa">Project Update</a></li>
+                </ul>
+            </div>
+        
+            <div class="tab-content" id="ApplicantInfoContainner" >
+                <div id="BasicParticular" class="tab-pane container">
+                    @{
+                        Html.RenderPartial("~/Views/Project/_BasicParticular.cshtml", Model.SpProjectTaskStatuse);
+                    }
+                </div>
+                <div id="prev" class="tab-pane container">
+                    @{
+                        Html.RenderPartial("~/Views/Project/_demandingAuthority.cshtml", Model.SpProjectTaskStatuse);
+                    }
+              
+
+                </div>
+                <div id="typeOfItem" class="tab-pane container">
+                    <br />
+                    @{
+                        Html.RenderPartial("~/Views/Project/_typeOfItem.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+
+                <div id="staffRequirement" class="tab-pane container">
+                    <br />
+                    @{
+                        Html.RenderPartial("~/Views/Project/_staffRequirement.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="staffRequirementApprove" class="tab-pane container">
+                    <br />
+                   
+                    @{
+    
+                        Html.RenderPartial("~/Views/Project/staffRequirementApprove.cshtml", Model.SpProjectTaskStatuse);
+ 
+
+                    }    
+                </div>
+                <div id="daftTenderSpecification" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_daftTenderSpecification.cshtml", Model);
+
+                    }
+                </div>
+                <div id="daftTenderSpecificationApprove" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_daftTenderSpecificationApprove.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="aIP" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_aIP.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="tendering" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_tendering.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="comments" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_comments.cshtml", Model);
+
+                    }
+                </div>
+                <div id="tea" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_tEA.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="fatPsi" class="tab-pane container">
+                    <br />
+
+                    @{
+                        Html.RenderPartial("~/Views/Project/_FatPSI.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="trialReport" class="tab-pane container">
+                    <br />
+                    @{
+                        Html.RenderPartial("~/Views/Project/_trialReport.cshtml", Model.SpProjectTaskStatuse);
+
+                    }
+                </div>
+                <div id="contractSign" class="tab-pane container">
+                    <br />
+                    @{
+                        Html.RenderPartial("~/Views/Project/_contractSign.cshtml", Model);
+                    }
+                </div>
+                <div id="projectUpdate" class="tab-pane container">
+                    <br />
+                    @{
+                        Html.RenderPartial("~/Views/Project/_projectUpdate.cshtml", Model);
+                    }
+                </div>
+                <div id="termsOfPayment" class="tab-pane container">
+                    <br />
+                    @{
+                        Html.RenderPartial("~/Views/Project/_financialInstallment.cshtml", Model);
+
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

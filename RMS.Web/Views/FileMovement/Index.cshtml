@@ -1,0 +1,446 @@
+﻿@model RMS.Web.Models.ViewModel.FlowSetupViewModel
+@{
+    ViewBag.Title = "Flow Setup Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+
+<style type="text/css">
+    
+    .comBtn {
+        width: 130px;
+        height: 40px;
+        margin: 5px 10px 5px 10px;
+        font-size: 20px;
+        font-weight: bold;
+        float: left;
+    }
+
+    .bbtn {
+        width: 130px;
+        height: 40px;
+        margin: 5px 10px 5px 10px;
+        font-size: 16px;
+        font-weight: bold;
+        float: left;
+    }
+
+    .imgbtn {
+        float: left;
+        margin-top: 20px;
+        margin-left: 10px;
+        transform: scale(3,2);
+    }
+
+    .btn1 {
+        background: #778899;
+    }
+
+    .btn2 {
+        background: #c0c0c0;
+    }
+
+    .btn3 {
+        background: #a9a9a9;
+    }
+
+    .btn3 {
+        background: #808080;
+    }
+
+    .pp p {
+        color: black;
+        padding-top: 10px;
+    }
+    .box {
+        width: 50px;
+        height: 10px;
+    }
+
+    .red {
+        background: #f00;
+    }
+    .green {
+        background: green;
+    }
+    .yellow {
+        background: yellow;
+    }
+    
+</style>
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            File Movement
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                
+          
+@using (Html.BeginForm("Index", "FileMovement", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-12" style="border: 1px solid #e6e6fa; margin-top: -10px">
+      
+        <div class="row">
+            <div class="col-sm-9 col-md-9 col-lg-9 col-xs-9">
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                    <div style="float: left">
+                        <div class="box red" style="display: inline-block;"></div> &nbsp;&nbsp;
+                        <div style="display: inline-block;">Skip</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                    <div style="float: left">
+                        <div class="box green" style="display: inline-block;"></div> &nbsp;&nbsp;
+                        <div style="display: inline-block;">Complete</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                    <div style="float: left">
+                        <div class="box yellow" style="display: inline-block;"></div> &nbsp;&nbsp;
+                        <div style="display: inline-block;">Incomplete</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        <div class="row" style=" margin-top: 10px">
+            <div class="col-sm-6 col-lg-6">
+                <div class="form-group">
+                    <label class="col-sm-5 col-md-5 col-lg-5">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(x => x.FlowSetup.FlowId, Model.ProjectSelectListItem, "--Select--", new { id = "projectId", @class = "form-control", required = "required" })
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-2 col-lg-2">Remarks &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                    <div class="col-md-7" style="margin-left: 28px; padding-right: 35px">
+                        @Html.TextAreaFor(x => x.FlowSetup.SkipRemarks, new { id = "milestone", @class = "txtMember form-control", required = "required" })
+                    </div>
+                    <div class="col-md-3">@Html.ValidationMessageFor(x => x.FlowSetup.SkipRemarks)</div>
+                </div>
+            </div>
+
+        </div>
+        @*<div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-md-2 col-lg-2">Attached File &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                        <div class="col-md-7" style="margin-left: 28px; padding-right: 35px">
+                            <input type="file" id="file" name="upload" class="form-control" required />
+
+                        </div>
+                        <div class="col-md-3">@Html.ValidationMessageFor(x => x.FileMovement.FileURL)</div>
+                    </div>
+                </div>
+
+            </div>*@
+
+        <table id="tblBtn" width="100% !important" style="margin-top: 10px">
+            <tr id="trBtn0">
+                <td>
+                    <input type="button" id="btn1" class="comBtn btn1" value="" />
+                    <i id="p2" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i>
+                    @*<p id="p1" class="imgbtn"><img src="~/images/Arrow2.JPG" /></p>*@
+                </td>
+                <td><input type="button" id="btn2" class="comBtn btn2" value="" /><i id="p3" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn3" class="comBtn btn3" value="" /><i id="p4" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn4" class="comBtn btn4" value="" /><i id="p5" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn1">
+                <td><input type="button" id="btn5" class="comBtn btn4" value="" /><i id="p6" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn6" class="comBtn btn3" value="" /><i id="p7" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn7" class="comBtn btn2" value="" /><i id="p8" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn8" class="comBtn btn1" value="" /><i id="p9" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn2">
+                <td><input type="button" id="btn9" class="comBtn btn1" value="" /><i id="p10" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn10" class="comBtn btn2" value="" /><i id="p11" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn11" class="comBtn btn3" value="" /><i id="p12" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn12" class="comBtn btn4" value="" /><i id="p13" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn3">
+                <td><input type="button" id="btn13" class="comBtn btn4" value="" /><i id="p14" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn14" class="comBtn btn3" value="" /><i id="p15" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn15" class="comBtn btn2" value="" /><i id="p16" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn16" class="comBtn btn1" value="" /><i id="p17" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn4">
+                <td><input type="button" id="btn17" class="comBtn btn1" value="" /><i id="p18" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn18" class="comBtn btn2" value="" /><i id="p19" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn19" class="comBtn btn3" value="" /><i id="p20" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn20" class="comBtn btn4" value="" /><i id="p21" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn5">
+                <td><input type="button" id="btn21" class="comBtn btn4" value="" /><i id="p22" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn22" class="comBtn btn3" value="" /><i id="p23" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn23" class="comBtn btn2" value="" /><i id="p24" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn24" class="comBtn btn1" value="" /><i id="p25" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn6">
+                <td><input type="button" id="btn25" class="comBtn btn1" value="" /><i id="p26" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn26" class="comBtn btn2" value="" /><i id="p27" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn27" class="comBtn btn3" value="" /><i id="p28" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn28" class="comBtn btn4" value="" /><i id="p29" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+            </tr>
+            <tr id="trBtn7">
+                <td><input type="button" id="btn29" class="comBtn btn4" value="" /><i id="p30" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn30" class="comBtn btn3" value="" /><i id="p31" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn31" class="comBtn btn2" value="" /><i id="p32" class="fa fa-arrow-right imgbtn" aria-hidden="true"></i></td>
+                <td><input type="button" id="btn32" class="comBtn btn1" value="" /></td>
+            </tr>
+        </table>
+        <table width="100% !important" >
+            <tr>
+           
+                <td><input type="submit" id="bntNextSetep" class="btn btn-primary pull-right" value=" Next setup" /></td>
+           
+            
+               
+            </tr>
+        </table>
+    </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (@Model.SuccessMessage !=null)
+                        {
+                        <div style="color:green">@Model.SuccessMessage</div>
+                        }
+                        else
+                        {
+                        <div style="color:red">@Model.FailedMessage</div>
+                        }
+
+                </div>
+            </div>
+            }
+        </div>
+
+
+    </div>
+    </div>
+
+</div>
+<div id="dialog-confirm" style="display: none">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+        Are you sure to Send Next Step ?
+    </p>
+</div>
+@section Scripts{
+    <script>
+        function parseJsonDate(jsonDate) {
+            var offset = new Date().getTimezoneOffset() * 60000;
+            var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+            if (parts[2] == undefined) parts[2] = 0;
+            if (parts[3] == undefined) parts[3] = 0;
+            d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+            date = d.getDate() + 1;
+            date = date < 10 ? "0" + date : date;
+            mon = d.getMonth() + 1;
+            mon = mon < 10 ? "0" + mon : mon;
+            year = d.getFullYear();
+            return (mon + "/" + date + "/" + year);
+        }
+
+        for (var i = 1; i <= 32; i++) {
+            var bv = $("#btn" + i).val();
+            if (bv.length > 0) {
+                $("#btn" + i).show();
+                $("#p" + i).show();
+
+            } else {
+                $("#btn" + i).hide();
+                $("#p" + i).hide();
+
+            }
+        }
+
+    
+        $("#projectId").change(function() {
+            var ProjectId = $("#projectId").val();
+            //alert(ProjectId);
+            if (ProjectId.length > 0) {
+                var option = {
+                    url: "/FileMovement/GetFlow",
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: { ProjectId: ProjectId }
+                };
+                $.ajax(option).done(function(resp) {
+                    $("#btn1").val("");
+                    $("#btn2").val("");
+                    $("#btn3").val("");
+                    $("#btn4").val("");
+                    $("#btn5").val("");
+                    $("#btn6").val("");
+                    $("#btn7").val("");
+                    $("#btn8").val("");
+                    $("#btn9").val("");
+                    $("#btn10").val("");
+                    $("#btn11").val("");
+                    $("#btn12").val("");
+                    $("#btn13").val("");
+                    $("#btn14").val("");
+                    $("#btn15").val("");
+                    $("#btn16").val("");
+                    $("#btn17").val("");
+                    $("#btn18").val("");
+                    $("#btn19").val("");
+                    $("#btn20").val("");
+                    $("#btn21").val("");
+                    $("#btn22").val("");
+                    $("#btn23").val("");
+                    $("#btn24").val("");
+                    $("#btn25").val("");
+                    $("#btn26").val("");
+                    $("#btn27").val("");
+                    $("#btn28").val("");
+                    $("#btn29").val("");
+                    $("#btn30").val("");
+                    $("#btn31").val("");
+                    $("#btn32").val("");
+                    for (var i = 1; i <= 32; i++) {
+                        var bv = $("#btn" + i).val();
+                        if (bv.length > 0) {
+                            $("#btn" + i).show();
+                            $("#p" + i).show();
+
+                        } else {
+                            $("#btn" + i).hide();
+                            $("#p" + i).hide();
+
+                        }
+                    }
+                    if (resp.length > 0) {
+                        //alert(resp.ProjectMovements.length);
+                        var flen = resp.length;
+                        for (var n = 0; n < flen; n++) {
+                            var s = n + 1;
+                          
+                            $("#btn" + s).val(resp[n].DepartmentName);
+                            if (resp[n].FileStatus == "1") {
+                                $("#btn"+s).css("background", "green");
+                            }
+                            else if (resp[n].FileStatus == "0" && resp[n].AnyTrue == "1" && resp[n].IsSkip != "true") {
+                                $("#btn" + s).css("background", "linear-gradient(to right, green 50%, yellow 50%)");
+                                document.getElementById("bntNextSetep").disabled = true;
+                            }
+                            else if (resp[n].FileStatus == "0" && resp[n].AnyTrue != "1" && resp[n].IsSkip == true) {
+                                //$("#btn" + s).css("background",  $("#btn" + s).css("background"));
+                                $("#btn" + s).css("background", "red");
+                            }
+                           else if (resp[n].FileStatus == "0") {
+                                $("#btn" + s).css("background", "yellow");
+                            }
+                            //alert($("#btn" + s).val());
+                        }
+                        for (var e = 0; e <= 32; e++) {
+                            var m = e + 1;
+                            
+                            var bvv = resp[e].DepartmentName;
+                            if (bvv.length > 0) {
+                                $("#btn" + m).show();
+                                $("#p" + m).show();
+
+                            } else {
+                                $("#btn" + m).hide();
+                                $("#p" + m).hide();
+
+                            }
+                        }
+                    } 
+                });
+            } else {
+                $("#btn1").val("");
+                $("#btn2").val("");
+                $("#btn3").val("");
+                $("#btn4").val("");
+                $("#btn5").val("");
+                $("#btn6").val("");
+                $("#btn7").val("");
+                $("#btn8").val("");
+                $("#btn9").val("");
+                $("#btn10").val("");
+                $("#btn11").val("");
+                $("#btn12").val("");
+                $("#btn13").val("");
+                $("#btn14").val("");
+                $("#btn15").val("");
+                $("#btn16").val("");
+                $("#btn17").val("");
+                $("#btn18").val("");
+                $("#btn19").val("");
+                $("#btn20").val("");
+                $("#btn21").val("");
+                $("#btn22").val("");
+                $("#btn23").val("");
+                $("#btn24").val("");
+                $("#btn25").val("");
+                $("#btn26").val("");
+                $("#btn27").val("");
+                $("#btn28").val("");
+                $("#btn29").val("");
+                $("#btn30").val("");
+                $("#btn31").val("");
+                $("#btn32").val("");
+                for (var i = 1; i <= 32; i++) {
+                    var bv = $("#btn" + i).val();
+                    if (bv.length > 0) {
+                        $("#btn" + i).show();
+                        $("#p" + i).show();
+
+                    } else {
+                        $("#btn" + i).hide();
+                        $("#p" + i).hide();
+
+                    }
+                }
+            }
+
+        });
+
+        $("#btnPendingFile").click(function () {
+            var ProjectId = $("#projectId").val();            
+            //alert(ProjectId);
+            if (ProjectId.length > 0) {
+                alert(ProjectId);
+                var option = {
+                    url: "/FileMovement/PendingFileDownload",
+                    type: 'GET',
+                    contentType: 'application/json',
+                    data: { ProjectId: ProjectId }
+                };
+                $.ajax(option).done(function (resp) {
+                });
+            };
+        });
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+

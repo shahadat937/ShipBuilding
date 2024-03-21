@@ -1,0 +1,117 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Project Payment Entry
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "ProjectPayments", null, FormMethod.Post, new { id = "formCreateProjectPayment" }))
+                {
+                    @Html.AntiForgeryToken()
+              @Html.HiddenFor(x =>x.FinancialInstallment.FinancialInstallmentId)
+              @Html.HiddenFor(x =>x.FinancialInstallment.ProjectId)
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.FinancialInstallment.ProjectId, Model.ProjectPaymentSeletedList, "--Select Project--", new { @class = "form-control watt", @id = "ddlProjectId" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Demand.DemandId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Amount &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.Amount, null, new { id = "txtName", @class = "txtMember form-control", required = "required",@readonly ="true" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Amount)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">GuranteeAmount</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.FinancialInstallment.BGPG.GuranteeAmount, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.ValidationMessageFor(x => x.BGPG.GuranteeAmount)*@
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Date </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.FinancialInstallment.BGPG.GuranteeDate, null, new { @class = "datepicker form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.ValidationMessageFor(x => x.Amount)*@
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Next", "FinacialYearCreate", "ProjectInstallments", new { demandId = Model.FinancialInstallment.ProjectId }, new { @class = "btn btn-info pull-left" })
+                                    <input type="submit" id="btnCreateOrganization" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+      
+        $("#ddlProjectId").change(function () {
+            var FlowId = $("#ddlProjectId").val();
+            var url = '/ProjectPayments/Create?id=' + FlowId; // build new urls
+            location.href = url; // redirect
+
+            return false; // cancel default redirect
+
+        });
+    </script>
+}

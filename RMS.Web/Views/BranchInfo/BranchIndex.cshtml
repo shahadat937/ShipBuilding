@@ -1,0 +1,328 @@
+﻿
+@model RMS.Web.Models.ViewModel.BranchInfoViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<div class="">
+    @using (Html.BeginForm("BranchIndex", "BranchInfo", FormMethod.Get))
+    {
+        <div class="col-sm-12 col-lg-12">
+            <div class="panel panel-primary" style="margin-bottom: 0px;">
+                <table class="table-responsive">
+                    <tr style="background-color: #32CD32;; color: white; width: auto;">
+                        <td>Bank Name</td>
+                        <td>@Html.DropDownListFor(x => x.BankCode, Model.BankSelectListItems, "--Select Bank Name--", new { @class = "BankName dropdownsize form-control", tabindex = 9, @TargetClass = "DistrictName", @action = "/BranchInfo/GetDistrictsByBankCode" })</td>
+                        <td>District Name</td>
+                        <td>@Html.DropDownListFor(x => x.DistrictCode, Model.DistrictSelectListItems, "--Select District Name--", new { @class = "DistrictName dropdownsize form-control", tabindex = 10, @TargetClass = "BranchName", @action = "/BranchInfo/GetBranchNamesByDistrict" })</td>
+                        <td><button id="findButton" class="btn btn-info" style=" font-weight:bold">Go</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    }
+    @using (Html.BeginForm("SaveBranchInfo", "BranchInfo", FormMethod.Post))
+    {
+        <div class="col-md-4 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Branch List
+                </div>
+
+                <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:450px; width:auto;padding-top: 0px">
+                    <br />
+                    <div class="tree">
+                        <ul>
+                            @foreach (var item in Model.BranchInfos)
+                            {
+                                <li>
+                                    <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span style="font-size: 14px; color: #006400">
+                                        @Html.ActionLink(item.BranchName, "BranchIndex", "BranchInfo", new { BranchInfoIdentity = item.BranchInfoIdentity, FirstLevel = item.FirstLevel, SecondLevel = item.SecondLevel }, null)
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-8 col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Branch Information
+                </div>
+                <div class="panel-body" style="height:450px">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Branch Code :&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+
+                                    @Html.HiddenFor(x => x.BankCode)
+                                    @Html.HiddenFor(x => x.DistrictCode)
+                                    @*@Html.HiddenFor(x => x.BranchInfo.FirstLevel, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Branch Code" })
+                                @Html.HiddenFor(x => x.BranchInfo.SecondLevel, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Branch Code" })*@
+                                    @Html.TextBoxFor(x => x.BranchInfo.BranchCode, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Branch Code" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Branch Name :&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.BranchName, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = "Branch Name" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Branch Address:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.Address, new { @class = "textBoxsize form-control", tabindex = 3, autofocus = "autofocus", placeholder = " Branch Address" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Contact Person:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.ContactPerson, new { @class = "textBoxsize form-control", tabindex = 4, autofocus = "autofocus", placeholder = "Contact Person" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Phone Number:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.Cellphone, new { @class = "textBoxsize form-control", tabindex = 5, autofocus = "autofocus", placeholder = " Branch Phone Number" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Branch Email Address:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.Email, new { @class = "textBoxsize form-control", tabindex = 5, autofocus = "autofocus", placeholder = " Branch Phone Number" })
+
+
+                                    @*@Html.DropDownListFor(x => x.BranchInfo.BBDistrict, Model.BbDistrictSelectedListItems,"-Select BB District-",new{@class="textBoxsize form-control", tabindex = 6 })*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Zone:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.BranchInfo.ZoneInfoIdentity, Model.ZoneSelectListItems, "--Select Zone--", new { @class = "dropdownsize form-control", tabindex = 7 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Country:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.BranchInfo.CountryCode, Model.CountrySelectListItems, "--Select Corntry--", new { @class = "dropdownsize form-control", tabindex = 8 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Currency:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.BranchInfo.CurrencyCode, Model.CurrencySelectListItems, "--Select Currency--", new { @class = "dropdownsize form-control", tabindex = 9 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Rounting No.:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.OwnBranchCode, new { @class = "textBoxsize form-control", tabindex = 6, autofocus = "autofocus", placeholder = "Rounting Number" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Own Branch Code:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.NativeBranchCode, new { @class = "textBoxsize form-control", tabindex = 11, autofocus = "autofocus", placeholder = " Own Branch Code" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">IP Address:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.ServerName, new { @class = "textBoxsize form-control", tabindex = 12, autofocus = "autofocus", placeholder = "IP Address" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Account Number(FC):</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.AccountNoFC, new { @class = "textBoxsize form-control", tabindex = 13, autofocus = "autofocus", placeholder = "Account Number(FC)" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Account Number(LC):</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.AccountNoLC, new { @class = "textBoxsize form-control", tabindex = 14, autofocus = "autofocus", placeholder = "Account Number(LC)" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Min Balance(FC):</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.MinimumNRDBalance, new { @class = "textBoxsize form-control", tabindex = 15, autofocus = "autofocus", placeholder = "Min Balance(FC)" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Min Balance (LC):</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.MinimumCoverFund, new { @class = "textBoxsize form-control", tabindex = 16, autofocus = "autofocus", placeholder = "Min Balance(LC)" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">Start Time(24H):</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.BranchInfo.WorkingTimeFrom, Model.HourseSelectListItems, "--Select Start Time--", new { @class = "dropdownsize form-control", tabindex = 7 })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" style="padding-top:8px">End Time(24H):</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.BranchInfo.WorkingTimeTo, Model.HourseSelectListItems, "--Select End Time--", new { @class = "dropdownsize form-control", tabindex = 8 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+                                    @if (Model.IsSucceed == 1)
+                                    {
+                                        <p style="color:green">@Model.Message</p>
+                                    }
+                                    else
+                                    {
+                                        <p style="color:red">@Model.Message</p>
+                                    }
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="submit" name="save" id="btnSave" value="Add New" class="btn btn-info" tabindex=7 />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" name="update" id="btnSave" value="Update" class="btn btn-info" tabindex=7 />
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.ActionLink("Delete", "DeleteBranchInfo", "BranchInfo", new { BranchInfoIdentity = Model.BranchInfo.BranchInfoIdentity, FirstLevel = Model.BranchInfo.FirstLevel, SecondLevel = Model.BranchInfo.SecondLevel }, new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-left" id="reportContainner">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('.BankName').change(function () {
+            var $BankNamedropdown = $(this);
+            var targetClass = $BankNamedropdown.attr('TargetClass');
+            var url = $BankNamedropdown.attr('action');
+            var bankCode = $BankNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { bankCode: bankCode }
+            };
+            $.ajax(option).done(function (districts) {
+                if (districts.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(districts, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        $('.DistrictName').change(function () {
+            var $DistrictNamedropdown = $(this);
+            var targetClass = $DistrictNamedropdown.attr('TargetClass');
+            var url = $DistrictNamedropdown.attr('action');
+            var districtCode = $DistrictNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { districtCode: districtCode }
+            };
+            $.ajax(option).done(function (brnchList) {
+                if (brnchList.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(brnchList, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+        function ClearDropDownList(selector) {
+            $('.' + selector)
+                .find('option').remove()
+                .end().append($('<option>').text("-Select-").attr('value', ""));
+        };
+
+        function NotFoundData(targetClass) {
+            $('.' + targetClass)
+                .append($('<option>').text("Not Found").attr('value', ""));
+        };
+    </script>
+}

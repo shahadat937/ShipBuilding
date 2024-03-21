@@ -1,0 +1,19 @@
+﻿@model RMS.Web.Models.ViewModel.ContractFieldViewModel
+@{
+    Layout = null;
+}
+<tr>
+    <td>
+        @Html.DropDownListFor(model => Model.ContractFieldDictionary[Model.Key].FieldName,
+            Model.ContractFieldItem.Select(x => new SelectListItem() { Value = x.Value.ToString(), Text = x.Text }).ToList(),
+            "Select",
+            new { @class = "form-control", required = "required" })
+    </td>
+    <td>
+        @Html.TextAreaFor(x => Model.ContractFieldDictionary[Model.Key].FieldValue, new { id = "fieldName", @class = "txtMember form-control", required = "required", @maxlength = "1498" })
+    </td>
+    <td>
+        <input class="btnAdd btn btn-danger" type="button" name="name" value="X" onclick="removeRow(this)" />
+    </td>
+
+</tr>

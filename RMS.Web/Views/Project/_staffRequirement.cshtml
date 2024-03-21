@@ -1,0 +1,53 @@
+﻿@model  RMS.Model.spProjectTaskStatus
+@{
+    Layout = null;
+}
+<style>
+    .rr {
+        background: #97507E !important;
+    }
+</style>
+<div class="col-md-2 col-sm-2 col-xs-2"></div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+    <div class="panel panel-warning">
+        <div class="panel-heading rr" style="color: white;text-align: center">Staff Requirement</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 col-lg-3">Title :</label>
+                        <div class="col-md-5">
+                            @Html.DisplayTextFor(x => x.StaffTitle)
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        <label class="col-sm-4 col-md-4 col-lg-4">Staff Requirement PDF :</label>
+                        @if (Model.StaffPDF != null)
+                        {
+                            <div class="col-md-5">
+                                <a href="@Url.Action("Show", "Demand", new {url = Model.StaffPDF})" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png"/></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-5">
+                            </div>
+                        }
+
+                        <div class="col-md-3">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

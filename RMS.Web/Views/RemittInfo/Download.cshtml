@@ -1,0 +1,243 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center;">Upload Remittace File</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("DownloadSelected", "RemittInfo", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "CadreApplyForm" }))
+        {
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" style="margin-top:5px;">Payment Date From:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.FromDate, "{0:dd MMM yyy}", new { @class = "form-control datepicker", id = "txtDateFrom", tabindex = 1, placeholder = "Payment Date From" })
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Payment Date To</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.ToDate, "{0:dd MMM yyyy}", new { @class = "form-control datepicker", id = "txtDateTo", tabindex = 2, placeholder = "Payment Date To" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <div class="col-md-12" style="text-align:right">
+                            @Html.ActionLink("Export Selected Filed", "DownloadSelected", "RemittInfo", new { @class = "btn btn-info", @id = "btnDownload" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-sm-5 col-lg-5">
+                    @Html.ListBoxFor(x => x.SelectedItems, Model.ItemListSelectList, new { id = "idSelectedItems", @class = "col-xs-12 col-sm-12 col-lg-12", selectionmode = "Multiple", size = "15" })
+                </div>
+
+                <div class="col-sm-1 col-lg-1">
+                    <input type="button" class="btn btn-info" style="width :100px;" id="moveAllButton" onclick="moveAllRight()" value="Select All" />
+                    <br />
+                    <br />
+                    <input type="button" class="btn btn-info" style="width :50px;" id="rightButton" onclick="moveRight()" value=">>" />
+                    <br />
+                    <br />
+                    <input type="button" class="btn btn-info" style="width: 50px;" id="leftButton" onclick="moveLeft()" value="<<" />
+                </div>
+                <div class="col-sm-5 col-lg-5">
+                    @Html.ListBoxFor(x => x.ChoiceSelectedItems, Model.ChoiceListSelectList, new { id = "idChoiceSelectedItems", @class = "col-xs-12 col-sm-12 col-lg-12", selectionmode = "Multiple", size = "15" })
+                </div>
+                <div class="col-sm-1 col-lg-1">
+
+                    <input type="button" class="btn btn-info" style="width: 60px; display: none" id="upButton" onclick="moveUp()()" value="UP" />
+                    <br />
+                    <br />
+                    <input type="button" class="btn btn-info" style="width: 60px; display: none" id="downButton" onclick="moveDown()" value="Down" />
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+@if (Model.RemittInfos.Count > 0)
+{
+    <div class="row" style="font-weight:bold;color:blue">
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label class="col-md-6 control-label">Number of Remittance:</label>
+                <div class="col-md-6" style="text-align:left">
+                    @Html.DisplayFor(x => x.NumberOfRemittance)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-md-6 control-label">Total Amount in BDT:</label>
+                <div class="col-md-6" style="text-align:left">
+                    @Html.DisplayFor(x => x.TotalAmountInBDT)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1" style="text-align:right">
+            <div class="col-md-12" style="text-align: right">
+                @Html.ActionLink("Export", "ExportSelectedField", "RemittInfo", new { ExchangeHouse = Model.RemittInfo.ExchangeHouse }, new { @class = "btn btn-info" })
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        function saveChoiceItems(obj) {
+
+            if ($("#idChoiceSelectedItems option").length == 0) {
+                alert("Please select your options before enter Save&Next button");
+                return false;
+            }
+            var button = $(obj);
+            var target = $(button.attr('data-target'));
+            var form = button.parents('form:first');
+            var url = form.attr('action');
+            var type = form.attr('method');
+            $('#idChoiceSelectedItems option').prop('selected', true);
+            var data = form.serialize();
+            var option = {
+                url: url,
+                type: type,
+                data: data,
+                dataType: 'html'
+            };
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    // e.preventDefault();
+                    return false;
+                } else {
+                    //alert(url);
+                    $.ajax(option).done(function (resp) {
+
+                        $(target).html(resp);
+
+                    });
+                }
+
+            }
+
+        }
+        //-----------------------------------------------------------------------------------------
+        function moveRight() {
+            var selectedOpts = $('#idSelectedItems option:selected');
+            if (selectedOpts.length == 0) {
+
+                alert("Please select an element.");
+            } else {
+                $('#idChoiceSelectedItems').append($(selectedOpts).clone());
+                $(selectedOpts).remove();
+                if ($('#idChoiceSelectedItems').children().length > 1) {
+                    $("#upButton").show();
+                    $("#downButton").show();
+                } else {
+                    $("#upButton").hide();
+                    $("#downButton").hide();
+                }
+            }
+
+        }
+        function moveAllRight() {
+            var obj = $("#idSelectedItems option").prop("selected", true);
+            var selectedValues = $("#idSelectedItems").val();
+        }
+        //-----------------------------------------------------------------------------------------
+        function moveLeft() {
+            var selectedOpts = $('#idChoiceSelectedItems option:selected');
+            if (selectedOpts.length == 0) {
+                alert("Please select an element.");
+
+            }
+
+            $('#idSelectedItems').append($(selectedOpts).clone());
+            $(selectedOpts).remove();
+
+            if ($('#idChoiceSelectedItems').children().length < 2) {
+                $("#upButton").hide();
+                $("#downButton").hide();
+            }
+        }
+        //-----------------------------------------------------------------------------------------
+        function moveDown() {
+
+            var selectedOption = $('#idChoiceSelectedItems option:selected');
+
+            var nextOption = $('#idChoiceSelectedItems option:selected').next("option");
+
+            if ($(nextOption).text() != "") {
+
+                $(selectedOption).remove();
+
+                $(nextOption).after($(selectedOption));
+
+            }
+
+        }
+        //-----------------------------------------------------------------------------------------
+        function moveUp() {
+
+            var selectedOption = $('#idChoiceSelectedItems option:selected');
+
+            var prevOption = $('#idChoiceSelectedItems option:selected').prev("option");
+
+            if ($(prevOption).text() != "") {
+
+                $(selectedOption).remove();
+
+                $(prevOption).before($(selectedOption));
+
+            }
+
+        }
+        //-----------------------------------------------------------------------------------------
+        $("#btnSubmit").click(function () {
+
+            var data = $("#CadreApplyForm").serialize();
+            $.ajax(
+                {
+                    url: "/Circular/GetChoiceList/",
+                    method: "Get",
+                    data: data,
+                    dataType: "html",
+                    success: function (response) {
+                        $("#ChoiceList").html(response);
+                    }
+                });
+        });
+
+
+
+
+
+        //-------------------------------------------------------------------------------(Ripon's Code--------------)
+        $('#btnDownload').click(function () {
+            var obj = $("#idChoiceSelectedItems option").prop("selected", true);
+            var values = $("#idChoiceSelectedItems").val();
+            var dateFrom = $("#txtDateFrom").val();
+            var dateTo = $("#txtDateTo").val();
+            //alert(selectedValues);
+
+            if (values == '')
+                alert("Please select column.");
+            var url = $(this).attr('href') + '&values=' + values+"&dateFrom="+dateFrom+"&dateTo="+dateTo; // build new url
+            location.href = url; // redirect
+            return false; // cancel default redirect
+        });
+
+
+
+    </script>
+}

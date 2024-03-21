@@ -1,0 +1,156 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="font-family:arial">
+    
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Payment Installment  Add For @*@Html.DisplayFor(x => x.ProjectInstallment.ProjectName)*@
+            </div>
+            <div class="col-sm-12 col-lg-12">
+                @if (@Model.Message != null)
+                {
+                    <div style="color:green">@Model.Message</div>
+                }
+                else
+                {
+                    <div style="color:red">@Model.Message</div>
+                }
+
+            </div>
+
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "ProjectInstallments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.FinancialInstallment.FinancialInstallmentId, new { id = "finId" })
+                    @Html.HiddenFor(x => x.Demand.DemandId, new { id = "projId" })
+                    
+                    <table class="table" id="projectInstallmentTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Installment")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Amount")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Percentage")
+                                </th>
+                                <th style="text-align:center">@Html.DisplayName("Terms & Conditions")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ProjectInstallmentDictionary)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DropDownListFor(model => Model.ProjectInstallmentDictionary[item.Key].InstallmentNo,
+Model.CommonCodes.Select(x => new SelectListItem() { Value = x.CommonCodeID.ToString(), Text = x.TypeValue, Selected = (x.CommonCodeID == Model.ProjectInstallmentDictionary[item.Key].InstallmentNo) }).ToList(),
+          "--Select--",
+              new { @class = "form-control", required = "required", @id = "ddl" })
+                                        @*@Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[item.Key].InstallmentNo, new { id = "fieldValue", @class = "form-control", required = "required" })*@
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[item.Key].Amount, new { id = "amount", @class = "form-control", required = "required" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[item.Key].Percent, new { id = "amount", @class = "form-control", required = "required" })
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(x => Model.ProjectInstallmentDictionary[item.Key].Term, new { @class = "form-control", required = "required" })
+                                    </td>
+                                    @if (Model.ProjectInstallmentDictionary[item.Key].InstallmentNo > 0 && Model.ProjectInstallmentDictionary[item.Key].Status == 10045)
+                                    {
+                                        <td><button type="button" class="btn btn-info" disabled="disabled">Paid</button></td>
+
+                                    }
+                                    else if (Model.ProjectInstallmentDictionary[item.Key].InstallmentNo > 0)
+                                    {
+                                            <td>
+                                                @Html.HiddenFor(x => Model.ProjectInstallmentDictionary[item.Key].Status)
+                                                @Html.HiddenFor(x => Model.ProjectInstallmentDictionary[item.Key].InstallmentId, new { id = "insId" })
+                                             @Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[item.Key].CreatedDate, "{0:dd MMM yyyy}", new { @class = "textBoxsize form-control datepicker",id="createdate", tabindex = 5 })
+                                             </td>
+                                        <td>
+                                            <input class="btn btn-info paidbtn" type="button" value="Paid" />
+                                 </td>
+                                     
+                                       
+                                    }
+                                    @*<td>@Html.ActionLink("Transfer", "UpdateStatus", "ProjectInstallments", new { installmentId = Model.ProjectInstallmentDictionary[item.Key].InstallmentId, financialId = Model.FinancialInstallment.FinancialInstallmentId, projectId = Model.Demand.DemandId }, new { @class = "btn btn-info" })</td>*@
+                                    
+                                    <td>
+                                        <input class="btn btn-danger" type="button" value="X" onclick="removeRow(this)" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><input class="btn btn-primary" type="button" onclick="addNewRow()" value="+" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Go Back", "FinacialYearCreate", "ProjectInstallments", new { demandId = Model.Demand.DemandId }, new { @class = "btn btn-info" })
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-primary right" />
+                                </td>
+
+                            </tr>
+                            @*<tr>
+                                <td>@Html.ActionLink("Show All", "Index", "ProjectInstallments", new { projectID = Model.ProjectInstallment.ProjectId }, new { @class = "btn btn-info" })</td>
+                            </tr>*@
+                        </tfoot>
+
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        function removeRow(obj) {
+            var r = confirm("Are you confirm to delete this!");
+            if (r == true) {
+                var tr = jQuery(obj).closest('tr');
+                tr.remove();
+            }
+        }
+        function addNewRow() {
+            var option = {
+                url: "/ProjectInstallments/AddNewRow",
+                type: "Get",
+                dataType: 'html'
+            }
+            jQuery.ajax(option).done(function (response) {
+                jQuery('#projectInstallmentTable > tbody:last').append(response);
+            });  
+        }
+
+        $(".paidbtn").click(function () {
+            var installmentId = $("#insId").val();
+            var financialId = $("#finId").val();
+            var projectId = $("#projId").val();
+            var createDate = $("#createdate").val();
+           
+            var url = '/ProjectInstallments/UpdateStatus?installmentId=' + installmentId + "&financialId=" + financialId + "&projectId=" + projectId + "&crteDate=" + createDate; // build new urls
+            location.href = url; // redirect
+
+            return false; // cancel default redirect
+
+        });
+    </script>
+}
+
+

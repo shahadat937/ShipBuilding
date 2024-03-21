@@ -1,0 +1,95 @@
+﻿@using RMS.Utility
+@model RMS.Model.NotificationCustomModel
+@{
+    Layout = null;
+}
+@if (PortalContext.CurrentUser.IsValidate == true)
+{
+    <i class="fa fa-bell-o" style="color:red; font-size: 1.5em; margin-top: 5px"></i>
+    if (ViewBag.count == null)
+    {
+        <a href="" data-toggle="dropdown">
+            <span id="idCounts" class="badge" style="margin-left:-8px; padding-top: -15px !important; color: white !important; background: red !important"><b>0</b></span>
+        </a>
+    }
+
+    <ul class="dropdown-menu">
+        <li>
+
+            <a href="@Url.Action("NotificationLifeTime", "Home")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Life Time Notification : </b>&nbsp; &nbsp;&nbsp;<b style="color: red"></b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("NotificationRefit", "Home")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Next Refit Notification : </b>&nbsp; &nbsp;&nbsp;<b style="color: red"></b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("NotificationDoking", "Home")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Next Docking Notification : </b>&nbsp; &nbsp;&nbsp;<b style="color: red"></b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("MejorDemanNotification", "MajorDemandOrProcure")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Mejor Demand : </b>&nbsp; &nbsp;&nbsp;<b style="color: red"></b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("SignalNotification", "MessageInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Signal Information : </b>&nbsp; &nbsp;&nbsp;<b style="color: red"></b>
+            </a>
+
+        </li>
+        @*<li>
+            <a href="@Url.Action("BeftnDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">BEFTN Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.BEFTNDueList</b>
+            </a>
+
+        </li>
+        <li>
+
+            <a href="@Url.Action("StoppedDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Stop Payment Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.StopPaymentDueList</b>
+            </a>
+
+        </li>*@
+    </ul>
+
+}
+@*@if (PortalContext.CurrentUser.RoleId == 4)
+{
+    <i class="fa fa-bell-o" style="color:white"></i>
+    if (ViewBag.count != null)
+    {
+        <a href="" data-toggle="dropdown">
+            <span id="idCounts" class="badge" style="margin-left:-8px"><b>@ViewBag.count</b></span>
+        </a>
+    }
+    <ul class="dropdown-menu">
+        <li>
+
+            <a href="@Url.Action("OwnBankAccountPaymentDueList", "RemittInfo")" style="display: block;padding: 5px 10px 8px;color: #666;border-bottom: 1px solid #ddd;">
+
+                <b style="color:black">Account Payee Due List</b>&nbsp; &nbsp;&nbsp;<b style="color: red">@Model.OwnBankAccountPayeeDueList</b>
+            </a>
+
+        </li>
+    </ul>
+
+}*@

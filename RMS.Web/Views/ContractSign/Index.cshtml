@@ -1,0 +1,81 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.ContractSignViewModel
+@{
+    //ViewBag.Title = "Commitee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.ContractSign.Demandid)
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Contract Sign
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-md-12">
+
+                        @if (Model.SuccessMessage != null)
+                        {
+                            <div style="color:green;text-align: center">@Model.SuccessMessage</div>
+                        }
+                        else
+                        {
+                            <div style="color: red; text-align: center">@Model.FailedMessage</div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <p style="color:green">@TempData["message"]</p>
+                </div>
+            </div>
+        </div>
+        @{ int rowNo = 0; }
+        <div class="">
+
+            <table class="table table-bordered table-hover table-striped">
+
+
+                <tr style="background-color: #654FA1;color: white">
+                    <td style="text-align: center; font-size: 15px">Serial No</td>
+                    <td style="text-align: center; font-size: 15px">Project Name</td>
+                    <td style="text-align: center; font-size: 15px">Reference</td>
+                    <td style="text-align: center; font-size: 15px">Send Name</td>
+                    <td style="text-align: center; font-size: 15px">Send Date</td>
+                    <td style="text-align: center; font-size: 15px">Remarks</td>
+                    <td style="text-align: center; font-size: 15px"></td>
+                </tr>
+
+                @foreach (var item in Model.ContractSigns)
+                {
+                    <tr>
+                        <td style="">@(rowNo += 1)</td>
+                        <td style="">@item.Demand.FileNo</td>
+                        <td style="">@item.Reference</td>
+                        <td style="">@item.SendName</td>
+                        <td style="">@item.SendDate</td>
+                        <td style="">@item.Remarks</td>
+                        @if (item.FilePath != null)
+                        {
+
+                            <td style="text-align: center; color: blue">
+                                <a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FilePath })'"><img src="~/Content/icons/32x32/pdf.png" /></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="text-align: center; color: blue"></td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+    @Html.ActionLink("Back", "ContractSignEdit", "ContractSign", new { fileId = Model.ContractSign.Demandid, flowserial = Model.FlowSerial }, new { @class = "btn btn-info" })
+
+
+</div>

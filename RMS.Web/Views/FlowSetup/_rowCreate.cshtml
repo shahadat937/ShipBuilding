@@ -1,0 +1,16 @@
+﻿@model RMS.Web.Models.ViewModel.FlowSetupViewModel
+@{
+    Layout = null;
+}
+<tr>
+    <td><label>Work Assign &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label></td>
+
+    <td>
+        @Html.DropDownListFor(model => Model.FlowSetupEditDictionary[Model.Key].Value,
+            Model.FormInfos.Select(x => new SelectListItem() { Value = x.Value.ToString(), Text = x.Text }).ToList(),
+            "Select",
+            new { @class = "form-control", required = "required" })
+    </td>
+    <td><input type="button" id="btnDel1" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>
+</tr>
+

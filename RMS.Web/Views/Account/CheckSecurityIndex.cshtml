@@ -1,0 +1,74 @@
+﻿@using RMS.Utility
+@model RMS.Model.SetPassword
+
+
+@{
+    ViewBag.Title = "Log in Page";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<!-- MAIN BODY SECTION -->
+@using (Html.BeginForm("CheckSecurity", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    <div class="login-section">
+        <!-- login-section -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="content-flex" class="login-wrapper">
+                        <form action="">
+                            <div class="login-inner-wrapper">
+                                <div class="input-group cus-mb-10">
+                                    <p style="color:teal">Security Code</p>
+                                </div>
+                                <div class="input-group cus-mb-10">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    @Html.TextBoxFor(model => model.MobileOrEmail, new { @class = "form-control", id = "login-username", tabindex = 1, placeholder = "Mobile or E-mail" })
+                                    @Html.ValidationMessageFor(model => model.MobileOrEmail)
+                                </div>
+                                <div class="input-group cus-mb-10">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    @Html.TextBoxFor(model => model.SecurityCode, new { @class = "form-control", id = "login-username", tabindex = 2, placeholder = "Security Code" })
+                                    @Html.ValidationMessageFor(model => model.SecurityCode)
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">@Html.ActionLink("Back to login", "login", "Account", new { @class = "btn btn-login-custom", tabindex = 4 })</div>
+                                    <div class="col-sm-6"><button id="btn-login" class="btn btn-login-custom pull-right" tabindex="3">Submit</button></div>
+
+                                </div>
+                                <div class="input-group cus-mb-10">
+                                    @if (Model.IsSucceed == true)
+                                    {
+                                        if (TempData["messeage"] != null)
+                                        {
+                                            <div class="alert alert-dismissable alert-info" style="color: green">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @TempData["messeage"].ToString()
+                                                <br />
+                                                @Html.ActionLink("Go to login page", "Login", "Account", new { style = "color:blue;font-size:15px;" })
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (TempData["messeage"] != null)
+                                        {
+                                            <div class="alert alert-dismissable alert-info" style="color: green">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @TempData["messeage"].ToString()
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /login-section -->
+}
+
+

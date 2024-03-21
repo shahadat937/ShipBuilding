@@ -1,0 +1,101 @@
+﻿@model RMS.Model.Role
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title col-sm-offset-6">
+            Create Role
+        </h2>
+    </div>
+    <div style="height:30px;">
+        
+    </div>
+        <div class="col-sm-offset-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <div class="form-horizontal">
+                    
+                    @*@Html.ValidationSummary(true)*@
+
+                    <div class="row form-group">
+                        @Html.Label("Role Name: ", new { @class = "text-right control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.RoleName)
+                            @Html.ValidationMessageFor(model => model.RoleName)
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        @Html.Label("Lower Role Name: ", new { @class = "text-right control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.LoweredRoleName)
+                            @Html.ValidationMessageFor(model => model.LoweredRoleName)
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        @Html.Label("Description: ", new { @class = "text-right control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Description)
+                            @*@Html.TextAreaFor(model => model.Description, new { @class = "textAreaSize" })*@
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        @Html.Label("Active: ", new { @class = "text-right control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.IsActive)
+                            @Html.ValidationMessageFor(model => model.IsActive)
+                        </div>
+                    </div>
+                   
+                    <div style="height:30px;">
+                        <div id="newpost" style="color:#ff0000; padding-left:3px;" class="col-sm-offset-3">
+
+                            <p>@TempData["message"]</p>
+                        </div>
+                    </div>
+     
+                    <div class="row form-group">
+                        <div class="col-md-offset-3" style="padding-left: 12px">
+                            <input type="submit" value="Create" class="btn btn-primary pull-left" />
+                        </div>
+                        <div class="col-md-offset-4" style="padding-left: 20px">
+                            <input type="button" onclick="showhide()" value="Add New" id="clearButton" class="btn btn-primary pull-left" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="col-md-offset-3">
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+
+
+            <script type="text/javascript">
+                function showhide() {
+                    var div = document.getElementById("newpost");
+                    document.getElementById("RoleName").value = "";
+                    document.getElementById("LoweredRoleName").value = "";
+                    document.getElementById("Description").value = "";
+                    $("#IsActive").prop('checked', false);   
+                    //$("#textbox1").val("");
+                    if (div.style.display !== "none") {
+                        div.style.display = "none";
+                    }
+                }
+            </script>
+        </div> 
+</div>

@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EAAFC2B7-7CBE-4ADF-A186-B2AAB38D93A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RMS.Model</RootNamespace>
+    <AssemblyName>RMS.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AFDLetter.cs" />
+    <Compile Include="AFDLetterApprove.cs" />
+    <Compile Include="Agendum.cs" />
+    <Compile Include="BankInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BGPG.cs" />
+    <Compile Include="BranchInfo.cs" />
+    <Compile Include="CommitteeRaiseLetter.cs" />
+    <Compile Include="CommitteInfo.cs" />
+    <Compile Include="CommitteNameList.cs" />
+    <Compile Include="CommonCode.cs" />
+    <Compile Include="Contract.cs" />
+    <Compile Include="ContractDeptOpinion.cs" />
+    <Compile Include="ContractField.cs" />
+    <Compile Include="ContractFile.cs" />
+    <Compile Include="ContractOpinion.cs" />
+    <Compile Include="ContractSign.cs" />
+    <Compile Include="ControlType.cs" />
+    <Compile Include="Demand.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="DepartmentWiseMileStone.cs" />
+    <Compile Include="DocumentInfo.cs" />
+    <Compile Include="EventLog.cs" />
+    <Compile Include="FieldValueBack.cs" />
+    <Compile Include="File.cs" />
+    <Compile Include="FileBackUp.cs" />
+    <Compile Include="FileListByTree_Result.cs" />
+    <Compile Include="FileMovement.cs" />
+    <Compile Include="FileStore.cs" />
+    <Compile Include="FileUploadForm.cs" />
+    <Compile Include="FinanceMinistryLetter.cs" />
+    <Compile Include="FinancialInstallment.cs" />
+    <Compile Include="FinancialYear.cs" />
+    <Compile Include="FlowList.cs" />
+    <Compile Include="FlowSetup.cs" />
+    <Compile Include="FormInfo.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="Member.cs" />
+    <Compile Include="MileStone.cs" />
+    <Compile Include="Notice.cs" />
+    <Compile Include="NotificationCustomModel.cs" />
+    <Compile Include="NSPCMeetingWork.cs" />
+    <Compile Include="Organization.cs" />
+    <Compile Include="PaymentSchedule.cs" />
+    <Compile Include="PendingDepartmentStatus_Result.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="ProjectFileMovement.cs" />
+    <Compile Include="ProjectFinalStatu.cs" />
+    <Compile Include="ProjectInstallment.cs" />
+    <Compile Include="ProjectNote.cs" />
+    <Compile Include="ProjectStatu.cs" />
+    <Compile Include="ProjectStatus.cs" />
+    <Compile Include="ProjectStatusForGanttChart.cs" />
+    <Compile Include="RptProjectMovement.cs" />
+    <Compile Include="ProjectMovement.cs" />
+    <Compile Include="ProjectType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="spProjectOpinion_Result.cs" />
+    <Compile Include="spProjectTaskStatus.cs" />
+    <Compile Include="StaffRequirement.cs" />
+    <Compile Include="StaffRequirementDeptOpinion.cs" />
+    <Compile Include="StaffRequirementOpinion.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="TenderOffer.cs" />
+    <Compile Include="TenderSpecDeptOpinion.cs" />
+    <Compile Include="TenderSpecification.cs" />
+    <Compile Include="TenderSpecificationChild.cs" />
+    <Compile Include="TenderSpecOpinion.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserBankInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserURLRight.cs" />
+    <Compile Include="vwFileAutoCompleteData.cs" />
+    <Compile Include="vwFileStatus.cs" />
+    <Compile Include="vwFlowName.cs" />
+    <Compile Include="vwMemberNameInfo.cs" />
+    <Compile Include="vwOpinionDeptInfo.cs" />
+    <Compile Include="WithdrawalLetterInfo.cs" />
+    <Compile Include="YearCalender.cs" />
+    <Compile Include="ZoneInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Model.Test\RMS.Model.Test.csproj">
+      <Project>{A6AB7D67-559B-476D-803D-8EB570AFDAD5}</Project>
+      <Name>RMS.Model.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Utility\RMS.Utility.csproj">
+      <Project>{7962ad98-79e1-47c3-9555-b929f480c7f3}</Project>
+      <Name>RMS.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

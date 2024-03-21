@@ -1,0 +1,103 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.DemandViewModel
+@{
+    //ViewBag.Title = "Commitee Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.ProjectNote.DemandId)
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Project Note
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td>@*@Html.ActionLink("Add New", "ProjectNoteEdit", "Demand", new { @class = "btn btn-info", pId = Model.ProjectNote.DemandId })*@
+                        <td><a href="@Url.Action("ProjectNoteEdit", "Demand", new { pId = Model.ProjectNote.DemandId })" class="btn btn-info">Add New</a></td>
+               
+                 
+                    <td>
+                        @using (Html.BeginForm("ProjectNoteSearch", "Demand", FormMethod.Get))
+                        {
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(x => x.SearchKey, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Name" })
+                                    </td>
+                                    <td>
+                                        <button class="custom-serach-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-md-12">
+
+                        @if (Model.SuccessMessage != null)
+                        {
+                            <div style="color:green;text-align: center">@Model.SuccessMessage</div>
+                        }
+                        else
+                        {
+                            <div style="color: red; text-align: center">@Model.FailedMessage</div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <p style="color:green">@TempData["message"]</p>
+                </div>
+            </div>
+        </div>
+        @{ int rowNo = 0; }
+        <div class="">
+
+            <table class="table table-bordered table-hover table-striped">
+
+
+                <tr style="background-color: #654FA1;color: white">
+                    <td style="text-align: center; font-size: 15px">Serial No</td>
+                    <td style="text-align: center; font-size: 15px">Project Name</td>
+                    <td style="text-align: center; font-size: 15px">Description</td>
+                    <td style="text-align: center; font-size: 15px">Progress</td>
+                    <td style="text-align: center; font-size: 15px">Remarks</td>
+                    <td style="text-align: center; font-size: 15px">Edit</td>
+                    <td style="text-align: center; font-size: 15px">Delete</td>
+                 
+                </tr>
+
+                @foreach (var item in Model.ProjectNotes)
+                {
+                    <tr>
+                        <td style="">@(rowNo += 1)</td>
+                        <td style="">@item.Demand.FileNo</td>
+                        <td style="">@item.Parameter</td>
+                        <td style="">@item.Complete</td>
+                        <td style="">@item.Value</td>
+                   
+                        <td>
+                            <a href="@Url.Action("ProjectNoteEdit", "Demand", new { id = item.Id })" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ProjectNoteDelete", "Demand", new { id = item.Id })" class="btn btn-warning">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </td>
+        
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,264 @@
+﻿@model RMS.Model.RemittanceInfo
+@{
+    Layout = null;
+
+}
+<link href="~/Content/App/cssForExpressVoutherReport.css" rel="stylesheet" />
+<div><input id="Button1" onclick="return Button1_onclick(); " type="button" value="Print in Legal Page size"></div>
+
+<div class="container">
+    <table class="table firstTable">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                             <tr>
+                                <th colspan="2"><b><center><font size="3">@Model.PaymentBankName</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2"><b><center><font size="3">@Model.PaymentBranchName,Branch</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <td><b>From:</b>@Model.IssuingBranchName,@Model.IssuingSubBranchName</td>
+                            </tr>
+                            <tr>
+                                <td><b>To:</b>@Model.PaymentBranchName</td>
+                                <td align="right">Office Copy</td>
+                            </tr>
+                            <tr>
+                                <td><b>Remitt#</b> @Model.RemittanceNo</td>
+                                <td class="rowRight">Date:@Model.LastUpdate.ToString("dd MMM yyyy hh:mm tt")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Remitter </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.ApplicantName</td>
+                            </tr>
+                            <tr>
+                                <td>Exchange:</td>
+                                <td class="rowleft">@Model.IssuingSubBranchName</td>
+                            </tr>
+                            <tr>
+                                <td>Country:</td>
+                                <td class="rowleft">@Model.IssuingCountryName</td>
+                            </tr>
+                            <tr>
+                                <td class="rowleft">@Model.PhotoIDType:</td>
+                                <td class="rowleft">@Model.PaymentPhotoIdNumber</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Beneficiary </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.BeneficiaryName</td>
+                            </tr>
+                            <tr>
+                                <td>Branch Code:</td>
+                                <td class="rowleft">@Model.PaymentBranch</td>
+                            </tr>
+                            <tr>
+                                <td>Branch:</td>
+                                <td class="rowleft">@Model.PaymentBranchName</td>
+                            </tr>
+                            <tr>
+                                <td>Security Code:</td>
+                                <td class="rowleft">@Model.SecurityCode</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                            <tr>
+                                <th colspan="2"><b><center><font size="3">Cash Amount @Model.FAmount</font></center></b> </th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    We have credided Head Office Account with the sum of Tk. @Model.FAmount
+                                    Being the amount of Foreign Remittance paid vide Cash
+                                    Declaration: I,receiver confirm the accuracy of details & amount are correct .
+                                    Source of Fund is legal & the remittance is not for any "Terrorist Financing or Money laundering".
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2"> <b><center><font size="4">Paid</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <td>@Model.ApplicantName</td>
+                                <td class="rowRight">@Model.BeneficiaryName</td>
+                            </tr>
+                            <tr>
+                                <td>______________________</td>
+                                <td class="rowRight">______________________</td>
+                            </tr>
+                            <tr>
+                                <td>Countre Signatur</td>
+                                <td class="rowRight">Signature</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="SeperateCustomerCopy" colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                            <tr>
+                                <th colspan="2"><b><center><font size="3">@Model.PaymentBankName</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2"><b><center><font size="3">@Model.PaymentBranchName,Branch</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <td><b>From:</b>@Model.IssuingBranchName,@Model.IssuingSubBranchName</td>
+                            </tr>
+                            <tr>
+                                <td><b>To:</b>@Model.PaymentBranchName</td>
+                                <td align="right">Customer Copy</td>
+                            </tr>
+                            <tr>
+                                <td><b>Remitt#</b> @Model.RemittanceNo</td>
+                                <td class="rowRight">Date:@Model.LastUpdate.ToString("dd MMM yyyy hh:mm tt")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Remitter </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.ApplicantName</td>
+                            </tr>
+                            <tr>
+                                <td>Exchange:</td>
+                                <td class="rowleft">@Model.IssuingSubBranchName</td>
+                            </tr>
+                            <tr>
+                                <td>Country:</td>
+                                <td class="rowleft">@Model.IssuingCountryName</td>
+                            </tr>
+                            <tr>
+                                <td class="rowleft">@Model.PhotoIDType:</td>
+                                <td class="rowleft">@Model.PaymentPhotoIdNumber</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="50%">
+                    <table class="table innerTable">
+                        <thead class="headerBoder">
+                            <tr>
+                                <th colspan="2"> Beneficiary </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name:</td>
+                                <td class="rowleft">@Model.BeneficiaryName</td>
+                            </tr>
+                            <tr>
+                                <td>Branch Code:</td>
+                                <td class="rowleft">@Model.PaymentBranch</td>
+                            </tr>
+                            <tr>
+                                <td>Branch:</td>
+                                <td class="rowleft">@Model.PaymentBranchName</td>
+                            </tr>
+                            <tr>
+                                <td>Security Code:</td>
+                                <td class="rowleft">@Model.SecurityCode</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table firstTable">
+                        <tbody>
+                            <tr>
+                                <th colspan="2"><b><center><font size="3">Cash Amount @Model.FAmount</font></center></b> </th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    We have credided Head Office Account with the sum of Tk. @Model.FAmount 
+                                    Being the amount of Foreign Remittance paid vide Cash
+                                    Declaration: I,receiver confirm the accuracy of details & amount are correct .
+                                    Source of Fund is legal & the remittance is not for any "Terrorist Financing or Money laundering". 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2"> <b><center><font size="4">Paid</font></center></b></th>
+                            </tr>
+                            <tr>
+                                <td>@Model.ApplicantName</td>
+                                <td class="rowRight">@Model.BeneficiaryName</td>
+                            </tr>
+                            <tr>
+                                <td>______________________</td>
+                                <td class="rowRight">______________________</td>
+                            </tr>
+                            <tr>
+                                <td>Countre Signatur</td>
+                                <td class="rowRight">Signature</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+
+    function Button1_onclick() {
+
+        document.getElementById('Button1').style.visibility = 'hidden';
+        window.print();
+
+    }
+</script>
+
+
+
+

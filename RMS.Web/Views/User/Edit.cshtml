@@ -1,0 +1,354 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.UserViewModel
+@{
+    var title = (Model.User.UserId > 0) ? "Information for Updating" : "Information of New User";
+    ViewBag.Title = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "User", FormMethod.Post))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center">@title</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @*<label for="Email" class="col-md-4 control-label">Is AD user:</label>
+                        <div class="col-md-8">
+                            @Html.CheckBoxFor(x => x.User.WinPassword, new { @class = "form-control isAdUserClass", id = "chkAdUser", tabindex = 13 })
+                        </div>*@
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="col=md-12">
+                            @Html.ActionLink("Refresh", "Edit", "User", new { @class = "btn btn-info" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="UserName" class="col-md-4 control-label">User ID:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        @if (Model.User.UserId > 0)
+                        {
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.User.UserName, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Login ID" })
+                                @Html.HiddenFor(x => x.User.UserName, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Login ID", required = "required" })
+                                @Html.HiddenFor(x => x.User.UserId)
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.User.UserName, new { @class = "textBoxsize form-control checkLogout", tabindex = 1, autofocus = "autofocus", placeholder = "Login ID", required = "required" })
+                                @Html.ValidationMessageFor(x => x.User.UserName)
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="UserFullName" class="col-md-4 control-label">Full Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.UserFullName, new { @class = "textBoxsize form-control checkLogout", tabindex = 7, placeholder = "Enter User Full Name", required = "required" })
+                            @Html.ValidationMessageFor(x => x.User.UserFullName)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="Password" class="col-md-4 control-label">Password:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @if (Model.User.UserId == 0)
+                            {
+                                @Html.PasswordFor(x => x.User.Password, new { @class = "textBoxsize form-control", id = "txtPassword", tabindex = 2, placeholder = "Enter Password", required = "required" })
+                                @Html.ValidationMessageFor(x => x.User.Password)
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="RoleId" class="col-md-4 control-label">Role Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.User.RoleId, Model.RoleSelectdItemList, "-Select-", new { @class = "dropdownsize form-control", id = "userRoleId", tabindex = 8, required = "required" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="ConfirmPassword" class="col-md-4 control-label">Confirm Password:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @if (Model.User.UserId == 0)
+                            {
+                                @Html.PasswordFor(x => x.User.ConfirmPassword, new { @class = "textBoxsize form-control", id = "txtConfirmPassword", tabindex = 3, placeholder = "Enter ConfirmPassword", required = "required" })
+                                @Html.ValidationMessageFor(x => x.User.ConfirmPassword)
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="BankCode" class="col-md-4 control-label">Organization Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.User.BankCode, Model.BankSelectdItemList, "-Select-", new { @class = "BankName dropdownsize form-control", tabindex = 9, @TargetClass = "DistrictName", @action = "/User/GetDistrictByBankCode", required = "required" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="PhoneNumber" class="col-md-4 control-label">Mobile number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.PhoneNumber, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Enter Mobile Number", required = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="DistrictCode" class="col-md-4 control-label">Department Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.DistrictCode, Model.DistricSelectdItemList, "-Select-", new { @class = "DistrictName dropdownsize form-control", tabindex = 10, @TargetClass = "BranchName", @action = "/User/GetBranchNameByDistrict", required = "required" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="Email" class="col-md-4 control-label">Email:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.Email, new { @class = "textBoxsize form-control", tabindex = 5, placeholder = "Enter Email", required = "required" })
+                            @Html.ValidationMessageFor(x => x.User.Email)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="Email" class="col-md-4 control-label">Password Validity (Days):&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.PasswordValidity, new { @class = "textBoxsize form-control", tabindex = 13, placeholder = "Password Validity", required = "required" })
+                            @Html.ValidationMessageFor(x => x.User.Email)
+                        </div>
+                        @*<label for="BranchInfo" class="col-md-4 control-label">Branch Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.BranchCode, Model.BranchInfosSelectdItemList, "-Select-", new { @class = "BranchName dropdownsize form-control", tabindex = 10, @TargetClass = "AgentName", @action = "/User/GetAgentByBranch" })
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="TransLimit" class="col-md-4 control-label">Transaction Limit:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.TransLimit, new { @class = "textBoxsize form-control", placeholder = "Enter Transaction Limit", tabindex = 6 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6" id="exchangeHouseAndAgent" style="display:none;position: relative">
+                    <div class="form-group">
+                        <label for="BranchInfo" class="col-md-4 control-label">Exchange House/Agent:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.AgentCode, Model.AgentSelectListItems, "-Select-", new { @class = "AgentName dropdownsize form-control", id = "exchangeHouseAndAgent", tabindex = 14 })
+                        </div>
+                    </div>
+                </div>
+
+            </div>*@
+
+            @*<div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="Email" class="col-md-4 control-label">Password Validity (Days):&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.PasswordValidity, new { @class = "textBoxsize form-control", tabindex = 13, placeholder = "Password Validity" })
+                            @Html.ValidationMessageFor(x => x.User.Email)
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="VerifyLimit" class="col-md-4 control-label">Verify Limit:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.User.VerifyLimit, new { @class = "textBoxsize form-control", placeholder = "Enter  Verify Limit", tabindex = 12 })
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+            <div class="row">
+
+                <div class="col-sm-6 col-lg-6">
+                    @Html.ActionLink("Back to list", "Index", "User", new { @class = "btn btn-info" })
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-8" style="text-align:right">
+                            <input type="submit" id="btnSave" value="Save" class="btn btn-info" tabindex=13 />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('.BankName').change(function () {
+            var $BankNamedropdown = $(this);
+            var targetClass = $BankNamedropdown.attr('TargetClass');
+            var url = $BankNamedropdown.attr('action');
+
+            var bankCode = $BankNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { bankCode: bankCode }
+            };
+            $.ajax(option).done(function (districts) {
+                if (districts.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(districts, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        $('.DistrictName').change(function () {
+            var $DistrictNamedropdown = $(this);
+            var targetClass = $DistrictNamedropdown.attr('TargetClass');
+            var url = $DistrictNamedropdown.attr('action');
+            var districtCode = $DistrictNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { districtCode: districtCode }
+            };
+            $.ajax(option).done(function (branches) {
+                if (branches.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(branches, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+
+        $('.BranchName').change(function () {
+            var $AgentNamedropdown = $(this);
+            var targetClass = $AgentNamedropdown.attr('TargetClass');
+            var url = $AgentNamedropdown.attr('action');
+            var branchCode = $AgentNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { branchCode: branchCode }
+            };
+            $.ajax(option).done(function (agentList) {
+                if (agentList.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(agentList, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    ClearDropDownList(targetClass);
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        function ClearDropDownList(selector) {
+            $('.' + selector)
+                .find('option').remove()
+                .end().append($('<option>').text("-Select-").attr('value', ""));
+        };
+
+        function NotFoundData(targetClass) {
+            $('.' + targetClass)
+                .append($('<option>').text("Not Found").attr('value', ""));
+        };
+
+        $("#userRoleId").change(function () {
+            //alert('hi');
+            if ($("#userRoleId option:selected").val() == "5" || $("#userRoleId option:selected").val() == "8") {
+                $("#exchangeHouseAndAgent").show();
+            } else {
+                $("#exchangeHouseAndAgent").hide();
+            }
+        });
+        $(".isAdUserClass").click(function () {
+
+            showHidePasswordField();
+        });
+        function showHidePasswordField() {
+            var rbtnValue = $('#chkAdUser')[0].checked;
+
+            if (rbtnValue == true) {
+                $("#txtPassword").hide();
+                $("#txtConfirmPassword").hide();
+            } else {
+                $("#txtPassword").show();
+                $("#txtConfirmPassword").show();
+            }
+        };
+
+    </script>
+}
+

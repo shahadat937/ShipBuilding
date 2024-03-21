@@ -1,0 +1,158 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.BranchInfoViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="">
+    @using (Html.BeginForm("DistrictIndex", "BranchInfo", FormMethod.Get))
+    {
+        <div class="col-sm-12 col-lg-12">
+            <div class="panel panel-primary" style="margin-bottom:0px">
+                <table>
+                    <tr style="background-color: #32CD32; color: white; width: auto">
+                        <td>Bank Name: </td>
+                        <td>@Html.DropDownListFor(model => model.BankCode, Model.BankSelectListItems, "--Select Bank Name--", new { @class = "dropdownsize form-control", tabindex = 1 })</td>
+                        <td><button id="findButton" class="btn btn-info" style=" font-weight:bold">Go</button></td>
+                    </tr>
+                </table>
+                <table>
+                    @Html.HiddenFor(x => x.BranchInfo.BranchName, new { id = "ThroughHiddenFor" })
+                    @Html.TextBoxFor(x => x.BranchInfo.BranchName, new { id = "ThroughTextBoxFor", @placeholder = "Through", @onkeyup = "employeeAutocomplite(this)" })
+                </table>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("SaveDistrictInfo", "BranchInfo", FormMethod.Post))
+    {
+        <div class="col-md-4 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    District List
+                </div>
+
+                <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:380px; width:auto;padding-top: 0px">
+                    <br />
+                    <div class="tree">
+                        <ul>
+                            @foreach (var item in Model.DistrictList)
+                            {
+                                <li>
+                                    <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span style="font-size: 14px; color: #006400">
+                                        @Html.ActionLink(item.BranchName, "DistrictIndex", "BranchInfo", new { BranchInfoIdentity = item.BranchInfoIdentity, FirstLevel = item.FirstLevel }, null)
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-8 col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    District Information
+                </div>
+                <div class="panel-body" style="height:380px">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">District Code :</label>
+                                <div class="col-md-8">
+                                    @Html.HiddenFor(x => x.BankCode)
+                                    @Html.HiddenFor(x => x.BranchInfo.FirstLevel, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Bank Code" })
+                                    @Html.TextBoxFor(x => x.BranchInfo.SecondLevel, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " District Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">District Name :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.BranchName, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = "District Name" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Division Name for BB Report:</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.BBDistrict, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = "District Name" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+                                    @if (Model.IsSucceed == 1)
+                                    {
+                                        <p style="color:green">@Model.Message</p>
+                                    }
+                                    else
+                                    {
+                                        <p style="color:red">@Model.Message</p>
+                                    }
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="submit" name="save" id="btnSave" value="Add New" class="btn btn-info" tabindex=7 />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" name="update" id="btnSave" value="Update" class="btn btn-info" tabindex=7 />
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.ActionLink("Delete", "DeleteDistrictInfo", "BranchInfo", new { BranchInfoIdentity = Model.BranchInfo.BranchInfoIdentity, FirstLevel = Model.BranchInfo.FirstLevel }, new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-left" id="reportContainner">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+<script type ="text/javascript">
+    function employeeAutocomplite(obj) {
+        var textBox = $(obj);
+        textBox.autocomplete({
+            source: function (request, response) {
+                var option = {
+                    url: '/BranchInfo/GetEmployeesBySearchCharacter/',
+                    type: "GET",
+                    datatype: "html",
+                    data: { SearchCharacter: request.term },
+                };
+                $.Ajax(option)
+                    .done(function (data) {
+                        $('#ThroughHiddenFor').val('');
+                        response($.map(data, function (employee) {
+                            return { label: employee.EmployeeCardId + "_" + employee.Name, value: employee.Name, EmployeeId: employee.EmployeeId };
+                        }));
+                    });
+            },
+            select: function (event, ui) {
+                var employeedI = ui.item.EmployeeId;
+                $('#ThroughHiddenFor').val(employeedI);
+            },
+
+        });
+    }
+</script>

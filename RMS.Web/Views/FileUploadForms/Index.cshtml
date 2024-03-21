@@ -1,0 +1,158 @@
+﻿@model RMS.Web.Models.ViewModel.FileUploadFormViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    img:hover {
+        color: red;
+        position: relative;
+    }
+</style>
+
+<div class="container" style="font-family:arial">
+
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Uploaded Form List
+            </div>
+            <div>
+                @Html.ActionLink("Add New", "Create", "FileUploadForms", new { @class = "btn btn-info" })
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr class="row">
+                        <th style="text-align: center">Project Name</th>
+                        <th style="text-align: center">TE&A File</th>
+                        <th style="text-align: center">FAT Schedule File</th>
+                        <th style="text-align: center">FAT Procedure File</th>
+                        <th style="text-align: center">FAT Report File</th>
+                        <th style="text-align: center">HAT/SAT</th>
+                        <th style="text-align: center">PIT</th>
+                        <th style="text-align: center"></th>
+                        <th style="text-align: center"></th>
+                    </tr>
+                    @foreach (var item in Model.FileUploadForms)
+                    {
+                        <tr class="row" id="panelPrecios">
+                            @Html.HiddenFor(x => x.FileUploadForm.FileUploadFormId)
+                            <td>@item.ProjectName</td>
+                            @if (item.TE_APDF != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.TE_APDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" data-toggle="tooltip" title="@item.TEA" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+
+
+                            @if (item.FATSchedulePDF != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.FATSchedulePDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.FATSchedule" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+
+
+                            @if (item.FATProcedurePDF != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.FATProcedurePDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.FATProcedure" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+
+
+                            @if (item.FATReportPDF != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.FATReportPDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.FATReport" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue">
+                                    @*<a href="#" style="" onclick="location.href = '@Url.Action("Show", "Demand", new { url = item.FileUrl})'"><img src="~/Content/icons/32x32/pdf.png" /></a>*@
+                                </td>
+                            }
+
+
+                            @if (item.HATSATPDF != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.HATSATPDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.HATSAT" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue"></td>
+                            }
+                            @if (item.PITPDF != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.PITPDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.PIT" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue"></td>
+                            }
+                            @if (item.LetterGo != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.LETTERPDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.LetterGo" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue"></td>
+                            }
+                            @if (item.ApprovedGo != null)
+                            {
+                                <td style="text-align: center; color: blue">
+                                    <a href="@Url.Action("Show", "FileUploadForms", new { url = item.APPROVEPDF })" style="" target="_blank"><img src="~/Content/icons/32x32/pdf.png" title="@item.ApprovedGo" height="40" width="40" /></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="text-align: center; color: blue"></td>
+                            }
+
+                            <td>@Html.ActionLink("Delete", "Delete", "FileUploadForms", new { fileUploadFormId = item.FileUploadFormId }, new { @class = "btn btn-info" })</td>
+                            <td>@Html.ActionLink("Update", "Edit", "FileUploadForms", new { fileUploadFormId = item.FileUploadFormId }, new { @class = "btn btn-info" })</td>
+
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#panelPrecios [data-toggle="tooltip"]').tooltip({
+        animated: 'fade',
+        placement: 'bottom',
+        html: true
+    });
+</script>
+
+
+

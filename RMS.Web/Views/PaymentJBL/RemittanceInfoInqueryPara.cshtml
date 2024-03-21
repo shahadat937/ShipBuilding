@@ -1,0 +1,44 @@
+﻿@model RMS.Web.Models.ViewModel.RemittanceViewModel
+
+@{
+    ViewBag.Title ="RemittanceInfoInqueryPara";
+    Layout = null;
+}
+
+
+<div class="container">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">Parameter Value (s)</legend>
+        <table>
+
+            @if (Model.ConditionId == "Equal")
+            {
+                <tr>
+                    @Html.HiddenFor(x=>x.RemittanceHeaderId)
+                    @Html.HiddenFor(x => x.ConditionId)
+                    <td>@Model.RemittanceHeaderId</td>
+                    <td>@Html.TextBoxFor(x => x.InqueryPara1)</td>
+                    <td><input class="btn btn-info" type="submit" value="Preview" id="PreviewButton" /></td>
+                </tr>
+            }
+            @if (Model.ConditionId == "Between")
+            {
+                <tr>
+                    @Html.HiddenFor(x => x.RemittanceHeaderId)
+                    @Html.HiddenFor(x => x.ConditionId)
+                    <td style="font-weight:bold; color:cadetblue">From </td>
+                    <td>@Model.RemittanceHeaderId</td>
+                    <td>@Html.TextBoxFor(x => x.InqueryPara1)</td>
+                    
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; color: cadetblue">To </td>
+                    <td>@Model.RemittanceHeaderId</td>
+                    <td>@Html.TextBoxFor(x => x.InqueryPara2)</td>
+                    <td><input class="btn btn-info" type="submit" value="Preview" id="PreviewButton" /></td>
+                </tr>
+            }
+        </table>
+    </fieldset>
+</div>
+

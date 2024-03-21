@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.BLL", "RMS.BLL\RMS.BLL.csproj", "{10A6AD39-E6EC-4475-B4F4-14C33B6698DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.DAL", "RMS.DAL\RMS.DAL.csproj", "{75D55AD0-0AC6-48C8-B10D-4CD98ED1919D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Utility", "RMS.Utility\RMS.Utility.csproj", "{7962AD98-79E1-47C3-9555-B929F480C7F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Model", "RMS.Model\RMS.Model.csproj", "{EAAFC2B7-7CBE-4ADF-A186-B2AAB38D93A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Web", "RMS.Web\RMS.Web.csproj", "{2150ABC0-C480-4E6F-8C52-E700E0E2A820}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "HasCode", "HasCode\HasCode.vbproj", "{39935113-6346-47C1-9890-0016A10F1931}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Model.Test", "RMS.Model.Test\RMS.Model.Test.csproj", "{A6AB7D67-559B-476D-803D-8EB570AFDAD5}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://mannaneng.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = HasCode\\HasCode.vbproj
+		SccProjectName1 = HasCode
+		SccLocalPath1 = HasCode
+		SccProjectUniqueName2 = RMS.BLL\\RMS.BLL.csproj
+		SccProjectName2 = RMS.BLL
+		SccLocalPath2 = RMS.BLL
+		SccProjectUniqueName3 = RMS.DAL\\RMS.DAL.csproj
+		SccProjectName3 = RMS.DAL
+		SccLocalPath3 = RMS.DAL
+		SccProjectUniqueName4 = RMS.Model.Test\\RMS.Model.Test.csproj
+		SccProjectName4 = RMS.Model.Test
+		SccLocalPath4 = RMS.Model.Test
+		SccProjectUniqueName5 = RMS.Model\\RMS.Model.csproj
+		SccProjectName5 = RMS.Model
+		SccLocalPath5 = RMS.Model
+		SccProjectUniqueName6 = RMS.Utility\\RMS.Utility.csproj
+		SccProjectName6 = RMS.Utility
+		SccLocalPath6 = RMS.Utility
+		SccProjectUniqueName7 = RMS.Web\\RMS.Web.csproj
+		SccProjectName7 = RMS.Web
+		SccLocalPath7 = RMS.Web
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10A6AD39-E6EC-4475-B4F4-14C33B6698DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A6AD39-E6EC-4475-B4F4-14C33B6698DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A6AD39-E6EC-4475-B4F4-14C33B6698DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A6AD39-E6EC-4475-B4F4-14C33B6698DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75D55AD0-0AC6-48C8-B10D-4CD98ED1919D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D55AD0-0AC6-48C8-B10D-4CD98ED1919D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D55AD0-0AC6-48C8-B10D-4CD98ED1919D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D55AD0-0AC6-48C8-B10D-4CD98ED1919D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7962AD98-79E1-47C3-9555-B929F480C7F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7962AD98-79E1-47C3-9555-B929F480C7F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7962AD98-79E1-47C3-9555-B929F480C7F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7962AD98-79E1-47C3-9555-B929F480C7F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAAFC2B7-7CBE-4ADF-A186-B2AAB38D93A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAAFC2B7-7CBE-4ADF-A186-B2AAB38D93A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAAFC2B7-7CBE-4ADF-A186-B2AAB38D93A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAAFC2B7-7CBE-4ADF-A186-B2AAB38D93A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2150ABC0-C480-4E6F-8C52-E700E0E2A820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2150ABC0-C480-4E6F-8C52-E700E0E2A820}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2150ABC0-C480-4E6F-8C52-E700E0E2A820}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2150ABC0-C480-4E6F-8C52-E700E0E2A820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39935113-6346-47C1-9890-0016A10F1931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39935113-6346-47C1-9890-0016A10F1931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39935113-6346-47C1-9890-0016A10F1931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39935113-6346-47C1-9890-0016A10F1931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6AB7D67-559B-476D-803D-8EB570AFDAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6AB7D67-559B-476D-803D-8EB570AFDAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6AB7D67-559B-476D-803D-8EB570AFDAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6AB7D67-559B-476D-803D-8EB570AFDAD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

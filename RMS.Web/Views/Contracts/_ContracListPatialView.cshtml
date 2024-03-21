@@ -1,0 +1,16 @@
+﻿@model RMS.Web.Models.ViewModel.ContractViewModel
+<table class="table">
+    <tr class="row">
+        <th>Contract File</th>
+        <th>Field Name</th>
+        <th>Field Value</th>
+    </tr>
+    @foreach (var item in @Model.Contracts)
+    {
+        <tr class="row">
+            <td>@item.ContractFileName</td>
+            <td>@item.FieldName</td>
+            <td>@item.FieldValue</td>
+        </tr>
+    }
+</table>

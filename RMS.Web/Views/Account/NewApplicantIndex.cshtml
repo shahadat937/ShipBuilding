@@ -1,0 +1,81 @@
+﻿@model RMS.Web.Models.ViewModel.RegisterBindingModel
+@{
+
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>Pre-registration Form</h4>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("NewApplicantSave", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @Html.Label("Full Name", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Register.UserFullName, new { @class = "textBoxsize form-control", tabindex = 1, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.UserFullName)
+
+                            </div>
+                            @Html.Label("Login ID", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Register.UserName, new { @class = "textBoxsize form-control refno", tabindex = 5, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.UserName)
+                                <div id="divStatus"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("E-mail", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Register.Email, new { @class = "textBoxsize form-control", tabindex = 5, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.Email)
+                            </div>
+                            @Html.Label("Mobile No", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Register.MobileNumber, new { @class = "textBoxsize form-control", tabindex = 5, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.MobileNumber)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Sercurity Question", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.Register.SecurityQuestion, Model.SecurityQustionSelectdItemList, "-Select-", new { @class = "dropdownsize form-control", tabindex = 6 })
+                            </div>
+                            @Html.Label("Answer", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Register.Answer, new { @class = "textBoxsize form-control", tabindex = 5, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.Answer)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Password", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.PasswordFor(model => model.Register.Password, new { @class = "textBoxsize form-control", tabindex = 5, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.Password)
+                            </div>
+                            @Html.Label("Confirm Password", new { @class = "control-label col-md-2" })<i class="fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i>
+                            <div class="col-md-4">
+                                @Html.PasswordFor(model => model.Register.ConfirmPassword, new { @class = "textBoxsize form-control", tabindex = 5, placeholder = "Enter Value" })
+                                @Html.ValidationMessageFor(model => model.Register.ConfirmPassword)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                @Html.ActionLink("Login", "Login", "Account", new { @class = "btn btn-primary" })
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+

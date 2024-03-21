@@ -1,0 +1,298 @@
+﻿@model RMS.Web.Models.ViewModel.TenderSpecDeptOpinionViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    select[readonly] {
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
+<div class="container1" style="font-family:arial">
+
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+               @Model.FormName
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "TenderSpecDeptOpinions", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "formCreateTenderSpecDeptOpinion" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.TenderSpecDeptOpinion.TenderSpecOpinionGivenId)
+                    @Html.HiddenFor(x =>x.FlowSerial)
+                      @Html.HiddenFor(x =>x.FormId ,new {id ="formIdentity"})
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">FileNo &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.TenderSpecDeptOpinion.FileNo, Model.ProjectSelectListItems, "--Select--", new { id = "fileNo", @class = "txtMember form-control", required = "required",@readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecDeptOpinion.FileNo)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">@Model.Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.TenderSpecDeptOpinion.TenderName, new List<SelectListItem>(), "--Select--", new { id = "tenderNameId", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecDeptOpinion.TenderName)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Department &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.TenderSpecDeptOpinion.OpinionGivenDeptId, new List<SelectListItem>(), "--Select--", new { id = "depId", @class = "txtMember form-control", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecDeptOpinion.OpinionGivenDeptId)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3"> Current uploaded file:</label>
+                                <div class="col-md-5 curDoc" style="display: none">
+                                    <a href="@Url.Action("Show", "CommitteeRaiseLetters", new { url = Model.Url })" id="surDoc" style="" target="_blank"><span id ="Fname"></span></a>
+                                    @*@Html.TextBoxFor(x => x.Url, new { @class = "form-control",@id ="fileName",@readonly ="true"})*@
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.Url)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Opinion Url:</label>
+                                <div class="col-md-5">
+                                    <input type="file" id="file" name="upload" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecDeptOpinion.OpinionUrl)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks</label>
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.TenderSpecDeptOpinion.Remarks, new { @class = "txtMember form-control", @id ="Rem" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.TenderSpecDeptOpinion.Remarks)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To Flow Info", "TreeMenuIndex", "FlowSetup", null, new { @class = "btn btn-info pull-left" }) &nbsp;
+                                    <a href="@Url.Action("Index", "TenderSpecDeptOpinions", new { fileId = Model.TenderSpecDeptOpinion.FileNo, formId = Model.FormId })" class="btn btn-info">
+                                        Show Data
+                                        <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+                                    </a>
+
+                                    <input type="submit" id="btnCreateTenderSpecDeptOpinion" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color:red">@Model.Message</div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Tender Specification Created Successfully!</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="FailedMessage" style="color:red">Tender Specification Creation Failed!</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "Get",
+                url: "/TenderSpecDeptOpinions/GetTenderNamesByFileNo",
+                data: { tenderSpecFileNo: $('#fileNo').val(), formId: $('#formIdentity').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var tenderNames = "<select id='tenderNameId'>";
+                    tenderNames = tenderNames + '<option value="">--select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        tenderNames = tenderNames + '<option value=' + data[i].Value + '>' + data[i].Text + '</option > ';
+                        console.log(data[i].Value);
+                    }
+                    tenderNames = tenderNames + '</select>';
+                    $("#tenderNameId").html(tenderNames);
+                }
+            });
+        });
+
+        //$('#fileNo').change(function () {
+        //    $.ajax({
+        //        type: "Get",
+        //        url: "/TenderSpecDeptOpinions/GetTenderNamesByFileNo",
+        //        data: { tenderSpecFileNo: $('#fileNo').val() },
+        //        datatype: "json",
+        //        traditional: true,
+        //        success: function (data) {
+        //            var tenderNames = "<select id='tenderNameId'>";
+        //            tenderNames = tenderNames + '<option value="">--select--</option>';
+        //            for (var i = 0; i < data.length; i++) {
+        //                tenderNames = tenderNames + '<option value=' + data[i].Value + '>' + data[i].Text + '</option > ';
+        //                console.log(data[i].Value);
+        //            }
+        //            tenderNames = tenderNames + '</select>';
+        //            $("#tenderNameId").html(tenderNames);
+        //        }
+        //    });         
+        //});
+        $('#tenderNameId').change(function () {
+            var da = $('#tenderNameId').val();
+            $.ajax({
+                type: "Get",
+                url: "/TenderSpecDeptOpinions/GetDepartmentsByTenderName",
+              
+                data: { tenderName: da, fileNo: $('#fileNo').val(), formId: $('#formIdentity').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var tenderNames = "<select id='depId'>";
+                    tenderNames = tenderNames + '<option value="">--select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        
+                        tenderNames = tenderNames + '<option value=' + data[i].Value + '>' + data[i].Text + '</option > ';
+                        console.log(data[i].Value);
+                    }
+                    tenderNames = tenderNames + '</select>';
+                    $("#depId").html(tenderNames);
+                }
+            });
+        });
+
+        $('#btnCreateTenderSpecDeptOpinion').unbind('click').bind('click', function () {
+            var form = $('#formCreateTenderSpecDeptOpinion');
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    return false;
+                }
+                else {
+                    var data = form.serialize();
+                    $.ajax({
+                        url: "/TenderSpecDeptOpinions/Create",
+                        type: 'POST',
+                        data: data,
+                        dataType: "html",
+                        success: successFunc,
+                        error: errorFunc
+                    });
+                    successFunc = function (response) {
+                        $('#mySuccessModel').modal('show');
+                    }
+                    errorFunc = function (response) {
+                        $('#myFailedModel').modal('show');
+                    }
+                }
+            }
+        });
+    //$("#btnCreateTenderSpecDeptOpinion").click(function () {
+        //    var dataForServer = $("#formCreateTenderSpecDeptOpinion").serialize();
+        //    console.log(dataForServer);
+        //    $.ajax({
+        //        url: "/TenderSpecDeptOpinions/Create",
+        //        type: "POST",
+        //        data: dataForServer,
+        //        dataType: "html",
+        //        success: successFunc,
+        //        error: errorFunc
+        //    });
+        //    successFunc = function (response) {
+        //        $('#mySuccessModel').modal('show');
+        //    }
+        //    errorFunc = function (response) {
+        //        $('#myFailedModel').modal('show');
+        //    }
+        //});
+        $('#depId').change(function () {
+            var da = $('#depId').val();
+            $.ajax({
+                type: "Get",
+                url: "/TenderSpecDeptOpinions/GetFileName",
+
+                data: { fileNo: $('#fileNo').val(), formId: $('#formIdentity').val(), depId: da },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    
+                    if (data.FileURL.length > 0) {
+                        var url = '/CommitteeRaiseLetters/Show?url=' + data.FileURL;
+                        $("#surDoc").prop("href", url);
+                        $(".curDoc").show();
+                        $("#Fname").html(data.FileName);
+                        //$("#fileName").val(data.FileURL);
+                        $("#Rem").val(data.Remarks);
+                    } else {
+                        $(".curDoc").hide();
+                        $("#Rem").val('');
+                    }
+               
+                }
+            });
+        });
+    </script>
+}

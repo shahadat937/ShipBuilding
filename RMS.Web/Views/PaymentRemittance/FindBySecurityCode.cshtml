@@ -1,0 +1,81 @@
+﻿@using iTextSharp.text.pdf.qrcode
+@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+    ViewBag.Title = "CashPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+@using (Html.BeginForm("FindBySecurityCode", "PaymentRemittance", FormMethod.Get))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div>
+        <table>
+            <tr>
+                <td>@Html.Label("Security Code")</td>
+                <td>:</td>
+                <td>@Html.TextBoxFor(x => x.SecurityCode, new { palaceholder = "Enter Security Code", id = "txtSecurityCode" })</td>
+                <td>
+                    <input type="button" id="btnFind" style="width: 95PX;height: 30PX;float:right" class="btn btn-primary" value="Search... " />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="remittancePamantId">
+        <p style="color:red">@Model.Message</p>
+    </div>
+
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('#btnFind').unbind('click').bind('click', function () {
+            var form = $(this).parents('form:first');
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        datatype: 'html',
+                        data: form.serialize()
+                    }).done(function (respons) {
+                        $('#remittancePamantId').html(respons);
+                    });
+                }
+            }
+        });
+
+        function saveRemittance(obj) {
+            var form = $(obj).parents('form:first');
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    e.preventDefault();
+                    return false;
+                } else {
+                    $.ajax({
+                        url: '/PaymentRemittance/Save',
+                        type: "POST",
+                        datatype: 'html',
+                        data: form.serialize()
+                    }).done(function (respons) {
+                        $('#remittancePamantId').html(respons);
+                    });
+                }
+            }
+        }
+        function printRemittance(obj) {
+            var form = $(obj).parents('form:first');
+            var url = '/PaymentRemittance/ExpressVoucher?securityCode=' + $('#txtSecurityCode').val();
+            window.open(url);
+        }
+
+    </script>
+}

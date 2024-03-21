@@ -1,0 +1,218 @@
+﻿@model RMS.Web.Models.ViewModel.DemandViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    .required {
+        color: red;
+        font-size: 18px;
+    }
+</style>
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Project Information
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12" style="text-align: center">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color:green">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color:red">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "Demand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.Demand.DemandId);
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.Demand.FileNo, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.Demand.FileNo)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Project Category &nbsp;<span class="required">*</span></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.Demand.ProjectCat, Model.ProjectCategorySelectListItems, "--Select--", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.Demand.ProjectCat)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Demand Name </label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.Demand.OrganigationId, Model.DeptSelectListItems, "--Select--", new { @class = "form-control", @maxlength = "198" })
+                                    @Html.ValidationMessageFor(x => x.Demand.OrganigationId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Approval Authority</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.Demand.ChildOrganization, Model.ApprovalTypeSelectListItems, "--Select--", new { @class = "form-control"})
+                                    @Html.ValidationMessageFor(x => x.Demand.ChildOrganization)
+                                </div>
+                            </div>
+                        </div>
+
+               
+                    </div>
+  
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Project Type &nbsp;<span class="required">*</span></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.Demand.ProjectType, Model.ProjectTypeSelectListItem, "--Select--", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.Demand.ProjectType)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4">Control File </label>
+                                <div class="col-md-8" >
+                                    @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control"})
+                                    @Html.ValidationMessageFor(x => x.ImageUpload)
+                                </div>
+                            </div>
+                        </div>
+            
+               
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4">Control Type &nbsp;<span class="required">*</span></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.Demand.ControllType, Model.ControlTypeSelectList, "--select--", new { @id = "ddlAppType", @class = "form-control", required = "required" })
+
+
+                                    @Html.ValidationMessageFor(x => x.Demand.ControllType)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">End Year&nbsp;<span class="required">*</span></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.Demand.EndDate, Model.YearCalenderSelectListItem, "--Select--", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.Demand.EndDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 col-md-4 col-lg-4">Demanding File </label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.DemandingUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                    @Html.ValidationMessageFor(x => x.DemandingUpload)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.ActionLink("Show All Project", "Index", "Demand", null, new { @class = "btn btn-info" })
+                                    <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+          
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="SuccessMessage" style="color:green">Demand Created Successfully!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="FailedMessage" style="color:red">Demand Creation Failed!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+
+        $('#btnCreateCommitee').unbind('click').bind('click', function () {
+            var form = $("#formCreateCommitee");
+            if (jQuery.validator && jQuery.validator.unobtrusive) {
+                form.validate();
+                if (!form.valid()) {
+                    return false;
+                } else {
+                    var data = form.serialize();
+                    var button = $('#btnCreateCommitee');
+                    var target = $(button.attr('data-target'));
+                    $.ajax(
+                        {
+                            url: "/Demand/Create",
+                            method: "post",
+                            data: data,
+                            dataType: "html",
+                            success: function (resp) {
+                               
+                                
+                                    $("#mySuccessModel").modal('show');
+                              
+                                    $("#myFailedModel").modal('show');
+                            },
+                            error: function (err) {
+                                $("#myFailedModel").modal('show');
+                            }
+                        });
+                }
+            }
+
+        });
+
+    </script>
+
+
+
+}
+
+

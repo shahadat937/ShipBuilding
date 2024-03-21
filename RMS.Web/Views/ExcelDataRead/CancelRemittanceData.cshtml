@@ -1,0 +1,107 @@
+﻿@using System.Globalization
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    ViewBag.Title = "Transaction Verify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+    
+    @using (Html.BeginForm("Cancel", "ExcelDataRead", FormMethod.Post, new { @class = "verifyTransaction" }))
+    {
+        <div class="container">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">
+                    <h4>Cancel Remittance Transaction</h4>
+                </legend>
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2">@Html.Label("Total No of Record:")</div>
+                        <div class="col-md-1 col-lg-1 text-left">@Html.Label(Model.RemittInfos.Count.ToString(CultureInfo.InvariantCulture))</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" style="font-size:12px;">
+                            <thead style="background-color: mintcream">
+                                <tr>
+                                    <th style="background-color:blueviolet"><input type="checkbox" id="selectAll" /></th>
+                                    <td>@Html.Label("Remittance No")</td>
+                                    <td>@Html.Label("Issuing Branch")</td>
+                                    <td>@Html.Label("Payment Date")</td>
+                                    <td>@Html.Label("Exchange Refference")</td>
+                                    <td>@Html.Label("Account No")</td>
+                                    <td>@Html.Label("Account Name")</td>
+                                    <td>@Html.Label("Responding Branch")</td>
+                                    <td>@Html.Label("USD Amount")</td>
+                                    <td>@Html.Label("Exchange Rate")</td>
+                                    <td>@Html.Label("BDT Amount")</td>
+                                    <td>@Html.Label("Currency")</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RemittInfos)
+                                {
+                                    <tr class="table-hover">
+                                        <td><input type="checkbox" value="@item.IdentityNo" name="NoOfTransaction" /></td>
+                                        <td>@Html.DisplayFor(modelItem => item.RemittanceNo)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.IssuingBranch)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DateofPayment, "{0:dd MMM yyyy}")</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.RespondingBranch)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ExchangeRate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.CurrencyCode)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 text-right">@Html.Label("Cancel Reason")</div>
+                    <div class="col-md-7 col-lg-7">@Html.TextBoxFor(x => x.StopPayReason, new { @class = "form-control tbox", tabindex = 10, autofocus = "autofocus", placeholder = "Cancel Reason" })</div>
+                    <div class="col-md-3 col-lg-3"><button id="verifyButton" style="height: 30PX;float:right" class="btn btn-danger">Cancel Remittance Transaction</button></div>
+                </div>
+                    @*<div><button id="verifyButton" style="height: 30PX;float:right" class="btn btn-danger">Reversal Remittance Transaction</button></div>*@
+                    <p style="color:red">@TempData["Message"]</p>
+                </fieldset>
+        </div>
+
+    }
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        $("tr:odd").css("background-color", "#bbf");
+        $(function () {
+            $('#verifyTransaction').unbind('click').bind('click', function () {
+                var form = $(this).parents("form:first");
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var option = {
+                    url: url,
+                    dataType: 'html',
+                    type: type,
+                    data: form.serialize(),
+                };
+
+                if ($.validator && $.validator.unobtrusive) {
+                    form.validate();
+                    if (!form.valid()) {
+                        return false;
+                    } else {
+                        $.ajax(option).done(function (htmlRespons) {
+                            $("#containnerInfo").html("");
+                            $("#containnerInfo").append(htmlRespons);
+                        });
+                    }
+                }
+            });
+            $('#selectAll').click(function (e) {
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+    </script>
+}

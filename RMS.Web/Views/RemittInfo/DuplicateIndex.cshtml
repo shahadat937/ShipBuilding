@@ -1,0 +1,118 @@
+﻿@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center;">Remittance Payment</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("DuplicateIndex", "RemittInfo", null, FormMethod.Post, new { enctype = "multipart/form-data", @id = "idForm" }))
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Reference Number</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.ExchangeRefference, new { @class = "form-control", tabindex = 1 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="col-md-12" style="text-align:left">
+                            <input type="submit" value="Find" class="btn btn-info" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>
+<div class="row">
+    @if (Model.Message != null)
+    {
+        if (Model.IsSucceed == 1)
+        {
+            <div style="color:green">@Model.Message</div>
+        }
+        else
+        {
+            <div style="color:red">@Model.Message</div>
+        }
+    }
+</div>
+<table class="table table-responsive table-bordered table-hover">
+    <thead style="background-color: #32CD32;">
+        <tr style="font-size:10px;">
+            @*<th>Exchange Company</th>*@
+            <th>Originating Country</th>
+            <th>Currency</th>
+            <th>Reference Number</th>
+            <th>Remitter Name</th>
+            <th>Beneficiary Name</th>
+            <th>Transaction Date</th>
+            @*<th>Amount in FC</th>
+                <th>Exchange Rate</th>*@
+            <th>Amount in BDT</th>
+            <th>Bank Name</th>
+            <th>District Name</th>
+            <th>Branch Name</th>
+            <th>Routing No.</th>
+            <th>Payment Type</th>
+            <th>Account Number</th>
+            <th>Status</th>
+            <th>Duplicate Voucher</th>
+            <th>Certificate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RemittInfos)
+        {
+            <tr style="font-size:10px;">
+                <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                <td>@Html.DisplayFor(modelItem => item.CommonCode.TypeValue)</td>
+                <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                <td>@Html.DisplayFor(modelItem => item.ApplicantName)</td>
+                <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                <td style="text-align: center">@Html.DisplayFor(modelItem => item.TransDate)</td>
+                <td style="text-align: center">@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo.BranchName)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo1.BranchName)</td>
+                <td style="background-color: khaki">@Html.DisplayFor(modelItem => item.BranchInfo3.BranchName)</td>
+                @if (item.BranchInfo3.OwnBranchCode.Trim() == "")
+                {
+                    <td style="background-color:red">@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(modelItem => item.BranchInfo3.OwnBranchCode)</td>
+                }
+                @if (item.CommonCode2.CommonCodeID == 112395)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                }
+                else
+                {
+                    <td style="background-color:white">@Html.DisplayFor(modelItem => item.CommonCode2.TypeValue)</td>
+                }
+                <td>@Html.DisplayFor(modelItem => item.AccountNo)</td>
+                <td>
+                    @if (item.Status == "04")
+                    { @Html.Label("Paid")}
+                    else
+                    { @Html.Label("Unpaid")}
+
+
+                </td>
+                @if (item.Status == "04" || item.Status == "01")
+                {
+                    <td>@Html.ActionLink("Duplicate Voucher", "DownloadDuplicateVoucher", "RemittInfo", new { RemittInfoIdentity = item.RemittInfoIdentity }, new { @class = "btn btn-info" })</td>
+                    <td>@Html.ActionLink("Certificate", "DownloadCetificate", "RemittInfo", new { RemittInfoIdentity = item.RemittInfoIdentity }, new { @class = "btn btn-info" })</td>
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>

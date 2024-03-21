@@ -1,0 +1,145 @@
+﻿@model RMS.Web.Models.ViewModel.FileUploadFormViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                File Upload Form 
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "FileUploadForms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            @if (@Model.Message != null)
+                            {
+                                <div style="color:green;text-align: center">@Model.Message</div>
+                            }
+                            else
+                            {
+                                <div style="color: red; text-align: center">@Model.Message</div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.FileUploadForm.ProjectId, Model.SelectedProjects,"--Select--", new { @class = "form-control watt", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.FileUploadForm.ProjectId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">TE & A</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.TE_AUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.TE_AUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">FAT Schedule</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.FATScheduleUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.FATScheduleUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">FAT Procedure</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.FATProcedureUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.FATProcedureUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">FAT Report</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.FATReportUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.FATReportUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">HAT / SAT</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.HATSATUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.HATSATUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">PIT</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.PITUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.PITUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Letter For Go</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.LettergoUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.LettergoUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approved Go</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ApproveltrUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control" })
+                                </div>
+                                <div class="col-md-4">@Html.ValidationMessageFor(x => x.ApproveltrUpload)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.ActionLink("Back To List", "Index", "FileUploadForms", new { @class = "btn btn-info" })
+                                    <input type="submit" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

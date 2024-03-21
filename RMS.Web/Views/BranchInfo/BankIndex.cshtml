@@ -1,0 +1,108 @@
+﻿@model RMS.Web.Models.ViewModel.BranchInfoViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="">
+    @using (Html.BeginForm("Index", "BranchInfo", FormMethod.Get))
+    {
+        <div class="col-sm-12 col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="text-align:center;">
+                    Bank Information
+                </div>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("SaveBankInfo", "BranchInfo", FormMethod.Post))
+    {
+        <div class="col-md-4 col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Bank List
+                </div>
+
+                <div class="panel-body" style="overflow-x:scroll;overflow-y:scroll;height:380px; width:auto;padding-top:0px;">
+                    <br />
+                    <div class="tree">
+                        <ul>
+                            @foreach (var firstLevel in Model.BranchInfos)
+                            {
+                                <li>
+                                    <a></a><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span style="font-size: 14px; color: #006400">
+                                        @Html.ActionLink(firstLevel.BranchName + " [" + firstLevel.BranchCode + "]", "BankIndex", "BranchInfo", new { BranchInfoIdentity = firstLevel.BranchInfoIdentity, BranchCode = firstLevel.BranchCode }, null)
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-8 col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Bank Information
+                </div>
+                <div class="panel-body" style="height:380px">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Bank Code :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.BranchCode, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = " Bank Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="PhoneNumber" class="col-md-4 control-label">Bank Name :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.BranchInfo.BranchName, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = " Bank Name" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+                                    @if (Model.IsSucceed == 1)
+                                    {
+                                        <p style="color:green">@Model.Message</p>
+                                    }
+                                    else
+                                    {
+                                        <p style="color:red">@Model.Message</p>
+                                    }
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="submit" name="save" id="btnSave" value="Add New" class="btn btn-info" tabindex=3 />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="submit" name="update" id="btnUpdate" value="Update" class="btn btn-info" tabindex=3 />
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.ActionLink("Delete", "DeleteBankInfo", "BranchInfo", new { BranchInfoIdentity = Model.BranchInfo.BranchInfoIdentity, BranchCode = Model.BranchInfo.BranchCode }, new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-left" id="reportContainner">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

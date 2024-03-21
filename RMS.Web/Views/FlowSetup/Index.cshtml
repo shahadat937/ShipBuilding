@@ -1,0 +1,724 @@
+﻿@model RMS.Web.Models.ViewModel.FlowSetupViewModel
+@{
+    ViewBag.Title = "Flow Setup Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .containerr {
+        position: relative;
+        top: 1%;
+
+    }
+
+    .list-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 80px;
+        width: 160px;
+       
+    }
+    .mm {
+        width: 100%;
+        min-height: 300px;
+    }
+    .mma{width: 100%}
+    .item-content {
+        height: 100%;
+        border: 0px solid rgba(123, 123, 123, 0.49804);
+        border-radius: 4px;
+        color: #FFFFFF;
+        line-height: 65px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 400;
+        background-color: #00BBD1;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+    }
+    /*.comBtn{width: 130px; height:40px;margin: 5px 10px 5px 10px; font-size: 20px; font-weight: bold}*/
+    .btn1 {
+        background: #778899;
+    }
+    .btn2 {
+        background: #c0c0c0;
+    }
+    .btn3 {
+        background: #a9a9a9;
+    }
+    .btn3{background: #808080}
+
+    /*select[readonly] {
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }*/
+</style>
+
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;">
+            Flow Setup
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+<div class="col-md-5">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                @if (@Model.SuccessMessage != null)
+                {
+                    <div style="color: green">@Model.SuccessMessage</div>
+                }
+                else
+                {
+                    <div style="color: red">@Model.FailedMessage</div>
+                }
+
+            </div>
+        </div>
+
+        <br/>
+        <div style="border: 1px solid #e6e6fa">
+         
+            @using (Html.BeginForm("Index", "FlowSetup", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.FlowSetup.FlowSetupIdentity, new { id = "Identity" })
+              @Html.HiddenFor(x => x.DeptId, new { id = "isedit" })
+                @Html.HiddenFor(x => x.FlowList.FlowId)
+                if(@Model.FlowSetup.FlowId != null)
+                 {
+                 <div class="row edibtn" style="margin-top: 10px">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <a class="btn btn-success pull-right editdon">Edit</a>
+                                <a class="btn btn-success pull-right addbtn" style="display: none" onclick="location.href = '@Url.Action("Index", "FlowSetUp")'">Refresh</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                 }
+          
+      
+                <div class="row" >
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 col-md-5 col-lg-5">Project Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.FlowSetup.FlowId, Model.ProjectSelectListItem, "--Select--", new { id = "flowId", @class = "form-control", required = "required", @action = "/FlowSetup/GetFlow" })
+                                @Html.ValidationMessageFor(x => x.FlowSetup.FlowId)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row dep">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 col-md-5 col-lg-5">Department Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.FlowSetup.DepartmentId, Model.DeptSelectListItems, "--Select--", new { id = "ddlProject", @class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(x => x.FlowSetup.DepartmentId)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row dep2" style="display: none">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 col-md-5 col-lg-5">Department Name &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(x => x.FlowSetup.DepartmentId, Model.DeptSelectListItems, "--Select--", new { id = "ddProject", @class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(x => x.FlowSetup.DepartmentId)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 col-md-5 col-lg-5">Start Date &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.FlowSetup.DepStartDate, "{0:dd MMMM yyyy}",new { id = "startDate", @class = "txtMember form-control datepicker", required = "required" })
+                                @Html.ValidationMessageFor(x => x.FlowSetup.DepStartDate)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>              
+              <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="col-sm-5 col-md-5 col-lg-5">End Date &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(x => x.FlowSetup.DepEndDate, "{0:dd MMMM yyyy}", new { id = "endDate", @class = "txtMember form-control datepicker", required = "required" })
+                                @Html.ValidationMessageFor(x => x.FlowSetup.DepEndDate)
+                            </div>
+
+                        </div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <table id="myTable" class="order-list table table">
+                            <tbody>
+                          
+                                @foreach (var item in Model.FlowSetupEditDictionary)
+                                {
+                                    if (item.Value.Value == 0)
+                                    {
+                                               <tr>
+                                            <td><label>Work Assign &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label></td>
+
+                                            <td>
+                                                @Html.DropDownListFor(model => Model.FlowSetupEditDictionary[item.Key].Value,
+                                                    Model.FormInfos.Select(x => new SelectListItem() { Value = x.Value.ToString(), Text = x.Text, Selected = (x.Value == Model.FlowSetupEditDictionary[item.Key].Value) }).ToList(),
+                                                    "--Select--",new { @class = "form-control", required = "required" })
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                    else if (Model.FlowSetupEditDictionary[item.Key].SkipStatus != true)
+                                    {
+                                        <tr>
+                                            <td><label>Work Assign &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label></td>
+
+                                            <td>
+                                                @Html.DropDownListFor(model => Model.FlowSetupEditDictionary[item.Key].Value,
+                                                    Model.FormInfos.Select(x => new SelectListItem() { Value = x.Value.ToString(), Text = x.Text, Selected = (x.Value == Model.FlowSetupEditDictionary[item.Key].Value) }).ToList(),
+                                                    "--Select--",new { @class = "form-control", required = "required" })
+                                            </td>
+                                            <td><input type="button" id="btnDel1" class="ibtnDel btn btn-md btn-danger " value="Delete"></td>
+                                        </tr>
+                                    }
+                             
+                                    else 
+                                    {
+                                        <tr>
+                                            <td><label>Work Assign &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label></td>
+
+                                            <td>
+                                                @Html.DropDownListFor(model => Model.FlowSetupEditDictionary[item.Key].Value,
+                                                    Model.FormInfos.Select(x => new SelectListItem() { Value = x.Value.ToString(), Text = x.Text, Selected = (x.Value == Model.FlowSetupEditDictionary[item.Key].Value) }).ToList(),
+                                                    "--Select--",new { @class = "form-control", required = "required" ,@readonly =true})
+                                            </td>
+                                            <td><input type="button" id="btnDel1" disabled class="ibtnDel btn btn-md btn-danger " value="Delete"></td>
+                                        </tr>
+                                    }
+                          
+
+                                }
+                           
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+
+                                    <td>
+                                        <a id="addrow" class="btn btn-success pull-right">Add More Work Assign</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                       
+                              
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @*@Html.ActionLink("Back To List", "Index", "Member", null, new { @class = "btn btn-info" })*@
+                                <input type="submit" id="btnCreateMember" class="btn btn-primary pull-right" value="Setup Flow" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@if (Model.FlowSetups.Count > 0)
+{
+    <div class="col-md-7">
+   
+        @Html.HiddenFor(x => x.FlowSetups.Count,new{ id ="listCount"})
+        @Html.HiddenFor(x => x.FlowSetup.FlowSerial, new { id = "flowSerial" })
+        @using (Html.BeginForm("Index", "FlowSetup", FormMethod.Post))
+        {
+            <div class="mm">
+                <section class="containerr">
+
+                    @for (int i = 0; i < Model.FlowSetups.Count; i++)
+                    {
+                        int num = 1;
+                        num += i;
+                        <div class="list-item">
+                            <div class="item-content" id=@i>
+                                <span class="order">@num</span> @Model.FlowSetups[i].FlowName <span style="visibility: hidden">@Model.FlowSetups[i].FlowSetupIdentity</span>
+
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+            <br>
+        @*<div class="mma">
+            <input type="submit" id="btnUpdate" class="btn btn-primary pull-right" value="Update" />
+        </div>*@
+        }
+    </div>
+}
+            </div>
+            
+
+        </div>
+    </div>
+    @Html.HiddenFor(x => x.FlowSetup.FlowSetupIdentity, new { id = "flowIdentity" })
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+               
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        List Of Work
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 400px; overflow: auto;" id="myAllNotifications">
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-left delbtn">
+                        <input type="submit" id="btnDelete" class="btn btn-warning pull-right " value="Delete This Department" />
+                    </div>
+                    <div class="pull-Right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mySuccessModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="SuccessMessage" style="color:green">File Updated Successfully!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myFailedModel" role="dialog" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="FailedMessage" style="color:red">File Update Fail !</h4>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+<script src="~/Scripts/DragDrop/TweenMax.js"></script>
+<script src="~/Scripts/DragDrop/Draggable.js"></script>
+<script src="~/Scripts/DragDrop/JavaScript1.js"></script>
+
+    <script>
+  
+        function parseJsonDate(jsonDate) {
+            var offset = new Date().getTimezoneOffset() * 60000;
+            var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+            if (parts[2] == undefined) parts[2] = 0;
+            if (parts[3] == undefined) parts[3] = 0;
+            d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+            date = d.getDate() + 1;
+            date = date < 10 ? "0" + date : date;
+            mon = d.getMonth() + 1;
+            mon = mon < 10 ? "0" + mon : mon;
+            year = d.getFullYear();
+            return (date + "/" + mon + "/" + year);
+        }
+
+        $("#flowId").change(function() {
+            var FlowId = $("#flowId").val();
+            var url = '/FlowSetup/GetFlow?FlowId=' + FlowId; // build new urls
+            location.href = url; // redirect
+         
+            return false; // cancel default redirect
+
+        });
+
+        $('#btnDelete').unbind('click').bind('click', function () {
+            var FlowIdentity = $("#flowIdentity").val();
+            var FlowId = $("#flowId").val();
+            var url = '/FlowSetup/DeptDelete?identity=' + FlowIdentity + "&flowid="+FlowId; // build new urls
+            location.href = url; // redirect
+            return false; // cancel default redirect
+        });
+        $(".item-content").dblclick(function () {
+            var FlowId = $("#flowId").val();
+
+            var id = this.id;
+            var val = $('#' + id).text();
+            $.post('/FlowSetup/GetFlowWork', $.param({ flowDetails: val, flowId: FlowId }, true), function (data) {
+                var Q = "";
+                var P = 0;
+
+                $.each(data, function (k, v) {
+                    P++;
+                    $('#flowSerial').val(v.FormSerial);
+                    var chk = ' <input id="ch' + P + '" type="checkbox" value = true visible=false>';
+
+                    //Q += "<div><div> <a href=" + v.FormURL + "?fileId=" + FlowId + "&flowserial=" + $("#flowSerial").val() + "><strong>" + P + " ." + v.FormName.toString() + "</strong></a></div><div style= padding-left:550px> " + chk + "</div></div> </br>";
+                    Q += "<div><div> <lavel>" + P + " ." + v.FormName.toString() + "</lavel></div><div style= padding-left:550px> " + chk + "</div></div> </br>";
+
+
+                });
+                $('#myAllNotifications').html("");
+                $('#myAllNotifications').append(Q);
+                $('#myModal').modal('show');
+                var PP = 0;
+                $(".delbtn").show();
+                $.each(data, function (k, v) {
+                    PP++;
+                    if (v.IsComplete == true)
+                    {
+                        $("#ch" + PP).prop('checked', true);
+                        $(".delbtn").hide();
+                    }
+                    else if (v.IsSkip == true) {
+                        $("#flowIdentity").val(v.FlowIdentity);
+                        $(".delbtn").hide();
+                    }
+                    else if (v.IsComplete == false && v.IsSkip != true)
+                    {
+                        $("#flowIdentity").val(v.FlowIdentity);
+                        $("#ch" + PP).prop('checked', false);
+                    }
+                 
+
+                });
+
+            });
+
+
+        });
+
+        $(document).ready(function () {
+         
+            $("#addrow").on("click", function () {
+               
+                        var option = {
+                            url: "/FlowSetup/AddNewRow",
+                            type: "Get",
+                            dataType: 'html'
+                        };
+                        jQuery.ajax(option).done(function (response) {
+                            jQuery('.order-list > tbody:last').append(response);
+                        });
+
+            });
+
+
+            $("table.order-list").on("click", ".ibtnDel", function (event) {
+                $(this).closest("tr").remove();
+                counter -= 1;
+            });
+
+
+        });
+
+        // Update Drag And Drop
+
+
+
+
+
+        // Drag And Drop
+
+        "use strict";
+        var rowSize = 90;
+        var colSize = 165;
+        var totalRows = 6;
+        var totalCols = 4;
+
+        var cells = [];
+
+        // Map cell locations to array
+        for (var row = 0; row < totalRows; row++) {
+            if (window.CP.shouldStopExecution(2)) { break; }
+            for (var col = 0; col < totalCols; col++) {
+                if (window.CP.shouldStopExecution(1)) { break; }
+                cells.push({
+                    row: row,
+                    col: col,
+                    x: col * colSize,
+                    y: row * rowSize
+                });
+            }
+            window.CP.exitedLoop(1);
+
+        }
+
+        window.CP.exitedLoop(2);
+
+
+       
+        var listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements
+        var sortables = listItems.map(Sortable); // Array of sortables
+        var total = sortables.length;
+
+     
+
+        function changeIndex(item, to, sameRow, sameCol) {
+
+            // Check if adjacent to new position
+            if (sameRow && !sameCol || !sameRow && sameCol) {
+
+                // Swap positions in array
+                var temp = sortables[to];
+                sortables[to] = item;
+                sortables[item.index] = temp;
+            }
+            else {
+
+                // Change position in array
+                arrayMove(sortables, item.index, to);
+            }
+
+            // Simple, but not optimized way to change element's position in DOM. Not always necessary.
+            sortables.forEach(function (sortable) {
+          
+            });
+
+            // Set index for each sortable
+            sortables.forEach(function (sortable, index) {
+                return sortable.setIndex(index);
+            });
+        }
+
+        function Sortable(element, index) {
+
+            var content = element.querySelector(".item-content");
+            var order = element.querySelector(".order");
+
+            var animation = TweenLite.to(content, 0.3, {
+                boxShadow: "rgba(0,0,0,0.2) 0px 16px 32px 0px",
+                force3D: true,
+                scale: 1.1,
+                paused: true
+            });
+
+
+
+            var position = element._gsTransform;
+
+            // Public properties and methods
+            var sortable = {
+                cell: cells[index],
+         
+                element: element,
+                index: index,
+                setIndex: setIndex
+            };
+
+            TweenLite.set(element, {
+                x: sortable.cell.x,
+                y: sortable.cell.y
+            });
+
+            function setIndex(index) {
+
+                var cell = cells[index];
+                var dirty = position.x !== cell.x || position.y !== cell.y;
+
+                sortable.cell = cell;
+                sortable.index = index;
+                order.textContent = index + 1;
+
+            }
+            var that = this;
+            function downAction() {
+                animation.play();
+                that.update();
+            }
+
+            function dragAction() {
+
+                var col = clamp(Math.round(this.x / colSize), 0, totalCols - 1);
+                var row = clamp(Math.round(this.y / rowSize), 0, totalRows - 1);
+
+                var cell = sortable.cell;
+                var sameCol = col === cell.col;
+                var sameRow = row === cell.row;
+
+                // Check if position has changed
+                if (!sameRow || !sameCol) {
+
+                    // Calculate the new index
+                    var index = totalCols * row + col;
+
+                    // Update the model
+                    changeIndex(sortable, index, sameRow, sameCol);
+                }
+            }
+
+            function upAction() {
+                animation.reverse();
+                layout();
+            }
+
+            function layout() {
+                TweenLite.to(element, 0.3, {
+                    x: sortable.cell.x,
+                    y: sortable.cell.y
+                });
+            }
+
+            return sortable;
+        }
+
+
+
+        // Clamps a value to a min/max
+        function clamp(value, a, b) {
+            return value < a ? a : value > b ? b : value;
+        }
+        // Edit load 
+        $( document ).ready(function() {
+        
+            if($('#isedit').val() > 0)
+            {
+            var da = $('#flowId').val();
+            $('.editdon').hide();
+            $('.addbtn').show();
+            
+            $.ajax({
+                type: "Get",
+                url: "/FlowSetup/GetFlowwiseDept",
+
+                data: { fileName: da },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var tenderNames = "<select id='depId'>";
+                    tenderNames = tenderNames + '<option value="">--Edit Department--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                     
+                        tenderNames = tenderNames + '<option value=' + data[i].Value + '>' + data[i].Text + '</option > ';
+                        console.log(data[i].Value);
+                    }
+                    tenderNames = tenderNames + '</select>';
+                    $("#ddProject").html(tenderNames);
+                    $(".dep2").show();
+                    $(".dep").hide();
+                    $("#ddProject").val($('#isedit').val());
+                }
+            });
+            }
+        });
+
+        // Load Dropdown data by Edit Click
+
+        $(".editdon").click(function () {
+            var da = $('#flowId').val();
+            $('.editdon').hide();
+            $('.addbtn').show();
+            
+            $.ajax({
+                type: "Get",
+                url: "/FlowSetup/GetFlowwiseDept",
+
+                data: { fileName: da },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var tenderNames = "<select id='depId'>";
+                    tenderNames = tenderNames + '<option value="">--Edit Department--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                     
+                        tenderNames = tenderNames + '<option value=' + data[i].Value + '>' + data[i].Text + '</option > ';
+                        console.log(data[i].Value);
+                    }
+                    tenderNames = tenderNames + '</select>';
+                    $("#ddProject").html(tenderNames);
+                    $(".dep2").show();
+                    $(".dep").hide();
+                  
+                  
+                }
+            });
+           
+        });
+
+        $("#ddProject").change(function () {
+            var FlowId = $("#flowId").val();
+            var da = $('#ddProject').val();
+            var url = '/FlowSetup/GetTaskList?id=' + da + '&flowId=' + FlowId; // build new urls
+            location.href = url; // redirect
+         
+            return false; // cancel default redirect
+
+            //var da = $('#ddProject').val();
+            //$.ajax({
+            //    type: "Get",
+            //    url: "/FlowSetup/GetTaskList",
+
+            //    data: { id: da },
+            //    datatype: "json",
+            //    traditional: true,
+            //    success: function (data) {
+        
+            //        for (var i = 0; i < data.length; i++) {
+
+            //            $("#Identity").val(data[i].Text);
+            //            $("#tbrow" + i).show();
+            //            $("#ca" + i).val(data[i].Value);
+            //            if(data[i].SkipStatus == true)
+            //                $('#btnDel'+i).attr('disabled',true);
+            //            else  $('#btnDel'+i).attr('disabled',false);
+                  
+            //            $('#startDate').rules('remove');
+            //            $('#endDate').rules('remove');
+            //            $("#startDate").val(parseJsonDate(data[i].StartDate));
+            //            $("#endDate").val(parseJsonDate(data[i].EndDate));
+                      
+            //            if(data[i].CompleteStatus == true)
+            //                $("#ca" + i).attr('readonly', true);
+            //            else $("#ca" + i).attr('readonly', false);
+
+            //        }
+            //    }
+            //});
+
+        });
+        //onkeypress = " return isNumberKey(event)"
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+</script>
+}

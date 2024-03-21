@@ -1,0 +1,27 @@
+﻿@model RMS.Web.Models.ViewModel.ProjectPaymentInstallmentViewModel
+@{
+    Layout = null;
+}
+<tr>
+
+    <td>
+        @Html.DropDownListFor(model => Model.ProjectInstallmentDictionary[Model.Key].InstallmentNo,
+Model.CommonCodes.Select(x => new SelectListItem() { Value = x.CommonCodeID.ToString(), Text = x.TypeValue, Selected = (x.CommonCodeID == Model.ProjectInstallmentDictionary[Model.Key].InstallmentNo) }).ToList(),
+          "--Select--",
+              new { @class = "form-control", required = "required" })
+        @*@Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[Model.Key].InstallmentNo, new { id = "fieldName", @class = "txtMember form-control", required = "required" })*@
+    </td>
+    <td>
+        @Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[Model.Key].Amount, new { id = "fieldName", @class = "txtMember form-control", required = "required" })
+    </td>
+    <td>
+        @Html.TextBoxFor(x => Model.ProjectInstallmentDictionary[Model.Key].Percent, new { id = "fieldName", @class = "txtMember form-control", required = "required" })
+    </td>
+    <td>
+        @Html.TextAreaFor(x => Model.ProjectInstallmentDictionary[Model.Key].Term, new { id = "term", @class = "form-control", required = "required" })
+    </td>
+    <td>
+        <input class="btnAdd btn btn-danger" type="button" name="name" value="X" onclick="removeRow(this)" />
+    </td>
+
+</tr>

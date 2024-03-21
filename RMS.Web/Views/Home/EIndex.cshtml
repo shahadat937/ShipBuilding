@@ -1,0 +1,90 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.vwHOBalanceViewModel 
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>
+    @ViewBag.Message
+</h1>
+<div class="table-responsive img-responsive">
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Exchange House Cover Fund</h3>
+            </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th >Company Name</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.VwHoBalances)
+                        {
+                            <tr class="table-hover">
+                                <td>@Html.DisplayFor(modelItem=>item.AgentBranchName)</td>
+                                <td style="font-weight: bold;background: forestgreen;color:whitesmoke">@Html.DisplayFor(modelItem=>item.FBalance)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    
+                </table>
+        </div>
+    </div>
+   
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">User Information</h3>
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <td>@Html.Label("User Full Name")</td>
+                    <td><span class="badge">@PortalContext.CurrentUser.UserFullName</span></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("Transaction Limited")</td>
+                    <td style="background: yellow"><span class="badge">@PortalContext.CurrentUser.TransLimit</span></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("Bank Code")</td>
+                    <td><span class="badge">@PortalContext.CurrentUser.BankCode</span></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("Bank Name")</td>
+                    <td><span class="badge">@PortalContext.CurrentUser.BankName</span></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("District Name")</td>
+                    <td><span class="badge">@PortalContext.CurrentUser.DistrictName</span></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("Branch Code")</td>
+                    <td style="background: yellow"><span class="badge">@PortalContext.CurrentUser.NativeBranchCode</span></td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("Branch Name")</td>
+                    <td><span class="badge">@PortalContext.CurrentUser.BranchName</span></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Prerequisite </h3>
+                </div>
+                <table class="table table-bordered">
+                    <tr style="color:crimson">
+                        <td>@Html.Label("Date format")</td>
+                        <td style="background: tomato"><span class="badge">@Html.Label("dd MMM yyyy, Example ="+DateTime.Now.ToString("dd MMM yyyy"))</span></td>
+                    </tr>
+                </table>
+               
+            </div>
+        </div>
+</div>

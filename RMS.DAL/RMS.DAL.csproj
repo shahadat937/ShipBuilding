@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{75D55AD0-0AC6-48C8-B10D-4CD98ED1919D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RMS.DAL</RootNamespace>
+    <AssemblyName>RMS.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>%24/RMS_DSB/RMS_DSB/RMS.DAL</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <SccAuxPath>https://mannaneng.visualstudio.com</SccAuxPath>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DSBDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSBDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DSBDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSBDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="IRepository\IAFDLetterApproveRepository.cs" />
+    <Compile Include="IRepository\IAFDLetterRepository.cs" />
+    <Compile Include="IRepository\IAgendumRepository.cs" />
+    <Compile Include="IRepository\IBGPGRepository.cs" />
+    <Compile Include="IRepository\ICommitteeRaiseLetterRepository.cs" />
+    <Compile Include="IRepository\ICommitteNameListRepository.cs" />
+    <Compile Include="IRepository\ICommonCodeRepository.cs" />
+    <Compile Include="IRepository\IComRepository.cs" />
+    <Compile Include="IRepository\IContractDeptOpinionRepository.cs" />
+    <Compile Include="IRepository\IContractFieldRepository.cs" />
+    <Compile Include="IRepository\IContractFileRepository.cs" />
+    <Compile Include="IRepository\IContractOpinionRepository.cs" />
+    <Compile Include="IRepository\IContractRepository.cs" />
+    <Compile Include="IRepository\IContractSignRepository.cs" />
+    <Compile Include="IRepository\IControlTypeRepository.cs" />
+    <Compile Include="IRepository\IBankInfoRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IBranchInfoRepository.cs" />
+    <Compile Include="IRepository\IDemandRepository.cs" />
+    <Compile Include="IRepository\IDepartmentRepositoty.cs" />
+    <Compile Include="IRepository\IFieldValueBackRepository.cs" />
+    <Compile Include="IRepository\IFileBackUpRepository.cs" />
+    <Compile Include="IRepository\IFileStoreRepository.cs" />
+    <Compile Include="IRepository\IFileUploadFormRepository.cs" />
+    <Compile Include="IRepository\IFinanceMinistryLetterRepository.cs" />
+    <Compile Include="IRepository\IFinancialInstallmentRepository.cs" />
+    <Compile Include="IRepository\IFinancialYearRepository.cs" />
+    <Compile Include="IRepository\IFormInfoRepository.cs" />
+    <Compile Include="IRepository\INSPCMeetingWorkRepository.cs" />
+    <Compile Include="IRepository\IOrganizationRepository.cs" />
+    <Compile Include="IRepository\IPaymentScheduleRepository.cs" />
+    <Compile Include="IRepository\IProjectFinalStatuRepository.cs" />
+    <Compile Include="IRepository\IProjectInstallmentRepository.cs" />
+    <Compile Include="IRepository\IProjectMovementRepository.cs" />
+    <Compile Include="IRepository\IFileMovementRepository.cs" />
+    <Compile Include="IRepository\IFlowListRepository.cs" />
+    <Compile Include="IRepository\IFlowSetupRepository.cs" />
+    <Compile Include="IRepository\IFileRepository.cs" />
+    <Compile Include="IRepository\ICommiteeRepository.cs" />
+    <Compile Include="IRepository\IMemberRepository.cs" />
+    <Compile Include="IRepository\INoticeRepository.cs" />
+    <Compile Include="IRepository\IProjectNoteRepository.cs" />
+    <Compile Include="IRepository\IProjectRepository.cs" />
+    <Compile Include="IRepository\IProjectTypeRepository.cs" />
+    <Compile Include="IRepository\IReportingRepository.cs" />
+    <Compile Include="IRepository\IRepository.cs" />
+    <Compile Include="IRepository\IRoleRepository.cs" />
+    <Compile Include="IRepository\IStaffRequirementDeptOpinionRepository.cs" />
+    <Compile Include="IRepository\IStaffRequirementOpinionRepository.cs" />
+    <Compile Include="IRepository\IStaffRequirementRepository.cs" />
+    <Compile Include="IRepository\IStatusRepository.cs" />
+    <Compile Include="IRepository\ITenderOfferRepository.cs" />
+    <Compile Include="IRepository\ITenderSecificationRepository.cs" />
+    <Compile Include="IRepository\ITenderSpecDeptOpinionRepository.cs" />
+    <Compile Include="IRepository\ITenderSpecificationChildRepository.cs" />
+    <Compile Include="IRepository\ITenderSpecOpinionRepository.cs" />
+    <Compile Include="IRepository\IUserBankInfoRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="IRepository\IUserURLRightRepository.cs" />
+    <Compile Include="IRepository\IYearCalenderRepository.cs" />
+    <Compile Include="IRepository\IZoneInfoRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AFDLetterApproveRepository.cs" />
+    <Compile Include="Repository\AFDLetterRepository.cs" />
+    <Compile Include="Repository\AgendumRepository.cs" />
+    <Compile Include="Repository\BankInfoRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\BGPGRepository.cs" />
+    <Compile Include="Repository\BranchInfoRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\CommitteeRaiseLetterRepository.cs" />
+    <Compile Include="Repository\CommitteNameListRepository.cs" />
+    <Compile Include="Repository\CommonCodeRepository.cs" />
+    <Compile Include="Repository\ComRepository.cs" />
+    <Compile Include="Repository\ContractDeptOpinionRepository.cs" />
+    <Compile Include="Repository\ContractFieldRepository.cs" />
+    <Compile Include="Repository\ContractFileRepository.cs" />
+    <Compile Include="Repository\ContractOpinionRepository.cs" />
+    <Compile Include="Repository\ContractSignRepository.cs" />
+    <Compile Include="Repository\ControlTypeRepository.cs" />
+    <Compile Include="Repository\DemandRepository.cs" />
+    <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\FieldValueBackRepository.cs" />
+    <Compile Include="Repository\FileBackUpRepository.cs" />
+    <Compile Include="Repository\FileStoreRepository.cs" />
+    <Compile Include="Repository\FileUploadFormRepository.cs" />
+    <Compile Include="Repository\FinanceMinistryLetterRepository.cs" />
+    <Compile Include="Repository\FinancialInstallmentRepository.cs" />
+    <Compile Include="Repository\FinancialYearRepository.cs" />
+    <Compile Include="Repository\FormInfoRepository.cs" />
+    <Compile Include="Repository\NSPCMeetingWorkRepository.cs" />
+    <Compile Include="Repository\OrganizationRepository.cs" />
+    <Compile Include="Repository\PaymentScheduleRepository.cs" />
+    <Compile Include="Repository\ProjectFinalStatuRepository.cs" />
+    <Compile Include="Repository\ProjectInstallmentRepository.cs" />
+    <Compile Include="Repository\ProjectMovementRepository.cs" />
+    <Compile Include="Repository\FileMovementRepository.cs" />
+    <Compile Include="Repository\FlowListRepository.cs" />
+    <Compile Include="Repository\FlowSetupRepository.cs" />
+    <Compile Include="Repository\FileRepository.cs" />
+    <Compile Include="Repository\CommiteeRepository.cs" />
+    <Compile Include="Repository\MemberRepository.cs" />
+    <Compile Include="Repository\NoticeRepository.cs" />
+    <Compile Include="Repository\ProjectNoteRepository.cs" />
+    <Compile Include="Repository\ProjectRepository.cs" />
+    <Compile Include="Repository\ProjectTypeRepository.cs" />
+    <Compile Include="Repository\ReportingRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\StaffRequirementDeptOpinionRepository.cs" />
+    <Compile Include="Repository\StaffRequirementOpinionRepository.cs" />
+    <Compile Include="Repository\StaffRequirementRepository.cs" />
+    <Compile Include="Repository\StatusRepository.cs" />
+    <Compile Include="Repository\TenderOfferRepository.cs" />
+    <Compile Include="Repository\TenderSecificationRepository.cs" />
+    <Compile Include="Repository\TenderSpecDeptOpinionRepository.cs" />
+    <Compile Include="Repository\TenderSpecificationChildRepository.cs" />
+    <Compile Include="Repository\TenderSpecOpinionRepository.cs" />
+    <Compile Include="Repository\UserBankInfoRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\UserURLRightRepository.cs" />
+    <Compile Include="Repository\YearCalenderRepository.cs" />
+    <Compile Include="Repository\ZoneInfoRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DSBDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DSBDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DSBDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DSBDBModel.edmx</DependentUpon>
+      <LastGenOutput>DSBDBModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DSBDBModel.edmx.diagram">
+      <DependentUpon>DSBDBModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Model\RMS.Model.csproj">
+      <Project>{eaafc2b7-7cbe-4adf-a186-b2aab38d93a2}</Project>
+      <Name>RMS.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

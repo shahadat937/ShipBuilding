@@ -1,0 +1,94 @@
+﻿@model RMS.Web.Models.ViewModel.DemandViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    .required {
+        color: red;
+        font-size: 18px;
+    }
+</style>
+
+<div class="container1" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Project Information
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12" style="text-align: center">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color:green">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color:red">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("ProjectNoteSave", "Demand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ProjectNote.Id);
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Project  &nbsp;<span class="required">*</span></label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.ProjectNote.DemandId, Model.ProjectListSelectListItems, "--Select--", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ProjectNote.DemandId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Complete (%) :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ProjectNote.Complete, null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Description &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ProjectNote.Parameter, null, new { id = "txtName", @class = "txtMember form-control", required = "required" })
+                                    @Html.ValidationMessageFor(x => x.ProjectNote.Parameter)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Remarks </label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.ProjectNote.Value, null, new { id = "txtName", @class = "txtMember form-control"})
+                                    @Html.ValidationMessageFor(x => x.ProjectNote.Value)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+     
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <a href="@Url.Action("ProjectNoteIndex", "Demand")" class="btn btn-info">Show All Note</a>
+                                 
+                                    <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

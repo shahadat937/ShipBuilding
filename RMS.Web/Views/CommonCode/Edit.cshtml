@@ -1,0 +1,202 @@
+﻿@model RMS.Web.Models.ViewModel.CommonCodeViewModel
+@{
+    var title = (Model.Code !=null) ? "Edit Common Code" : "Create Common Code";
+    ViewBag.Title = title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+@using (Html.BeginForm("Save", "CommonCode", FormMethod.Post, new { @class = "UserForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="container">
+        <div class="aaa">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">
+                    <h2>@title</h2>
+                </legend>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="UserName" class="col-md-4 control-label">Code :</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.Code , new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Common Code" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="RoleId" class="col-md-4 control-label">Type :</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(x => x.Type, Model.CommonCodeListItem, "--Select--", new { @class = "dropdownsize form-control", tabindex = 2 })
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="PhoneNumber" class="col-md-4 control-label">Code Name:</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.TypeValue, new { @class = "textBoxsize form-control", tabindex = 3, placeholder = "Enter Code Name" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-4 control-label">Display Code:</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.DisplayCode, new { @class = "textBoxsize form-control", tabindex = 4, placeholder = "Enter Display Code" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="Email" class="col-md-4 control-label">Status :</label>
+                            <div class="col-md-8">
+                                @Html.CheckBox("Status", new { @class = "checBoxsize form-control", tabindex = 5 })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="inputLabel4" class="col-md-4 control-label"></label>
+                            <div class="col-md-8">
+                                <input type="submit" id="btnSave" value="Save" class="btn btn-primary" tabindex=16 />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-offset-4" id="newpost" style="color:red; padding-left:3px;">
+                        <p>@TempData["message"]</p>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    @Html.ActionLink("Show All User List", "Index", "CommonCode", new { tabindex = 17 })
+                </div>
+                <div>
+                    @if (ViewData["Error"] != null)
+                    {
+                        <div class="red">
+                            <p><strong>Error:</strong> @ViewData["Error"].ToString()</p>
+                        </div>
+                    }
+                </div>
+                
+            </fieldset>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        
+
+        function myFunction() {
+            var uri = "http://localhost:6023/User/Edit";
+            var res = encodeURI(uri);
+            document.getElementById("demo").innerHTML = res;
+        }
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        function showhide() {
+            var div = document.getElementById("newpost");
+            if (div.style.display !== "none") {
+                div.style.display = "none";
+            }
+        }
+
+        function toUnicode(elmnt) {
+            var next;
+            if (elmnt.value.length == elmnt.maxLength) {
+                next = elmnt.tabIndex + 1;
+                //look for the fields with the next tabIndex
+                var f = elmnt.form;
+                for (var i = 0; i < f.elements.length; i++) {
+                    if (next <= f.elements[i].tabIndex) {
+                        f.elements[i].focus();
+                        break;
+                    }
+                }
+            }
+        }
+       
+                
+
+       
+        $('.BankName').change(function () {
+            var $BankNamedropdown = $(this);
+            var targetClass = $BankNamedropdown.attr('TargetClass');
+            var url = $BankNamedropdown.attr('action');
+
+            var bankCode = $BankNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { bankCode: bankCode }
+            };
+            $.ajax(option).done(function (districts) {
+                if (districts.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(districts, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+
+        $('.DistrictName').change(function () {
+            var $DistrictNamedropdown = $(this);
+            var targetClass = $DistrictNamedropdown.attr('TargetClass');
+            var url = $DistrictNamedropdown.attr('action');
+            var districtCode = $DistrictNamedropdown.val();
+            var option = {
+                url: url,
+                type: 'GET',
+                dataType: 'JSON',
+                data: { districtCode: districtCode }
+            };
+            $.ajax(option).done(function (brnchList) {
+                if (brnchList.length > 0) {
+                    ClearDropDownList(targetClass);
+                    $.each(brnchList, function () {
+                        $("." + targetClass).append($("<option />").val(this.BranchCode).text(this.BranchName));
+                    });
+                } else {
+                    NotFoundData(targetClass);
+                }
+
+            });
+        });
+        function ClearDropDownList(selector) {
+            $('.' + selector)
+                .find('option').remove()
+                .end().append($('<option>').text("-Select-").attr('value', ""));
+        };
+
+        function NotFoundData(targetClass) {
+            $('.' + targetClass)
+                .append($('<option>').text("Not Found").attr('value', ""));
+        };
+    </script>
+}
+

@@ -1,0 +1,104 @@
+﻿@model RMS.Web.Models.ViewModel.FormInfoViewModel
+@{
+    ViewBag.Title = "GetForms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="font-family:arial">
+    <div class="col-md-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                Uploaded File Information by Form
+            </div>
+            <div>
+                @if (@Model.Message == null)
+                {
+                    @Model.Message
+                }
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Index", "FormPDFSearch", FormMethod.Get, new { DefaultButton = "btnSearch", id = "MyForm" }))
+                {
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    @if (@Model.Message != null)
+                                    {
+                                        @Model.Message
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Form Name</label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(x => x.FormInfo.FormId, Model.Forms,"--Select--", new { @class = "form-control watt", id = "ddlFormInfoId", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.FormInfo.FormId)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Search Key</label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.FormInfo.SearchKey, new { @id = "txtName", @class = "txtMember form-control", placeholder = "File Name" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    <input type="button" value="Search" class="btn btn-primary pull-right" id="btnSearch" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div id="broughtData">
+
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $('#txtName').keypress(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+        //$('#formId').keypress(function (e) {
+        //    if (e.keyCode == 13) {
+                $('#btnSearch').click(function () {
+                    var formId = $('#ddlFormInfoId').val();
+                    var fileData = $('#txtName').val();
+                    console.log(fileData);
+                    $.ajax({
+                        url: '/FormPDFSearch/Index',
+                        type: 'get',
+                        data: { 'id': formId, 'fileName': fileData },
+                        dataType: 'html',
+                        success: successFunc,
+                        error: errorFunc
+                    });
+                    function successFunc(response) {
+                        $('#broughtData').empty();
+                        $('#broughtData').html(response);
+                    }
+                    function errorFunc() {
+                        alert("Error");
+                    }
+                });
+            
+    </script>
+}

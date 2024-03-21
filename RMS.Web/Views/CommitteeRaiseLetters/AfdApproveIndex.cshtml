@@ -1,0 +1,190 @@
+﻿@model RMS.Web.Models.ViewModel.CommitteeRaiseLetterViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    select[readonly] {
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
+<div class="container1" style="font-family:arial">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-info ">
+            <div class="panel-heading custom-panel-heading" style="background-color: #D900A9; text-align: center; color: #fff;">
+                AFD Approve 
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    @if (@Model.SuccessMessage != null)
+                    {
+                        <div style="color: green ;text-align: center">@Model.SuccessMessage</div>
+                    }
+                    else
+                    {
+                        <div style="color: red; text-align: center">@Model.FailedMessage</div>
+                    }
+
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("AfdApproveSave", "CommitteeRaiseLetters", FormMethod.Post, new { id = "formCreateCommitee", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.AFDLetterApprove.Id)
+                    @Html.HiddenFor(x =>x.FlowSerial)
+                     @Html.HiddenFor(x =>x.FormId)
+                     @Html.HiddenFor(x =>x.AfdLetter.LetterId)
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">File No &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.FileNo, Model.ProjectSelectListItems, "--select--", new { @class = "form-control", required = "required", @readonly = true })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.FileNo)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+         
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Reference &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i> </label>
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.AFDLetterApprove.Reference, new { @class = "txtMember form-control", required = "required", maxlenth = 250 })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.AFDLetterApprove.Reference)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Decision : </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.AFDLetterApprove.Decition, null, new { @class = "txtMember form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.AFDLetterApprove.Decition)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Is Approved </label>
+                                <div class="col-md-5">
+                                    @Html.CheckBoxFor(x => x.AFDLetterApprove.IsApprove, new { id = "approvBtn" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.AFDLetterApprove.IsApprove)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row approveDate">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approve Date &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(x => x.AFDLetterApprove.CreateDate, "{0:dd MMMM yyyy}", new { id = "startDate", @class = "txtMember form-control datepicker", required = "required" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.AFDLetterApprove.CreateDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row approvDoc" style="display: none">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Approved Document </label>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(m => m.ApproveDocument, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control " })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.AFDLetterApprove.ApproveUrl)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rem">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-3 col-lg-3">Remarks </label>
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(x => x.AFDLetterApprove.Remarks, new { id = "txtEmail", @class = "txtMember form-control" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.ValidationMessageFor(x => x.AFDLetterApprove.Remarks)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    <a href="@Url.Action("AfdApproveList", "CommitteeRaiseLetters", new { proId = Model.FileNo, flowserial = Model.FlowSerial, formId = Model.FormId })" class="btn btn-info">
+                                        Show Data
+                                        <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+                                    </a>
+                                    <input type="submit" id="btnCreateCommitee" class="btn btn-info pull-right" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#approvBtn").click(function () {
+                if ($(this).is(':checked')) {
+                    $(".approvDoc").show();
+                    $(".approveDate").show();
+                    $(".rem").show();
+                }
+                else {
+                    $(".approvDoc").hide();
+                    $(".approveDate").hide();
+                    $(".rem").hide();
+                }
+            });
+        });
+        $(document).ready(function () {
+            if ($("#approvBtn").is(':checked')) {
+                $(".approvDoc").show();
+                $(".approveDate").show();
+                $(".rem").show();
+            }
+            else {
+                $(".approvDoc").hide();
+                $(".approveDate").hide();
+                $(".rem").hide();
+            }
+        });
+
+    </script>
+
+
+
+}
+
+

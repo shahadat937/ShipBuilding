@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AspReport</h2>
+@Html.ActionLink("Show Report","Reporting")
+
+<iframe id="ifrmReportViewer" style="height:3500px; width:99%"></iframe>
+@section scripts
+{
+    @* ReSharper disable once QualifiedExpressionMaybeNull *@
+    <script>
+        $(document).ready(function () {
+            ReportValidationCheck();
+        })
+    </script>
+    <script>
+        function ReportValidationCheck() {
+            var url = "../Reports/FrmReportViewer.aspx";
+            //to add parameters pas as query string like"~/Report/AppReportViewer.aspx"
+            var myframe = document.getElementById("ifrmReportViewer");
+            if (myframe !== null) {
+                if (myframe.src) {
+                    myframe.src = url;
+                }
+                else if (myframe.contentWindow !== null && myframe.contentWindow.location !== null) {
+                    myframe.contentWindow.location = url;
+                }
+                else{myframe.setAttribute('src',url);
+                }
+            }
+            return false;
+        }
+    </script>
+}

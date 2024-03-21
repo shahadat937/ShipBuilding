@@ -1,0 +1,277 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    var title = "Spot Cash Payment for Paid Remittance";
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading" style="text-align:center">@title</div>
+    <div class="panel-body">
+        @*@using (Html.BeginForm("PaidCashPayeeIndex", "RemittInfo", FormMethod.Post))
+            {
+
+            }*@
+        @using (Html.BeginForm("MakeCashPayeePaidTransaction", "RemittInfo", FormMethod.Post, new { @class = "verifyTransaction" }))
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Ref No.(Security/PIN No.):&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.SecurityCode, new { @class = "textBoxsize form-control", tabindex = 1, placeholder = "Security Code/PIN", id = "securityCode" })
+                            @Html.ValidationMessageFor(x => x.RemittInfo.SecurityCode)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2" style="text-align:left">
+                    <div class="form-group">
+                        @Html.ActionLink("Find", "FindCashPayeePaidTransaction", "RemittInfo", new { @class = "btn btn-info", id = "btnSecurityCode", tabindex = 2 })
+                        @Html.ActionLink("Add New", "PaidCashPayeeIndex", "RemittInfo", new { @class = "btn btn-info" })
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    @if (Model.Message != null)
+                    {
+                        if (Model.IsSucceed == 1)
+                        {
+                            <div style="color:green">@Model.Message</div>
+                        }
+                        else
+                        {
+                            <div style="color:red">@Model.Message</div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Payment Branch:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @if (PortalContext.CurrentUser.RoleId == 4)
+                            {
+                                @Html.DropDownListFor(x => x.RemittInfo.RespondingBranch, Model.BranchInfosSelectdItemList, new { @class = "form-control", @readonly = "readonly", tabindex = 3 })
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(x => x.RemittInfo.RespondingBranch, Model.BranchInfosSelectdItemList, "-Select Payment Branch-", new { @class = "form-control", tabindex = 3 })
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Check Number:</label>
+                        <div class="col-md-8" style="font-weight:bold">
+                            @Html.DisplayFor(x => x.CheckNumber, new { @class = "form-control", @readonly = "readonly", tabindex = 4 })
+                            @Html.ValidationMessageFor(x => x.CheckNumber)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Exchange Company:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfo.ExchangeHouse, Model.ExchangeHouseSelectListItems, "-Select Exchange Company-", new { @class = "form-control", tabindex = 5 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Originationg Country:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfo.OriginatingCountry, Model.CountrySelectListItems, "-Select Country-", new { @class = "form-control", tabindex = 6 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Originating Currency:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.RemittInfo.TransCurrencyCode, Model.CurrenceySelectListItems, "-Select Currency-", new { @class = "form-control", tabindex = 7 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Valid Photo ID Type:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.PaymentIdType, Model.PaymentPhotoIdTypeSelectListItems, "-Select Payment Photo ID type-", new { @class = "form-control", tabindex = 8 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Valid Photo ID Number:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.PaymentIdNumber, new { @class = "form-control", palceholder = "ID number", tabindex = 9 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Remitter Name:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.ApplicantName, new { @class = "form-control", tabindex = 10 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Beneficiary Name:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.BeneficiaryName, new { @class = "form-control", tabindex = 11 })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Beneficiary Address:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.BeneficiaryAddress, new { @class = "form-control", tabindex = 12 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Beneficiary Mobile No.:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.BeneficiaryCellPhone, new { @class = "form-control", tabindex = 13, palceholder = "Beneficiary Mobile Number" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Beneficiary Date of Birth:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.DOB, "{0:dd MMMM yyyy}", new { @class = "form-control datepicker", tabindex = 14, placeholder = "Beneficiary Date of Birth" })
+                            @Html.ValidationMessageFor(x => x.DOB)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Expected Amount:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.ExpectedAmount, new { @class = "form-control", tabindex = 15, placeholder = "Expected Amount" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Pay out Amount:&nbsp;<i class="fa fa-asterisk" style="font-size:9px;color:red" aria-hidden="true"></i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.Amount, new { @class = "form-control", tabindex = 16, placeholder = "Pay out Amount" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Date of Payment:</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.RemittInfo.DateofPayment, "{0:dd MMMM yyyy}", new { @class = "form-control datepicker", tabindex = 17 })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-8">
+                            @if (Model.IsSucceed == 1)
+                            {
+                                <input type="submit" value="Update" class="btn btn-info" />
+                                @Html.ActionLink("Download Voucher", "DownloadVoucher", "RemittInfo", new { RemittInfoIdentity = Model.RemittInfo.RemittInfoIdentity }, new { @class = "btn btn-info" })
+                            }
+                            else
+                            {
+                                <input type="submit" value="Make Payment" class="btn btn-info" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="text-align:center"> Unverified transaction of login user (@PortalContext.CurrentUser.UserFullName)</div>
+                    <div class="panel-body">
+                        <table class="table table-responsive table-bordered table-hover">
+                            <thead style="background-color: #32CD32;">
+                                <tr style="font-size:10px;">
+                                    <th>Originating Country</th>
+                                    <th>Reference Number</th>
+                                    <th>Remitter Name</th>
+                                    <th>Remitter Address</th>
+                                    <th>Beneficiary Name</th>
+                                    <th>Beneficiary Address</th>
+                                    <th>Beneficiary Date of Birth</th>
+                                    <th>Beneficiary Phone</th>
+                                    <th>Amount in BDT</th>
+                                    <th>Date of Payment</th>
+                                    <th>Check Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RemittInfos)
+                                {
+                                    <tr style="font-size:10px;">
+                                        <td>@Html.DisplayFor(modelItem => item.CommonCode3.TypeValue)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ExchangeRefference)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ApplicantName)</td>
+                                        <td>@Html.DisplayFor(x => item.ApplicantAddress)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BeneficiaryName)</td>
+                                        <td>@Html.DisplayFor(x => item.BeneficiaryAddress)</td>
+                                        <td>@Html.DisplayFor(x => item.BenificiaryDOB)</td>
+                                        <td style="text-align: center">@Html.DisplayFor(modelItem => item.BeneficiaryCellPhone)</td>
+                                        <td>@Html.DisplayFor(x => item.Amount)</td>
+                                        <td>@Html.DisplayFor(x => item.DateofPayment)</td>
+                                        <td>@Html.DisplayFor(x => item.AccountNo)</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script>
+    @*$("#exchangeHouseNumber").click(function () {
+        var url = '@Url.Action("FindUploadedData", "RemittInfo", new { exchangeHouse = "----",uploadDate="--" })';
+        url = url.replace("----", $('#exchangeHouse').val());
+        url = url.replace("--", $('#uploadDate').val() + "|" + $('#exchangeHouse').val());
+        window.location = url;
+    });*@
+
+    $('#btnSecurityCode').click(function () {
+        var securityCode = $('#securityCode').val();
+        if (securityCode == '')
+            alert("Please input security code.");
+        var url = $(this).attr('href') + '&securityCode=' + securityCode; // build new url
+        location.href = url; // redirect
+        return false; // cancel default redirect
+    });
+</script>

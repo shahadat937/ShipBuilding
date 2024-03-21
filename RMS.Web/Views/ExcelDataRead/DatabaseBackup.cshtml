@@ -1,0 +1,28 @@
+﻿@using System.Globalization
+@model RMS.Web.Models.ViewModel.RemittInfoViewModel
+
+@{
+    ViewBag.Title = "Databse backup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/CommonDesign/commonBootStrap.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Backup", "ExcelDataRead", FormMethod.Post, new { @class = "verifyTransaction" }))
+{
+    <div class="container">
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">
+                <h4>Database Backup</h4>
+            </legend>
+           
+            <div class="row">
+
+                <button id="backup" style="height: 30PX;float:right" class="btn btn-danger">Database Backup</button>
+            </div>
+           
+            <p style="color:red">@TempData["Message"]</p>
+        </fieldset>
+    </div>
+
+}
+

@@ -1,0 +1,112 @@
+﻿@using RMS.Utility
+@model RMS.Web.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in Page";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<style>
+    .bb {
+        padding: 0;
+        margin: 0;
+    }
+</style>
+<link href="~/css/material-design-iconic-font.min.css" rel="stylesheet" />
+<link href="~/css/main.css" rel="stylesheet" />
+<div class="">
+    
+        @*<div class="panel-body form-control">*@
+
+            <div class="col-md-12 bb">
+                <div style="margin-top:-150px">
+                @using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                {
+                        <div class="limiter">
+                            <div class="container-login100" style="background-image: url('../images/SlideImage/1st_slide.jpg'); ">
+                                @*<div class="container-login100" style="background-image: url('../images/BNS_BANGABANDHU.jpg'); ">*@
+
+                                        <div class="container-login100">
+                                            <div class="wrap-login100">
+                                                <form class="login100-form validate-form">
+                                                    <span class="login100-form-logo">
+                                                        <img height="80px" width="70px" src="~/images/1favicon.ico" />
+                                                    </span>
+
+                                                    <span class="login100-form-title p-b-34 p-t-27">
+                                                        Bangladesh Navy
+                                                    </span>
+                                                    <br />
+                                                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+
+
+                                                        @Html.TextBoxFor(x => x.UserName, new { @class = "input100", autofocus = "autofocus", tabindex = 1, placeholder = "Login ID" })
+
+                                                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                                                    </div>
+
+                                                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+
+                                                        @Html.PasswordFor(x => x.Password, new { @class = "input100", tabindex = 2, placeholder = "Enter Password" })
+
+                                                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                                                    </div>
+                                                    <div class="container-login100-form-btn">
+                                                        <button class="login100-form-btn">
+                                                            Login
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="text-center p-t-90">
+
+                                                        <a class="txt1" href="~/Home/ForgotPassword">Forgot Password ? </a>
+                                                    </div>
+                                                </form>
+                                                <div class="input-group cus-mb-10">
+                                                    @if (TempData["Msg"] != null)
+                                                {
+                                                        <div class="alert alert-dismissable alert-info" style="color: red">
+                                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                                            @TempData["Msg"].ToString()
+                                                        </div>
+                                                }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                    }
+                        </div>
+
+            </div>
+
+    </div>
+
+    @section Scripts{
+        <script>
+            var description = $("#description").text();
+            var descriptionLength = $("#description").text().length;
+
+            $(document).ready(function () {
+                var c = "Continue...";
+
+                var strFirst = $("#description").text();
+                var str = $("#description").text();
+                if (str.length > 500) {
+                    str = str.substring(0, 400);
+                    str = str + ' <a href="#" id="idContinue">' + c + '</a>';
+                    $("#description").html(str);
+                }
+
+                $("#idContinue").click(function () {
+
+                    $("#description").html(description);
+                });
+
+            });
+
+
+        </script>
+    }

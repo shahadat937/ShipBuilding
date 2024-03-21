@@ -1,0 +1,71 @@
+﻿@model RMS.Web.Models.ViewModel.RemittanceViewModel
+@{
+    ViewBag.Title = "CashPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <fieldset>
+        <legend>Account Payee Download</legend>
+        <div class="img-responsive table-responsive">
+            <div id="container">
+
+                <p></p>
+                @using (Html.BeginForm("AccountPayeeByHO", "PaymentJBL", FormMethod.Post, new { @class = "RemittanceForm", @id = "formId" }))
+                {
+                    <table>
+                        <tr>
+                            <td>@Html.Label("Issuing Branch Name")</td>
+                            <td>:</td>
+                            <td >@Html.DropDownListFor(x => x.BranchCode, Model.ExchangesSelectdItemList, new { @class = "dropdownsize form-control", tabindex = 0 }) </td>
+                            <td><button id="findButton" style="width: 95PX;height: 30PX;float:right" class="btn btn-primary">Search... </button></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table>
+                        <tr style="font-weight: bold; color:limegreen;font-size:16px">
+                            <td>Cover Fund Balance(TK): </td>
+                            <td>@Html.DisplayFor(x=>x.CoverFundBalance)</td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class=" table table-bordered">
+                        <tr>
+                            <th>File Name</th>
+                            <th>File Date</th>
+                            <th>Unpaid Remittance(S)</th>
+                            <th>Total Amount</th>
+                        </tr>
+                        @if (Model.JRemittanceInfos.Count > 0)
+                        {
+                            foreach (var item in Model.JRemittanceInfos)
+                             {
+                                 <tr>
+                                     <td>@Html.DisplayFor(modelItem=>item.FileName)</td>
+                                     <td>@Html.DisplayFor(modelItem=>item.FileDate)</td>
+                                     <td style="text-align: center">@Html.DisplayFor(modelItem => item.NoOfRemittance)</td>
+                                     <td style="text-align: right">@Html.DisplayFor(modelItem => item.FAmount)</td>
+                                 </tr>
+                             }
+                        }
+                    </table>
+                    <table>
+                        @if (TempData["Msg"] != null)
+                        {
+                            <p style="color:red"> @TempData["Msg"].ToString()</p>
+                        }
+                    </table>
+                }
+
+                @using (Html.BeginForm("JAccData", "PaymentJBL", FormMethod.Post, new { @class = "RemittanceForm1", @id = "formId1" }))
+                {
+
+                     @Html.HiddenFor(x => x.BranchCode)
+                      @Html.HiddenFor(x=>x.PaymentType)
+                    @Html.HiddenFor(x=>x.IssuePaymentCode)
+                     <button id="btnDownload" style="width: 95PX;height: 30PX;float:right" class="btn btn-primary">Download </button>
+                        
+                }
+            </div>
+        </div>
+    </fieldset>
+</div>

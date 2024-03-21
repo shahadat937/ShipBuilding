@@ -1,0 +1,92 @@
+﻿@model RMS.Web.Models.ViewModel.AccountInformationViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<div class="">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Save", "AccountInformation", FormMethod.Post, new { @class = "UserForm" }))
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Chart Of Accounts Information
+                </div>
+                <div class="panel-body" style="height:430px">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Parent Code :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.AccountInformation.FirstLevel, new { @class = "textBoxsize form-control", tabindex = 1, autofocus = "autofocus", placeholder = "Parent Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Account Code :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.AccountInformation.AccountCode, new { @class = "textBoxsize form-control", tabindex = 2, autofocus = "autofocus", placeholder = "Account Code" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Account Head :</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.AccountInformation.AccountHead, new { @class = "textBoxsize form-control", tabindex = 3, autofocus = "autofocus", placeholder = "Account Head" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Category :</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.AccountInformation.Category, Model.CategoryListItem, "--Select--", new { @class = "Type dropdownsize form-control", tabindex = 4 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="UserName" class="col-md-4 control-label">Account Status :</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => x.AccountInformation.AccountStatusCode, Model.AccountStatusListItem, "--Select--", new { @class = "Type dropdownsize form-control", tabindex = 5 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <p style="color:green">@TempData["message"]</p>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input type="submit" id="btnSave" value="Save" class="btn btn-info" tabindex=16 />
+                                </div>
+
+                                <div class="col-md-5">
+                                    @Html.HiddenFor(model => model.AccountInformation.AccountCode)
+                                    @Html.ActionLink("Delete", "Delete", "AccountInformation", new { AccountCode = Model.AccountInformation.AccountCode }, new { @class = "btn btn-danger" })
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

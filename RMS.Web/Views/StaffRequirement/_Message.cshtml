@@ -1,0 +1,37 @@
+﻿@model RMS.Web.Models.ViewModel.StaffRequirementViewModel
+@{
+    Layout = null;
+}
+@if (Model.FailedMessage != null)
+{
+    <div id="divError" class="alert alert-danger">
+        <a id="linkErrorClose" class="close" href="#">&times;</a>
+        <div id="divErrorText" style="text-align:center">
+            <p style="color:red">@Model.FailedMessage</p>
+        </div>
+    </div>
+}
+@if (Model.SuccessMessage != null)
+{
+    <div id="divSuccess" class="alert alert-success">
+        <a id="linkSuccessClose" class="close" href="#">&times;</a>
+        <div id="divSuccessText" style="text-align:center">
+
+            <p style="color:green">@Model.SuccessMessage</p>
+
+        </div>
+    </div>
+}
+<script>
+    $("#linkErrorClose").click(function () {
+        $("#divError").hide();
+    });
+    $("#linkSuccessClose").click(function () {
+        $("#divSuccess").hide();
+    });
+</script>
+
+
+
+
+
