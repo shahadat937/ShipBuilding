@@ -13,7 +13,6 @@ using Microsoft.Reporting.WebForms;
 using RMS.Utility;
 using System.IO;
 using System.IO.Compression;
-using Ionic.Zip;
 
 namespace RMS.Web.Controllers
 {

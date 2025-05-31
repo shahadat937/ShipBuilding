@@ -59,69 +59,51 @@ namespace RMS.BLL.Manager
                     _tenderUrl = _path;
                 }
             }
-            //switch (formId)
-            //​{
-            //     case "10008":
-            //        TenderSpecDeptOpinion oldData = _iTenderSpecDeptOpinionRepository.FindOne(x => x.FileNo == model.FileNo & x.OpinionGivenDeptId == model.OpinionGivenDeptId);
-            //        if (oldData != null)
-            //        {
-            //            oldData.OpinionUrl = _tenderUrl ?? oldData.OpinionUrl;
-            //            oldData.Remarks = model.Remarks;
-            //            oldData.UpdatedBy = PortalContext.CurrentUser.UserName;
-            //            oldData.UpdatedDate = DateTime.Now;
-            //            oldData.IsComplete = true;
-            //        }
-            //        int result = _iTenderSpecDeptOpinionRepository.Save(oldData);
-            //        if (result > 0)
-            //        {
-            //            message = "Successfully Saved document";
-            //        }
-            //        else
-            //        {
-            //            message = "Upload failed";
-            //        }
-            //    break;
-            //     case "10013":
-            //     StaffRequirementDeptOpinion oldDataa = _iStaffRequirementDeptOpinionRepository.FindOne(x => x.FileNo == model.FileNo & x.OpinionGivenDeptId == model.OpinionGivenDeptId);
-            //     if (oldDataa != null)
-            //        {
-            //            oldDataa.OpinionUrl = _tenderUrl ?? oldDataa.OpinionUrl;
-            //            oldDataa.Remarks = model.Remarks;
-            //            oldDataa.UpdatedBy = PortalContext.CurrentUser.UserName;
-            //            oldDataa.UpdatedDate = DateTime.Now;
-            //            oldDataa.IsComplete = true;
-            //        }
-            //     int resultt = _iStaffRequirementDeptOpinionRepository.Save(oldDataa);
-            //     if (resultt > 0)
-            //        {
-            //            message = "Successfully Saved document";
-            //        }
-            //        else
-            //        {
-            //            message = "Upload failed";
-            //        }
-            //    break;
-            //     case "10015":
-            //           ContractDeptOpinion oldDaata = _contractDeptOpinionRepository.FindOne(x => x.FileNo == model.FileNo & x.OpinionGivenDeptId == model.OpinionGivenDeptId);
-            //           if (oldDaata != null)
-            //        {
-            //            oldDaata.OpinionUrl = _tenderUrl ?? oldDaata.OpinionUrl;
-            //            oldDaata.Remarks = model.Remarks;
-            //            oldDaata.UpdatedBy = PortalContext.CurrentUser.UserName;
-            //            oldDaata.UpdatedDate = DateTime.Now;
-            //            oldDaata.IsComplete = true;
-            //        }
-            //           int reslt = _contractDeptOpinionRepository.Save(oldDaata);
-            //           if (reslt > 0)
-            //        {
-            //            message = "Successfully Saved document";
-            //        }
-            //        else
-            //        {
-            //            message = "Upload failed";
-            //        }
-            //    break;
-            //}
+            switch (formId)
+            {
+                case "10008":
+                    var oldData = _iTenderSpecDeptOpinionRepository.FindOne(x => x.FileNo == model.FileNo && x.OpinionGivenDeptId == model.OpinionGivenDeptId);
+                    if (oldData != null)
+                    {
+                        oldData.OpinionUrl = _tenderUrl ?? oldData.OpinionUrl;
+                        oldData.Remarks = model.Remarks;
+                        oldData.UpdatedBy = PortalContext.CurrentUser.UserName;
+                        oldData.UpdatedDate = DateTime.Now;
+                        oldData.IsComplete = true;
+                    }
+                    int result = _iTenderSpecDeptOpinionRepository.Save(oldData);
+                    message = result > 0 ? "Successfully Saved document" : "Upload failed";
+                    break;
+
+                case "10013":
+                    var oldDataa = _iStaffRequirementDeptOpinionRepository.FindOne(x => x.FileNo == model.FileNo && x.OpinionGivenDeptId == model.OpinionGivenDeptId);
+                    if (oldDataa != null)
+                    {
+                        oldDataa.OpinionUrl = _tenderUrl ?? oldDataa.OpinionUrl;
+                        oldDataa.Remarks = model.Remarks;
+                        oldDataa.UpdatedBy = PortalContext.CurrentUser.UserName;
+                        oldDataa.UpdatedDate = DateTime.Now;
+                        oldDataa.IsComplete = true;
+                    }
+                    int resultt = _iStaffRequirementDeptOpinionRepository.Save(oldDataa);
+                    message = resultt > 0 ? "Successfully Saved document" : "Upload failed";
+                    break;
+
+                case "10015":
+                    var oldDaata = _contractDeptOpinionRepository.FindOne(x => x.FileNo == model.FileNo && x.OpinionGivenDeptId == model.OpinionGivenDeptId);
+                    if (oldDaata != null)
+                    {
+                        oldDaata.OpinionUrl = _tenderUrl ?? oldDaata.OpinionUrl;
+                        oldDaata.Remarks = model.Remarks;
+                        oldDaata.UpdatedBy = PortalContext.CurrentUser.UserName;
+                        oldDaata.UpdatedDate = DateTime.Now;
+                        oldDaata.IsComplete = true;
+                    }
+                    int reslt = _contractDeptOpinionRepository.Save(oldDaata);
+                    message = reslt > 0 ? "Successfully Saved document" : "Upload failed";
+                    break;
+            }
+
             return message;
         }
         public TenderSpecDeptOpinion GetTenderSpecDeptOpinionById(long tenderSpecOpinionGivenId)
