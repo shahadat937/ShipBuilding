@@ -22,6 +22,6 @@ namespace RMS.Model
         public Nullable<bool> IsComplete { get; set; }
         public string DeptName { get; set; }
         public string PendingDays { get; set; }
-        public int? Complete { get; set; }
+        public float? Complete { get; set; }
     }
 }

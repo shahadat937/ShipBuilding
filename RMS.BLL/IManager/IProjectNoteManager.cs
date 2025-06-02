@@ -16,6 +16,6 @@ namespace RMS.BLL.IManager
       List<ProjectNote> GetAllbyId(int? pId);
       int DeleteProjectNote(int? id);
       List<ProjectNote> GetSearchValue(string searchKey);
-        int? GetCompleteStatus(long ddDemandId);
+        float? GetCompleteStatus(long ddDemandId);
     }
 }

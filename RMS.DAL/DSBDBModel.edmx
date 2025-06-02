@@ -643,7 +643,7 @@
           <Property Name="DemandId" Type="bigint" Nullable="false" />
           <Property Name="Parameter" Type="varchar" MaxLength="250" />
           <Property Name="Value" Type="varchar" MaxLength="250" />
-          <Property Name="Complete" Type="int" />
+          <Property Name="Complete" Type="float" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateId" Type="varchar" MaxLength="50" />
           <Property Name="LastUpdateDate" Type="datetime" />
@@ -3516,7 +3516,7 @@ warning 6002: The table/view 'DSBDB1.dbo.UserBankInfo' does not have a primary k
           <Property Name="DemandId" Type="Int64" Nullable="false" />
           <Property Name="Parameter" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Complete" Type="Int32" />
+          <Property Name="Complete" Type="Single" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />

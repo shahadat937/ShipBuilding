@@ -49,7 +49,7 @@ namespace RMS.BLL.Manager
             return _projectNoteRepository.Filter(x => x.Demand.FileNo.Contains(searchKey) || String.IsNullOrEmpty(searchKey)).Include(x => x.Demand).ToList();
         }
 
-        public int? GetCompleteStatus(long ddDemandId)
+        public float? GetCompleteStatus(long ddDemandId)
         {
             return  _projectNoteRepository.All().Where(x => x.DemandId == ddDemandId).Sum(x => x.Complete);
         }

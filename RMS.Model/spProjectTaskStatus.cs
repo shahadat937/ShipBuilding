@@ -8,7 +8,7 @@ namespace RMS.Model
 {
    public class spProjectTaskStatus
     {
-       public Nullable<int> Progress { get; set; }
+       public Nullable<double> Progress { get; set; }
        public string DemandingUrl { get; set; }
        public string FileUrl { get; set; }
         public string FileNo { get; set; }
