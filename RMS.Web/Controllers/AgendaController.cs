@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using RMS.BLL.IManager;
+using RMS.BLL.Manager;
 using RMS.Model;
 using RMS.Utility;
 using RMS.Web.Models.ViewModel;
@@ -15,11 +16,13 @@ namespace RMS.Web.Controllers
         private readonly IAgendumManager _agendumManager;
         private readonly IDemandManager _demandManager;
         private readonly ICommonCodeManager _commonCodeManager;
-        public AgendaController(IAgendumManager agendumManager, IDemandManager demandManager, ICommonCodeManager commonCodeManager)
+        private readonly IFlowSetupManager _flowSetupManager;
+        public AgendaController(IAgendumManager agendumManager, IDemandManager demandManager, ICommonCodeManager commonCodeManager, IFlowSetupManager flowSetupManager)
         {
             _agendumManager = agendumManager;
             _demandManager = demandManager;
             _commonCodeManager = commonCodeManager;
+            _flowSetupManager = flowSetupManager;
         }
         public ActionResult Index(AjendaViewModel model)
         {
@@ -27,15 +30,17 @@ namespace RMS.Web.Controllers
             return View(model);
         }
         [HttpGet]
-        public ActionResult Create(long? AjendaId, AjendaViewModel model)
+        public ActionResult Create(string fileId, string flowSerial, long? AjendaId, AjendaViewModel model)
         {
-
+            long fileID = Convert.ToInt64(fileId);
             model.Agendum = _agendumManager.GetAndaId(AjendaId) ?? new Agendum();
             model.CategoryLists = _commonCodeManager.GetCommonCodeByType("LetterCategory").Select(x => new SelectionList()
             {
                 Value = x.CommonCodeID,
-                Text = x.AdditonalValue
+                Text = x.TypeValue
             }).ToList();
+            model.FileSerial = flowSerial;
+            model.DemandId = fileID;
             return View(model);
         }
         public ActionResult SearchByKey(AjendaViewModel model)
@@ -61,7 +66,7 @@ namespace RMS.Web.Controllers
                 Agendum com = new Agendum();
                 com = _agendumManager.GetAndaId(model.Agendum.Id);
 
-                string dirPath = @"~/File";
+                string dirPath = @"~/Agenda";
                 string dirFullPath = Server.MapPath(dirPath);
                 model.Agendum.FileUrl = ImageUpload.ImageUploadFile(model.ImageUpload, dirFullPath, dirPath);
                 if (com != null)
@@ -90,6 +95,11 @@ namespace RMS.Web.Controllers
 
                 if (result == 1)
                 {
+                    if (model.DemandId != null && model.FileSerial != null)
+                    {
+                        _flowSetupManager.UpdateFormStatusInFlow(model.DemandId, model.FileSerial, FormInformation.Agenda, null);
+                    }
+
                     model.SuccessMessage = "Agenda has been created successfully!";
 
                 }

@@ -12,7 +12,7 @@ namespace RMS.Model
         public long DemandId { get; set; }
         public string Parameter { get; set; }
         public string Value { get; set; }
-        public Nullable<int> Complete { get; set; }
+        public Nullable<float> Complete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateId { get; set; }
         public Nullable<System.DateTime> LastUpdateDate { get; set; }

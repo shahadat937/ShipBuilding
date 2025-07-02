@@ -17,14 +17,16 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(x => x.Agendum.Id);
+                    @Html.HiddenFor(x => x.DemandId)
+                    @Html.HiddenFor(x => x.FileSerial)
 
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3">File No  &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
                                 <div class="col-md-5">
-                                    @Html.HiddenFor(x => x.ValidationCheckBySubject, new { id = "subHiddenId", @class = "subHiddenClass"})
-                                    @Html.TextBoxFor(x => x.Agendum.FileNo, null, new { id = "ThroughTextBoxFor", @class = "txtMember form-control",@onkeyup = "fileAutocomplite(this)", required = "required" })
+                                    @Html.HiddenFor(x => x.ValidationCheckBySubject, new { id = "subHiddenId", @class = "subHiddenClass" })
+                                    @Html.TextBoxFor(x => x.Agendum.FileNo, null, new { id = "ThroughTextBoxFor", @class = "txtMember form-control", @onkeyup = "fileAutocomplite(this)", required = "required" })
                                 </div>
                                 <div class="col-md-4">
                                     @Html.ValidationMessageFor(x => x.Agendum.FileNo)
@@ -52,7 +54,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3">Heading &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
                                 <div class="col-md-5">
-                                    @Html.TextAreaFor(x => x.Agendum.Heading,new { id = "txtEmail", @class = "txtMember form-control", required = "required" })
+                                    @Html.TextAreaFor(x => x.Agendum.Heading, new { id = "txtEmail", @class = "txtMember form-control", required = "required" })
                                 </div>
                                 <div class="col-md-4">
                                     @Html.ValidationMessageFor(x => x.Agendum.Heading)
@@ -66,7 +68,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3">Formula &nbsp;<i class=" fa fa-asterisk" style="font-size:9px;color:red;position:absolute;" aria-hidden="true"></i></label>
                                 <div class="col-md-5">
-                                    @Html.TextAreaFor(x => x.Agendum.Formula,new { id = "txtEmail", @class = "txtMember form-control", required = "required" })
+                                    @Html.TextAreaFor(x => x.Agendum.Formula, new { id = "txtEmail", @class = "txtMember form-control", required = "required" })
                                 </div>
                                 <div class="col-md-4">
                                     @Html.ValidationMessageFor(x => x.Agendum.Formula)
@@ -93,13 +95,13 @@
                         <div class="col-sm-12 col-lg-12">
                             <div class="form-group">
                                 <label class="col-sm-3 col-md-3 col-lg-3">Attached Document &nbsp;<i class=" fa fa-asterisk" style="font-size: 9px; color: red; position: absolute;" aria-hidden="true"></i></label>
-                                <div class="col-md-5" >
+                                <div class="col-md-5">
                                     @Html.TextBoxFor(m => m.ImageUpload, new { type = "file", accept = "application/pdf", @class = "btn btn-info form-control", required = "required" })
                                 </div>
                                 <div class="col-md-4">@Html.ValidationMessageFor(x => x.ImageUpload)</div>
                             </div>
                         </div>
-                       
+
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-lg-12">
@@ -174,10 +176,10 @@
         $('#btnCreateCommitee').unbind('click').bind('click', function () {
             var form = $("#formCreateCommitee");
            
-            if ($('#subHiddenId').val().length < 1) {
-                $("#myValidModel").modal('show');
-                return false;
-            }
+            //if ($('#subHiddenId').val().length < 1) {
+            //    $("#myValidModel").modal('show');
+            //    return false;
+            //}
             if (jQuery.validator && jQuery.validator.unobtrusive) {
                 form.validate();
                 if (!form.valid()) {

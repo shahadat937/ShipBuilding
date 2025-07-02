@@ -24,6 +24,8 @@ namespace RMS.Web.Models.ViewModel
         public HttpPostedFileBase ImageUpload { get; set; }
         public string SearcKey { get; set; }
         public string ValidationCheckBySubject { get; set; }
+        public long DemandId { get; set; }
+        public string FileSerial { get; set; }
         public IEnumerable<SelectListItem> CategorySelectListItems
         {
             get

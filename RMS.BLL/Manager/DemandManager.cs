@@ -66,7 +66,7 @@ namespace RMS.BLL.Manager
         {
             long ss = Convert.ToInt64(demandId);
             var old = _demandRepository.FindOne(x => x.DemandId == ss);
-            if (old.IsComplete == true)
+            if (old.IsComplete != true)
             {
                 old.IsAccept = false;
               return  _demandRepository.Edit(old);
