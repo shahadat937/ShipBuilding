@@ -514,7 +514,7 @@
           <Property Name="MemberId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rank" Type="bigint" />
           <Property Name="OfficeId" Type="varchar" MaxLength="50" />
-          <Property Name="MemberName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="150" />
           <Property Name="ImageUrl" Type="varchar" MaxLength="250" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="PhoneNo" Type="varchar" MaxLength="20" />
@@ -2763,7 +2763,7 @@ warning 6002: The table/view 'DSBDB1.dbo.UserBankInfo' does not have a primary k
           <Property Name="MemberId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rank" Type="Int64" />
           <Property Name="OfficeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MemberName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MemberName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ImageUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
